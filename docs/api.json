@@ -1,0 +1,19 @@
+{
+	"/user/authenticate" :{
+		"method" : "post",
+		"description" : "Authenticate user to get access token",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : false,
+		"parameter" : [{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's password"
+		}]
+	}
+}

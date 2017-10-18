@@ -1,0 +1,23 @@
+{
+	"server" : {
+		"host" : "http://localhost",
+		"port" : 3307
+	},
+	"postgres" : {
+		"host" : "128.199.227.10",
+		"port" : 5432,
+		"database" : "carwashDB",
+		"user" : "postgres",
+		"password" : "mvp.buzzbuddies.2017"
+	},
+	"mongodb" : {
+		"url" : "mongodb://127.0.0.1:27017/komudigi"
+	},
+	"jwt" : {
+		"jwtSecret": "07d9fc30dff91b5a7e54e9a2997531a960218054",
+		"jwtSession": {
+				"session": false
+		}
+	},
+	"docs" : true
+}

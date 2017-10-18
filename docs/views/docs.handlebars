@@ -1,0 +1,201 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+		/* Remove the navbar's default margin-bottom and rounded borders */ 
+		.navbar {
+			margin-bottom: 0;
+			border-radius: 0;
+		}
+
+		/* Add a gray background color and some padding to the footer */
+		footer {
+			background-color: #f2f2f2;
+			padding: 25px;
+		}
+
+		.get{
+			background-color: #61affe;
+		}
+
+		.bg-get{
+			background: rgba(97,175,254,.1) !important;
+			border : 1px solid #61affe !important;
+		}
+
+		.post{
+			background-color: #49cc90;
+		}
+
+		.bg-post{
+			background: rgba(73,204,144,.1) !important;
+			border : 1px solid #49cc90 !important;
+		}
+
+		.put{
+			background-color: #fca130;
+		}
+
+		.bg-put{
+			background: rgba(252,161,48,.1) !important;
+			border : 1px solid #fca130 !important;
+		}
+
+		.delete{
+			background-color: #f93e3e;
+		}
+
+		.bg-delete{
+			background: rgba(249,62,62,.1) !important;
+			border : 1px solid #f93e3e !important;
+		}
+
+		.content {
+			margin-top : 25px;
+		}
+
+		.method-label {
+			display: inline-block;
+			min-width: 100px;
+			padding : 10px 20px;
+			margin-right : 15px;
+			font-size : 15px;
+			text-transform : uppercase;
+		}
+
+		.panel-footer {
+		    padding: 10px 15px;
+			background-color: #f5f5f5;
+			border-top: 1px solid #ddd !important;
+			border-bottom-right-radius: 3px;
+			border-bottom-left-radius: 3px;
+		}
+
+		.url-text{
+			font-weight: bold;
+			margin-right : 10px;
+			font-size : 1em;
+		}
+
+		.panel-heading {
+		    cursor: pointer;
+		}
+
+		.panel-body {
+			padding : 0px !important;
+		}
+
+		.parameter-header {
+			background-color: #f5f5f5;
+			padding : 10px 15px;
+		}
+
+		.parameter-body {
+			padding-bottom : 15px;
+			padding-left : 15px;
+			padding-right : 15px;
+		}
+
+		.parameter-required {
+			margin-left : 5px;
+			color : red;
+			font-size : 1em;
+		}
+
+		table {
+			width : 100%;
+			font-size : 1em;
+		}
+
+		thead td{
+			border-bottom : 1px solid;
+			padding : 10px 0px;
+			font-weight : bold;
+		}
+
+		tbody td {
+			padding : 10px 0px;
+			font-size : 1em;
+		}
+
+		.content-type-container {
+			padding: 5px 15px;
+		}
+
+		</style>
+		<title>{{config.title}}</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">{{config.title}}</a>
+					
+				</div><!--/.nav-collapse -->
+			</div>
+		</nav>
+		<div class="container-fluid content">
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				<!-- Here -->
+				{{#each config.api}}
+					<div class="panel panel-default">
+						<div class="panel-heading bg-{{this.method}}" role="tab" id="heading1" data-toggle="collapse" data-target="#collapse{{@index}}">
+							<div class="panel-title">
+								<span class="label label-default method-label {{this.method}}">{{this.method}}</span>
+								<span class="url-text">
+									{{#if token}}
+										{{@key}}?accessToken={accessToken}
+									{{else}}
+										{{@key}}
+									{{/if}}
+								</span>
+								<span class="">{{this.description}}</span>
+							</div>
+						</div>
+						<div id="collapse{{@index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+							<div class="panel-body bg-{{this.method}}">
+								{{#if this.content_type}}
+									<div class="content-type-container">
+										<div class="content-type">
+											<b>Content-Type : {{this.content_type}}</b>
+										</div>
+									</div>
+								{{/if}}
+								<div class="parameter-header">
+									<b>Parameter</b>
+								</div>
+								<div class="parameter-body">
+									<table>
+										<thead class="header-table-parameter">
+											<tr>
+												<td width="20%">Name</td>
+												<td width="15%">Type</td>
+												<td width="65%">Description</td>
+											</tr>
+										</thead>
+										<tbody>
+											{{#each this.parameter}}
+												<tr>
+													<td>
+														<b>{{this.name}}</b>
+														{{#if this.required}}
+															<span class="parameter-required">(required)</span>
+														{{/if}}
+													</td>
+													<td><b>{{this.type}}</b></td>
+													<td>{{this.description}}</td>
+												</tr>
+											{{/each}}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</body>
+</html>
