@@ -25,6 +25,8 @@ var _user = require("../controllers/user");
 
 var _member = require("../controllers/member");
 
+var _card = require("../controllers/card");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53,6 +55,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var indexController = new _index.IndexController();
 			var userController = new _user.UserController();
 			var memberController = new _member.MemberController();
+			var cardController = new _card.CardController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -174,6 +177,18 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End Member routes ---*/
+
+			/*--- Start Card routes ---*/
+			this.app.get("/card/type", function (req, res) {
+				var param = {};
+
+				cardController.cardType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Card routes ---*/
 
 			return this.app;
 		}

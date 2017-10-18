@@ -48,13 +48,20 @@ var Build = exports.Build = function () {
 			};
 
 			if (data.ct_id) {
-				member.card.type = {
-					id: data.ct_id,
-					name: data.ct_name
-				};
+				member.card.type = this.card(data);
 			}
 
 			return member;
+		}
+	}, {
+		key: "card",
+		value: function card(data) {
+			var card = {
+				id: data.ct_id,
+				name: data.ct_name
+			};
+
+			return card;
 		}
 	}]);
 

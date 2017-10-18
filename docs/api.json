@@ -32,6 +32,12 @@
 			"description" : "Start of data, default 0"
 		}]
 	},
+	"/card/type" :{
+		"method" : "get",
+		"description" : "Get card type",
+		"token" : false,
+		"parameter" : []
+	},
 	"/member/list" :{
 		"method" : "get",
 		"description" : "Get members list",

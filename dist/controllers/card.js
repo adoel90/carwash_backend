@@ -3,11 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.CardModel = undefined;
+exports.CardController = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _model = require("./model");
+var _controller = require("./controller");
+
+var _card = require("../models/card");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15,63 +17,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CardModel = exports.CardModel = function (_Model) {
-	_inherits(CardModel, _Model);
+var CardController = exports.CardController = function (_Controller) {
+	_inherits(CardController, _Controller);
 
-	function CardModel() {
-		_classCallCheck(this, CardModel);
+	function CardController() {
+		_classCallCheck(this, CardController);
 
-		return _possibleConstructorReturn(this, (CardModel.__proto__ || Object.getPrototypeOf(CardModel)).call(this));
+		return _possibleConstructorReturn(this, (CardController.__proto__ || Object.getPrototypeOf(CardController)).call(this));
 	}
 
-	/*** Generate card id ***/
+	/*
+ ** Get list of card type
+ ** GET :: /card/type
+ */
 
 
-	_createClass(CardModel, [{
-		key: "generateCardId",
-		value: function generateCardId(type) {
-			var c_id = this.moment(new Date()).format("x");
+	_createClass(CardController, [{
+		key: "cardType",
+		value: function cardType() {
+			var _this2 = this;
 
-			if (type < 10) {
-				type = "00" + parseInt(type);
-			} else if (type >= 10 && type < 100) {
-				type = "0" + parseInt(type);
-			}
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
 
-			return type + c_id;
-		}
+				cardModel.getCardType().then(function (card) {
+					var result = [];
+					for (var i = 0; i < card.length; i++) {
+						result.push(_this2.build.card(card[i]));
+					}
 
-		/*** Insert card data ***/
-
-	}, {
-		key: "insertCard",
-		value: function insertCard(param) {
-			this.db.insert("card", param, "c_id");
-
-			return this.db.execute(true);
-		}
-
-		/*** Get card type ***/
-
-	}, {
-		key: "getCardType",
-		value: function getCardType() {
-			this.db.select("card_type");
-
-			return this.db.execute();
-		}
-
-		/*** Get card type by ct_id ***/
-
-	}, {
-		key: "getCardTypeById",
-		value: function getCardTypeById(ct_id) {
-			this.db.select("card_type");
-			this.db.where("ct_id", ct_id);
-
-			return this.db.execute(true);
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
 		}
 	}]);
 
-	return CardModel;
-}(_model.Model);
+	return CardController;
+}(_controller.Controller);
