@@ -27,6 +27,8 @@ var _member = require("../controllers/member");
 
 var _card = require("../controllers/card");
 
+var _service = require("../controllers/service");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,6 +58,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var userController = new _user.UserController();
 			var memberController = new _member.MemberController();
 			var cardController = new _card.CardController();
+			var serviceController = new _service.ServiceController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -189,6 +192,74 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End Card routes ---*/
+
+			/*--- Start Service routes ---*/
+			this.app.get("/service/type/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceTypeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/service/type/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.createServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/type/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.updateServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/type/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.deleteServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Service routes ---*/
 
 			return this.app;
 		}

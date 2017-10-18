@@ -136,5 +136,59 @@
 			"required" : true,
 			"description" : "Member ID"
 		}]
+	},
+	"/service/type/list" :{
+		"method" : "get",
+		"description" : "Get service type list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		}]
+	},
+	"/service/type/create" :{
+		"method" : "post",
+		"description" : "Create new service type",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service type name"
+		}]
+	},
+	"/service/type/update" :{
+		"method" : "put",
+		"description" : "Update service type data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service type name"
+		}]
+	},
+	"/service/type/delete" :{
+		"method" : "put",
+		"description" : "Delete service type data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		}]
 	}
 }

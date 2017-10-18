@@ -63,6 +63,16 @@ var Build = exports.Build = function () {
 
 			return card;
 		}
+	}, {
+		key: "serviceType",
+		value: function serviceType(data) {
+			var type = {
+				id: data.srvt_id,
+				name: data.srvt_name
+			};
+
+			return type;
+		}
 	}]);
 
 	return Build;

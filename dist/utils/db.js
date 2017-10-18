@@ -12,17 +12,21 @@ var _templateObject = _taggedTemplateLiteral(["SELECT ", " FROM ", " ", ""], ["S
     _templateObject3 = _taggedTemplateLiteral([" ", ""], [" ", ""]),
     _templateObject4 = _taggedTemplateLiteral([" ", " ", "=", "'"], [" ", " ", "=", "'"]),
     _templateObject5 = _taggedTemplateLiteral(["WHERE ", "=", ""], ["WHERE ", "=", ""]),
-    _templateObject6 = _taggedTemplateLiteral(["GROUP BY ", ""], ["GROUP BY ", ""]),
-    _templateObject7 = _taggedTemplateLiteral(["ORDER BY ", " ", ""], ["ORDER BY ", " ", ""]),
-    _templateObject8 = _taggedTemplateLiteral(["LIMIT ", " OFFSET ", ""], ["LIMIT ", " OFFSET ", ""]),
-    _templateObject9 = _taggedTemplateLiteral(["LIMIT ", ""], ["LIMIT ", ""]),
-    _templateObject10 = _taggedTemplateLiteral(["INSERT INTO ", "(", ") VALUES (", ")"], ["INSERT INTO ", "(", ") VALUES (", ")"]),
-    _templateObject11 = _taggedTemplateLiteral([" RETURNING ", ""], [" RETURNING ", ""]),
-    _templateObject12 = _taggedTemplateLiteral(["", "=", ""], ["", "=", ""]),
-    _templateObject13 = _taggedTemplateLiteral(["UPDATE ", " SET ", ""], ["UPDATE ", " SET ", ""]),
-    _templateObject14 = _taggedTemplateLiteral(["DELETE FROM ", ""], ["DELETE FROM ", ""]),
-    _templateObject15 = _taggedTemplateLiteral(["", " ", ""], ["", " ", ""]),
-    _templateObject16 = _taggedTemplateLiteral(["", " ", " ", " ", " ", " ", ""], ["", " ", " ", " ", " ", " ", ""]);
+    _templateObject6 = _taggedTemplateLiteral([" ", " ", " is not NULL'"], [" ", " ", " is not NULL'"]),
+    _templateObject7 = _taggedTemplateLiteral(["WHERE ", " is not NULL"], ["WHERE ", " is not NULL"]),
+    _templateObject8 = _taggedTemplateLiteral([" ", " ", " is NULL'"], [" ", " ", " is NULL'"]),
+    _templateObject9 = _taggedTemplateLiteral(["WHERE ", " is NULL"], ["WHERE ", " is NULL"]),
+    _templateObject10 = _taggedTemplateLiteral(["GROUP BY ", ""], ["GROUP BY ", ""]),
+    _templateObject11 = _taggedTemplateLiteral(["ORDER BY ", " ", ""], ["ORDER BY ", " ", ""]),
+    _templateObject12 = _taggedTemplateLiteral(["LIMIT ", " OFFSET ", ""], ["LIMIT ", " OFFSET ", ""]),
+    _templateObject13 = _taggedTemplateLiteral(["LIMIT ", ""], ["LIMIT ", ""]),
+    _templateObject14 = _taggedTemplateLiteral(["INSERT INTO ", "(", ") VALUES (", ")"], ["INSERT INTO ", "(", ") VALUES (", ")"]),
+    _templateObject15 = _taggedTemplateLiteral([" RETURNING ", ""], [" RETURNING ", ""]),
+    _templateObject16 = _taggedTemplateLiteral(["", "=", ""], ["", "=", ""]),
+    _templateObject17 = _taggedTemplateLiteral(["UPDATE ", " SET ", ""], ["UPDATE ", " SET ", ""]),
+    _templateObject18 = _taggedTemplateLiteral(["DELETE FROM ", ""], ["DELETE FROM ", ""]),
+    _templateObject19 = _taggedTemplateLiteral(["", " ", ""], ["", " ", ""]),
+    _templateObject20 = _taggedTemplateLiteral(["", " ", " ", " ", " ", " ", ""], ["", " ", " ", " ", " ", " ", ""]);
 
 var _util = require("./util");
 
@@ -101,9 +105,27 @@ var Db = function () {
 			}
 		}
 	}, {
+		key: "whereNotNull",
+		value: function whereNotNull(field) {
+			if (this.q_where) {
+				this.q_where += (0, _util.stringFormat)(_templateObject6, operator, field);
+			} else {
+				this.q_where = (0, _util.stringFormat)(_templateObject7, field);
+			}
+		}
+	}, {
+		key: "whereIsNull",
+		value: function whereIsNull(field) {
+			if (this.q_where) {
+				this.q_where += (0, _util.stringFormat)(_templateObject8, operator, field);
+			} else {
+				this.q_where = (0, _util.stringFormat)(_templateObject9, field);
+			}
+		}
+	}, {
 		key: "group",
 		value: function group(by) {
-			this.q_group = (0, _util.stringFormat)(_templateObject6, by);
+			this.q_group = (0, _util.stringFormat)(_templateObject10, by);
 		}
 	}, {
 		key: "order",
@@ -115,15 +137,15 @@ var Db = function () {
 				order_type = "DESC";
 			}
 
-			this.q_order = (0, _util.stringFormat)(_templateObject7, by, order_type);
+			this.q_order = (0, _util.stringFormat)(_templateObject11, by, order_type);
 		}
 	}, {
 		key: "limit",
 		value: function limit(_limit, offset) {
 			if (_limit !== null && offset !== null) {
-				this.q_limit = (0, _util.stringFormat)(_templateObject8, _limit, offset);
+				this.q_limit = (0, _util.stringFormat)(_templateObject12, _limit, offset);
 			} else {
-				this.q_limit = (0, _util.stringFormat)(_templateObject9, _limit);
+				this.q_limit = (0, _util.stringFormat)(_templateObject13, _limit);
 			}
 		}
 	}, {
@@ -144,9 +166,9 @@ var Db = function () {
 				values.push("$(" + key + ")");
 				this.q_data[key] = param[key];
 			}
-			this.q_insert = (0, _util.stringFormat)(_templateObject10, table, fields.join(), values.join());
+			this.q_insert = (0, _util.stringFormat)(_templateObject14, table, fields.join(), values.join());
 			if (primary_key) {
-				this.q_insert += (0, _util.stringFormat)(_templateObject11, primary_key);
+				this.q_insert += (0, _util.stringFormat)(_templateObject15, primary_key);
 			}
 		}
 	}, {
@@ -159,15 +181,15 @@ var Db = function () {
 			for (var key in param) {
 				var v = "$(" + key + ")";
 				this.q_data[key] = param[key];
-				update_set.push((0, _util.stringFormat)(_templateObject12, key, v));
+				update_set.push((0, _util.stringFormat)(_templateObject16, key, v));
 			}
 
-			this.q_update = (0, _util.stringFormat)(_templateObject13, table, update_set.join());
+			this.q_update = (0, _util.stringFormat)(_templateObject17, table, update_set.join());
 		}
 	}, {
 		key: "delete",
 		value: function _delete(table) {
-			this.q_delete = (0, _util.stringFormat)(_templateObject14, table);
+			this.q_delete = (0, _util.stringFormat)(_templateObject18, table);
 		}
 	}, {
 		key: "push",
@@ -180,11 +202,11 @@ var Db = function () {
 			if (this.q_insert) {
 				this.query = this.q_insert;
 			} else if (this.q_update && this.q_where) {
-				this.query = (0, _util.stringFormat)(_templateObject15, this.q_update, this.q_where);
+				this.query = (0, _util.stringFormat)(_templateObject19, this.q_update, this.q_where);
 			} else if (this.q_delete && this.q_where) {
-				this.query = (0, _util.stringFormat)(_templateObject15, this.q_delete, this.q_where);
+				this.query = (0, _util.stringFormat)(_templateObject19, this.q_delete, this.q_where);
 			} else {
-				this.query = (0, _util.stringFormat)(_templateObject16, this.q_select, this.q_join, this.q_where, this.q_group, this.q_order, this.q_limit);
+				this.query = (0, _util.stringFormat)(_templateObject20, this.q_select, this.q_join, this.q_where, this.q_group, this.q_order, this.q_limit);
 			}
 
 			return this.query;

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.UserModel = undefined;
+exports.ServiceModel = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -15,40 +15,50 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var UserModel = exports.UserModel = function (_Model) {
-	_inherits(UserModel, _Model);
+var ServiceModel = exports.ServiceModel = function (_Model) {
+	_inherits(ServiceModel, _Model);
 
-	function UserModel() {
-		_classCallCheck(this, UserModel);
+	function ServiceModel() {
+		_classCallCheck(this, ServiceModel);
 
-		return _possibleConstructorReturn(this, (UserModel.__proto__ || Object.getPrototypeOf(UserModel)).call(this));
+		return _possibleConstructorReturn(this, (ServiceModel.__proto__ || Object.getPrototypeOf(ServiceModel)).call(this));
 	}
 
-	_createClass(UserModel, [{
-		key: "getUserByUsername",
-		value: function getUserByUsername(username) {
-			this.db.select("users");
-			this.db.join("user_level", "user_level.ul_id = users.ul_id");
-			this.db.where("u_username", username);
-			this.db.whereIsNull("deleted_at");
+	/*** Get list of service type ***/
 
-			return this.db.execute(true);
-		}
-	}, {
-		key: "getUserList",
-		value: function getUserList(limit, offset) {
-			this.db.select("users", "count(*)");
-			this.db.join("user_level", "user_level.ul_id = users.ul_id");
+
+	_createClass(ServiceModel, [{
+		key: "getServiceTypeList",
+		value: function getServiceTypeList(limit, offset) {
+			this.db.select("service_type", "count(*)");
 			this.db.whereIsNull("deleted_at");
 			this.db.push();
 
-			this.db.select("users");
+			this.db.select("service_type");
 			this.db.limit(limit, offset);
 			this.db.push();
 
 			return this.db.executeMany();
 		}
+
+		/*** Insert service type data ***/
+
+	}, {
+		key: "insertServiceType",
+		value: function insertServiceType(param) {
+			this.db.insert("service_type", param, "srvt_id");
+
+			return this.db.execute();
+		}
+	}, {
+		key: "updateServiceType",
+		value: function updateServiceType(srvt_id, param) {
+			this.db.update("service_type", param);
+			this.db.where("srvt_id", srvt_id);
+
+			return this.db.execute();
+		}
 	}]);
 
-	return UserModel;
+	return ServiceModel;
 }(_model.Model);
