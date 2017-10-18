@@ -45,6 +45,13 @@ var Response = function () {
 						break;
 					}
 
+				// Response card error
+				case 20:
+					{
+						error.set("status", 400);
+						error.set("message", "Card type doesn't exist");
+					}
+
 				// Response server error
 				default:
 					{

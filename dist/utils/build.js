@@ -32,6 +32,30 @@ var Build = exports.Build = function () {
 
 			return user;
 		}
+	}, {
+		key: "member",
+		value: function member(data) {
+			var member = {
+				id: data.m_id,
+				name: data.m_name,
+				phone: data.m_phone,
+				email: data.m_email,
+				address: data.m_address,
+				balance: data.m_balance,
+				card: {
+					id: data.c_id
+				}
+			};
+
+			if (data.ct_id) {
+				member.card.type = {
+					id: data.ct_id,
+					name: data.ct_name
+				};
+			}
+
+			return member;
+		}
 	}]);
 
 	return Build;

@@ -23,6 +23,8 @@ var _index = require("../controllers/index");
 
 var _user = require("../controllers/user");
 
+var _member = require("../controllers/member");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50,6 +52,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			var indexController = new _index.IndexController();
 			var userController = new _user.UserController();
+			var memberController = new _member.MemberController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -94,6 +97,83 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End User routes ---*/
+
+			/*--- Start Member routes ---*/
+			this.app.get("/member/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.memberList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/member/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name,
+					phone: req.body.phone ? req.body.phone : null,
+					email: req.body.email ? req.body.email : null,
+					address: req.body.address ? req.body.address : null,
+					balance: req.body.balance,
+					type: req.body.type,
+					card: req.body.card
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.createMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/member/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name,
+					phone: req.body.phone ? req.body.phone : null,
+					email: req.body.email ? req.body.email : null,
+					address: req.body.address ? req.body.address : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.updateMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/member/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.deleteMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Member routes ---*/
 
 			return this.app;
 		}

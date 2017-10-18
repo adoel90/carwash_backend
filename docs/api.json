@@ -47,5 +47,88 @@
 			"required" : false,
 			"description" : "Start of data, default 0"
 		}]
+	},
+	"/member/create" :{
+		"method" : "post",
+		"description" : "Create new member",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Member fullname"
+		},{
+			"name" : "phone",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member phone number"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member email"
+		},{
+			"name" : "address",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member address"
+		},{
+			"name" : "balance",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Member inital balance"
+		},{
+			"name" : "card",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member card type"
+		},{
+			"name" : "type",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member membership type"
+		}]
+	},
+	"/member/update" :{
+		"method" : "put",
+		"description" : "Update member data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Member fullname"
+		},{
+			"name" : "phone",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member phone number"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member email"
+		},{
+			"name" : "address",
+			"type" : "string",
+			"required" : false,
+			"description" : "Member address"
+		}]
+	},
+	"/member/delete" :{
+		"method" : "put",
+		"description" : "Delete member data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member ID"
+		}]
 	}
 }

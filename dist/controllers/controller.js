@@ -11,6 +11,10 @@ var _crypto = require("crypto");
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
+var _moment = require("moment");
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _response = require("../utils/response");
 
 var _build = require("../utils/build");
@@ -24,6 +28,7 @@ var Controller = exports.Controller = function () {
 		_classCallCheck(this, Controller);
 
 		this.build = new _build.Build();
+		this.moment = _moment2.default;
 	}
 
 	_createClass(Controller, [{
