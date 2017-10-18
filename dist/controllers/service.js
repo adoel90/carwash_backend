@@ -27,15 +27,41 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}
 
 	/*
- ** Get service type list
- ** GET :: /service/type/list
+ ** Get service type
+ ** GET :: /service/type
  */
 
 
 	_createClass(ServiceController, [{
+		key: "serviceType",
+		value: function serviceType(param) {
+			var _this2 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getServiceType().then(function (type) {
+					var result = [];
+					for (var i = 0; i < type.length; i++) {
+						result.push(_this2.build.serviceType(type[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get service type list
+  ** GET :: /service/type/list
+  */
+
+	}, {
 		key: "serviceTypeList",
 		value: function serviceTypeList(param) {
-			var _this2 = this;
+			var _this3 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
@@ -47,7 +73,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 					};
 
 					for (var i = 0; i < type[1].length; i++) {
-						result.data.push(_this2.build.serviceType(type[1][i]));
+						result.data.push(_this3.build.serviceType(type[1][i]));
 					}
 
 					return resolve(result);
@@ -87,14 +113,14 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "updateServiceType",
 		value: function updateServiceType(param) {
-			var _this3 = this;
+			var _this4 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
 
 				var serviceParam = {
 					srvt_name: param.name,
-					update_at: _this3.moment(new Date()).format()
+					update_at: _this4.moment(new Date()).format()
 				};
 				serviceModel.updateServiceType(param.id, serviceParam).then(function (type) {
 					return resolve(true);
@@ -112,13 +138,13 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "deleteServiceType",
 		value: function deleteServiceType(param) {
-			var _this4 = this;
+			var _this5 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
 
 				var serviceParam = {
-					deleted_at: _this4.moment(new Date()).format()
+					deleted_at: _this5.moment(new Date()).format()
 				};
 				serviceModel.updateServiceType(param.id, serviceParam).then(function (type) {
 					return resolve(true);

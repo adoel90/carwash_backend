@@ -29,6 +29,8 @@ var _card = require("../controllers/card");
 
 var _service = require("../controllers/service");
 
+var _cafe = require("../controllers/cafe");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59,6 +61,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var memberController = new _member.MemberController();
 			var cardController = new _card.CardController();
 			var serviceController = new _service.ServiceController();
+			var cafeController = new _cafe.CafeController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -194,6 +197,20 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Card routes ---*/
 
 			/*--- Start Service routes ---*/
+			this.app.get("/service/type", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/service/type/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					limit: req.query.limit ? req.query.limit : 10,
@@ -259,6 +276,52 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+			/*--- End Service routes ---*/
+
+			/*--- Start Cafe routes ---*/
+			this.app.get("/cafe/type", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				cafeController.cafeType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/cafe/type/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.cafeTypeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/cafe/type/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.createCafe(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			/*--- End Service routes ---*/
 
 			return this.app;

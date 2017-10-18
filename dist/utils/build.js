@@ -73,6 +73,16 @@ var Build = exports.Build = function () {
 
 			return type;
 		}
+	}, {
+		key: "buildType",
+		value: function buildType(data) {
+			var type = {
+				id: data.cf_id,
+				name: data.cf_name
+			};
+
+			return type;
+		}
 	}]);
 
 	return Build;

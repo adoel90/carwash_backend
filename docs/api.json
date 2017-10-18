@@ -1,4 +1,27 @@
 {
+	"/cafe/type" :{
+		"method" : "get",
+		"description" : "Get cafe type",
+		"token" : true,
+		"parameter" : []
+	},
+	"/cafe/type/list" :{
+		"method" : "get",
+		"description" : "Get list of cafe type",
+		"token" : true,
+		"parameter" : []
+	},
+	"/cafe/type/list" :{
+		"method" : "post",
+		"description" : "Create new cafe type",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Cafe name"
+		}]
+	},
 	"/user/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate user to get access token",
@@ -57,6 +80,7 @@
 	"/member/create" :{
 		"method" : "post",
 		"description" : "Create new member",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "name",
@@ -98,6 +122,7 @@
 	"/member/update" :{
 		"method" : "put",
 		"description" : "Update member data",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -129,6 +154,7 @@
 	"/member/delete" :{
 		"method" : "put",
 		"description" : "Delete member data",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -136,6 +162,12 @@
 			"required" : true,
 			"description" : "Member ID"
 		}]
+	},
+	"/service/type" :{
+		"method" : "get",
+		"description" : "Get service type",
+		"token" : true,
+		"parameter" : []
 	},
 	"/service/type/list" :{
 		"method" : "get",
@@ -156,6 +188,7 @@
 	"/service/type/create" :{
 		"method" : "post",
 		"description" : "Create new service type",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "name",
@@ -167,6 +200,7 @@
 	"/service/type/update" :{
 		"method" : "put",
 		"description" : "Update service type data",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -183,6 +217,7 @@
 	"/service/type/delete" :{
 		"method" : "put",
 		"description" : "Delete service type data",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
