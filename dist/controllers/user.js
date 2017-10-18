@@ -30,7 +30,7 @@ var UserController = exports.UserController = function (_Controller) {
 
 	/*
  ** Authenticate user to get access token
- ** POST :: "/user/authenticate"
+ ** POST :: /user/authenticate
  */
 
 
@@ -63,6 +63,36 @@ var UserController = exports.UserController = function (_Controller) {
 					} else {
 						return reject(err);
 					}
+				});
+			});
+		}
+
+		/*
+  ** Get users list
+  ** GET :: /user/list
+  */
+
+	}, {
+		key: "userList",
+		value: function userList(param) {
+			var _this3 = this;
+
+			return new Promise(function (resolve, reject) {
+				var userModel = new _user.UserModel();
+
+				userModel.getUserList(param.limit, param.offset).then(function (user) {
+					var result = {
+						row: user[0][0].count,
+						data: []
+					};
+
+					for (var i = 0; i < user[1].length; i++) {
+						result.data.push(_this3.build.user(user[1][i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
 				});
 			});
 		}

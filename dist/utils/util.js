@@ -9,7 +9,7 @@ exports.stringFormat = stringFormat;
 function stringFormat(string) {
 	var res = string[0];
 	for (var i = 1; i < string.length; i++) {
-		if (typeof arguments[i] !== 'undefined') res += arguments[i];
+		if (typeof arguments[i] !== 'undefined' && arguments[i] !== null) res += arguments[i];
 		res += string[i];
 	}
 	return res;

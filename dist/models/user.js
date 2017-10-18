@@ -33,6 +33,19 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+	}, {
+		key: "getUserList",
+		value: function getUserList(limit, offset) {
+			this.db.select("users", "count(*)");
+			this.db.join("user_level", "user_level.ul_id = users.ul_id");
+			this.db.push();
+
+			this.db.select("users");
+			this.db.limit(limit, offset);
+			this.db.push();
+
+			return this.db.executeMany();
+		}
 	}]);
 
 	return UserModel;

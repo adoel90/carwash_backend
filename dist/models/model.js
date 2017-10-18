@@ -13,4 +13,5 @@ var Model = exports.Model = function Model() {
 	_classCallCheck(this, Model);
 
 	this.db = new _db.Db();
+	this.db.init();
 };

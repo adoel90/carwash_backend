@@ -54,6 +54,7 @@ var Db = function () {
 			this.q_insert = null;
 			this.q_update = null;
 			this.q_delete = null;
+			this.q_batch = [];
 		}
 	}, {
 		key: "select",
@@ -171,7 +172,7 @@ var Db = function () {
 	}, {
 		key: "push",
 		value: function push() {
-			this.q_batch.push(this.query);
+			this.q_batch.push(this.execute());
 		}
 	}, {
 		key: "build_query",
@@ -200,6 +201,14 @@ var Db = function () {
 			} else {
 				return dbConn.any(this.query, this.q_data);
 			}
+		}
+	}, {
+		key: "executeMany",
+		value: function executeMany() {
+			var queries = this.q_batch;
+			return dbConn.tx(function (t) {
+				return this.batch(queries);
+			});
 		}
 	}]);
 
