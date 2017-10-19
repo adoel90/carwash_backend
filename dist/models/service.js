@@ -60,11 +60,64 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Update service type data ***/
+
 	}, {
 		key: "updateServiceType",
 		value: function updateServiceType(srvt_id, param) {
 			this.db.update("service_type", param);
 			this.db.where("srvt_id", srvt_id);
+
+			return this.db.execute();
+		}
+
+		/*** Get service data ***/
+
+	}, {
+		key: "getService",
+		value: function getService(srvt_id) {
+			this.db.select("service");
+			this.db.where("srvt_id", srvt_id);
+			this.db.whereIsNull("deleted_at");
+
+			return this.db.execute();
+		}
+
+		/*** Get service data list ***/
+
+	}, {
+		key: "getServiceList",
+		value: function getServiceList(srvt_id, limit, offset) {
+			this.db.select("service", "count(*)");
+			this.db.where("srvt_id", srvt_id);
+			this.db.whereIsNull("deleted_at");
+			this.db.push();
+
+			this.db.select("service");
+			this.db.limit(limit, offset);
+			this.db.push();
+
+			return this.db.executeMany();
+		}
+
+		/*** Insert service data ***/
+
+	}, {
+		key: "insertService",
+		value: function insertService(param) {
+			this.db.insert("service", param);
+
+			return this.db.execute();
+		}
+
+		/*** Update service data ***/
+
+	}, {
+		key: "updateService",
+		value: function updateService(srv_id, param) {
+			this.db.update("service", param);
+			this.db.where("srv_id", srv_id);
 
 			return this.db.execute();
 		}

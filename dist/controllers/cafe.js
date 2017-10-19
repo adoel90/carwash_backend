@@ -221,14 +221,18 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafeMenu",
 		value: function createCafeMenu(param) {
+			var _this8 = this;
+
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
+				var image = _this8.rewriteImage(param.image);
 				var menuParam = {
 					cf_id: param.cf_id,
 					mn_name: param.name,
 					mn_price: param.price,
-					mn_desc: param.desc
+					mn_desc: param.desc,
+					mn_img: image
 				};
 				menuModel.insertCafeMenu(menuParam).then(function (data) {
 					return resolve(true);
@@ -246,7 +250,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "updateCafeMenu",
 		value: function updateCafeMenu(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -255,7 +259,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
-					updated_at: _this8.moment(new Date()).format()
+					updated_at: _this9.moment(new Date()).format()
 				};
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
@@ -273,13 +277,13 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "deleteCafeMenu",
 		value: function deleteCafeMenu(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				var menuParam = {
-					deleted_at: _this9.moment(new Date()).format()
+					deleted_at: _this10.moment(new Date()).format()
 				};
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);

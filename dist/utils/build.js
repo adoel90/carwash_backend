@@ -3,8 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.Build = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _fs = require("fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _config = require("../../config.json");
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -14,6 +25,15 @@ var Build = exports.Build = function () {
 	}
 
 	_createClass(Build, [{
+		key: "checkImage",
+		value: function checkImage(filename) {
+			if (_fs2.default.existsSync("public/" + filename)) {
+				return _config2.default.server.host + "public/" + filename;
+			} else {
+				return null;
+			}
+		}
+	}, {
 		key: "user",
 		value: function user(data) {
 			var user = {
@@ -90,10 +110,24 @@ var Build = exports.Build = function () {
 				id: data.mn_id,
 				name: data.mn_name,
 				price: data.mn_price,
-				description: data.mn_desc
+				description: data.mn_desc,
+				image: this.checkImage(data.mn_img)
 			};
 
 			return menu;
+		}
+	}, {
+		key: "service",
+		value: function service(data) {
+			var service = {
+				id: data.srv_id,
+				name: data.srv_name,
+				price: data.srv_price,
+				description: data.srv_description,
+				image: this.checkImage(data.srv_img)
+			};
+
+			return service;
 		}
 	}]);
 

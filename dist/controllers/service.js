@@ -153,6 +153,142 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Get service data
+  ** GET :: /service
+  */
+
+	}, {
+		key: "service",
+		value: function service(param) {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getService(param.type).then(function (service) {
+					var result = [];
+					for (var i = 0; i < service.length; i++) {
+						result.push(_this6.build.service(service[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get list of service data
+  ** GET :: /service/list
+  */
+
+	}, {
+		key: "serviceList",
+		value: function serviceList(param) {
+			var _this7 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getServiceList(param.type, param.limit, param.offset).then(function (service) {
+					var result = {
+						row: service[0][0].count,
+						data: []
+					};
+
+					for (var i = 0; i < service[1].length; i++) {
+						result.data.push(_this7.build.service(service[1][i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Create new service
+  ** GET :: /service/create
+  */
+
+	}, {
+		key: "createService",
+		value: function createService(param) {
+			var _this8 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				var image = _this8.rewriteImage(param.img);
+				var serviceParam = {
+					srvt_id: param.type,
+					srv_name: param.name,
+					srv_price: param.price,
+					srv_desc: param.desc,
+					srv_img: image
+				};
+				serviceModel.insertService(serviceParam).then(function (service) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Update service data
+  ** PUT :: /service/update
+  */
+
+	}, {
+		key: "updateService",
+		value: function updateService(param) {
+			var _this9 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				var serviceParam = {
+					srv_name: param.name,
+					srv_price: param.price,
+					srv_desc: param.desc,
+					updated_at: _this9.moment(new Date()).format()
+				};
+				serviceModel.updateService(param.id, serviceParam).then(function (service) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Delete service data
+  ** PUT :: /service/delete
+  */
+
+	}, {
+		key: "deleteService",
+		value: function deleteService(param) {
+			var _this10 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				var serviceParam = {
+					deleted_at: _this10.moment(new Date()).format()
+				};
+				serviceModel.updateService(param.id, serviceParam).then(function (service) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return ServiceController;

@@ -19,6 +19,8 @@ var _response = require("../utils/response");
 
 var _build = require("../utils/build");
 
+var _util = require("../utils/util");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29,6 +31,7 @@ var Controller = exports.Controller = function () {
 
 		this.build = new _build.Build();
 		this.moment = _moment2.default;
+		this.rewriteImage = _util.rewriteImage;
 	}
 
 	_createClass(Controller, [{

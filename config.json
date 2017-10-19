@@ -1,6 +1,6 @@
 {
 	"server" : {
-		"host" : "http://localhost",
+		"host" : "http://128.199.227.10:3307/",
 		"port" : 3307
 	},
 	"postgres" : {
