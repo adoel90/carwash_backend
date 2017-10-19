@@ -61,6 +61,17 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Update cafe data ***/
+
+	}, {
+		key: "updateCafe",
+		value: function updateCafe(cf_id, param) {
+			this.db.update("cafe", param);
+			this.db.where("cf_id", cf_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CafeModel;

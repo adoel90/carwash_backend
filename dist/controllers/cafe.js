@@ -105,6 +105,28 @@ var CafeController = exports.CafeController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Update cafe type data
+  ** PUT :: /cafe/type/update
+  */
+
+	}, {
+		key: "updateCafe",
+		value: function updateCafe(param) {
+			return new Promise(function (resolve, reject) {
+				var cafeModel = new _cafe.CafeModel();
+
+				var cafeParam = {
+					cf_name: param.name
+				};
+				cafeModel.updateCafe(param.id, cafeParam).then(function (cafe) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return CafeController;

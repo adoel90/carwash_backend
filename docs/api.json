@@ -11,11 +11,27 @@
 		"token" : true,
 		"parameter" : []
 	},
-	"/cafe/type/list" :{
+	"/cafe/type/create" :{
 		"method" : "post",
 		"description" : "Create new cafe type",
 		"token" : true,
 		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Cafe name"
+		}]
+	},
+	"/cafe/type/update" :{
+		"method" : "put",
+		"description" : "Update new cafe type",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
 			"name" : "name",
 			"type" : "string",
 			"required" : true,
