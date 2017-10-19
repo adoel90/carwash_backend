@@ -14,6 +14,7 @@
 	"/cafe/type/create" :{
 		"method" : "post",
 		"description" : "Create new cafe type",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "name",
@@ -24,7 +25,8 @@
 	},
 	"/cafe/type/update" :{
 		"method" : "put",
-		"description" : "Update new cafe type",
+		"description" : "Update new cafe type data",
+		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -36,6 +38,118 @@
 			"type" : "string",
 			"required" : true,
 			"description" : "Cafe name"
+		}]
+	},
+	"/cafe/type/delete" :{
+		"method" : "put",
+		"description" : "Delete cafe type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		}]
+	},
+	"/cafe/menu" :{
+		"method" : "get",
+		"description" : "Get cafe menu",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		}]
+	},
+	"/cafe/menu/list" :{
+		"method" : "get",
+		"description" : "Get cafe menu list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		}]
+	},
+	"/cafe/menu/create" :{
+		"method" : "post",
+		"description" : "Create new cafe menu",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Menu name"
+		},{
+			"name" : "price",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Menu price"
+		},{
+			"name" : "description",
+			"type" : "string",
+			"required" : false,
+			"description" : "Menu description"
+		}]
+	},
+	"/cafe/menu/update" :{
+		"method" : "put",
+		"description" : "Update cafe menu data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Menu name"
+		},{
+			"name" : "price",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Menu price"
+		},{
+			"name" : "description",
+			"type" : "string",
+			"required" : false,
+			"description" : "Menu description"
+		}]
+	},
+	"/cafe/menu/delete" :{
+		"method" : "put",
+		"description" : "Delete cafe menu data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu ID"
 		}]
 	},
 	"/user/authenticate" :{

@@ -12,9 +12,9 @@ var _templateObject = _taggedTemplateLiteral(["SELECT ", " FROM ", " ", ""], ["S
     _templateObject3 = _taggedTemplateLiteral([" ", ""], [" ", ""]),
     _templateObject4 = _taggedTemplateLiteral([" ", " ", "=", "'"], [" ", " ", "=", "'"]),
     _templateObject5 = _taggedTemplateLiteral(["WHERE ", "=", ""], ["WHERE ", "=", ""]),
-    _templateObject6 = _taggedTemplateLiteral([" ", " ", " is not NULL'"], [" ", " ", " is not NULL'"]),
+    _templateObject6 = _taggedTemplateLiteral([" ", " ", " is not NULL"], [" ", " ", " is not NULL"]),
     _templateObject7 = _taggedTemplateLiteral(["WHERE ", " is not NULL"], ["WHERE ", " is not NULL"]),
-    _templateObject8 = _taggedTemplateLiteral([" ", " ", " is NULL'"], [" ", " ", " is NULL'"]),
+    _templateObject8 = _taggedTemplateLiteral([" ", " ", " is NULL"], [" ", " ", " is NULL"]),
     _templateObject9 = _taggedTemplateLiteral(["WHERE ", " is NULL"], ["WHERE ", " is NULL"]),
     _templateObject10 = _taggedTemplateLiteral(["GROUP BY ", ""], ["GROUP BY ", ""]),
     _templateObject11 = _taggedTemplateLiteral(["ORDER BY ", " ", ""], ["ORDER BY ", " ", ""]),
@@ -107,6 +107,8 @@ var Db = function () {
 	}, {
 		key: "whereNotNull",
 		value: function whereNotNull(field) {
+			var operator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "AND";
+
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject6, operator, field);
 			} else {
@@ -116,6 +118,8 @@ var Db = function () {
 	}, {
 		key: "whereIsNull",
 		value: function whereIsNull(field) {
+			var operator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "AND";
+
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject8, operator, field);
 			} else {

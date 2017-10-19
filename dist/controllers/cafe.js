@@ -11,6 +11,8 @@ var _controller = require("./controller");
 
 var _cafe = require("../models/cafe");
 
+var _menu = require("../models/menu");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -114,13 +116,172 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "updateCafe",
 		value: function updateCafe(param) {
+			var _this4 = this;
+
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
 				var cafeParam = {
-					cf_name: param.name
+					cf_name: param.name,
+					updated_at: _this4.moment(new Date()).format()
 				};
 				cafeModel.updateCafe(param.id, cafeParam).then(function (cafe) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Delete cafe type data
+  ** PUT :: /cafe/type/delete
+  */
+
+	}, {
+		key: "deleteCafe",
+		value: function deleteCafe(param) {
+			var _this5 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cafeModel = new _cafe.CafeModel();
+
+				var cafeParam = {
+					deleted_at: _this5.moment(new Date()).format()
+				};
+				cafeModel.updateCafe(param.id, cafeParam).then(function (cafe) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get cafe menu
+  ** GET :: /cafe/menu
+  */
+
+	}, {
+		key: "cafeMenu",
+		value: function cafeMenu(param) {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				menuModel.getCafeMenu(param.cf_id).then(function (menu) {
+					var result = [];
+					for (var i = 0; i < menu.length; i++) {
+						result.push(_this6.build.menu(menu[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get cafe menu list
+  ** GET :: /cafe/menu/list
+  */
+
+	}, {
+		key: "cafeMenuList",
+		value: function cafeMenuList(param) {
+			var _this7 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				menuModel.getCafeMenuList(param.cf_id, param.limit, param.offset).then(function (menu) {
+					var result = {
+						row: menu[0][0].count,
+						data: []
+					};
+
+					for (var i = 0; i < menu[1].length; i++) {
+						result.data.push(_this7.build.menu(menu[1][i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Create new cafe menu
+  ** POST :: /cafe/menu/create
+  */
+
+	}, {
+		key: "createCafeMenu",
+		value: function createCafeMenu(param) {
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				var menuParam = {
+					cf_id: param.cf_id,
+					mn_name: param.name,
+					mn_price: param.price,
+					mn_desc: param.desc
+				};
+				menuModel.insertCafeMenu(menuParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Update cafe menu data
+  ** PUT :: /cafe/menu/update
+  */
+
+	}, {
+		key: "updateCafeMenu",
+		value: function updateCafeMenu(param) {
+			var _this8 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				var menuParam = {
+					mn_name: param.name,
+					mn_price: param.price,
+					mn_desc: param.desc,
+					updated_at: _this8.moment(new Date()).format()
+				};
+				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Delete cafe menu data
+  ** PUT :: /cafe/menu/delete
+  */
+
+	}, {
+		key: "deleteCafeMenu",
+		value: function deleteCafeMenu(param) {
+			var _this9 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				var menuParam = {
+					deleted_at: _this9.moment(new Date()).format()
+				};
+				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
 				}).catch(function (err) {
 					return reject(err);

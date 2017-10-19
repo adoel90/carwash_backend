@@ -83,6 +83,18 @@ var Build = exports.Build = function () {
 
 			return type;
 		}
+	}, {
+		key: "menu",
+		value: function menu(data) {
+			var menu = {
+				id: data.mn_id,
+				name: data.mn_name,
+				price: data.mn_price,
+				description: data.mn_desc
+			};
+
+			return menu;
+		}
 	}]);
 
 	return Build;
