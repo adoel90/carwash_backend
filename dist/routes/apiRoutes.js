@@ -181,6 +181,39 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.post("/member/authenticate", _auth.verifyToken, function (req, res) {
+				var param = {
+					c_id: req.body.card
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.memberAuthenticate(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/member/topup", _auth.verifyMemberToken, function (req, res) {
+				var param = {
+					id: res.locals.member.id,
+					balance: req.body.balance
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.topupMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Member routes ---*/
 
 			/*--- Start Card routes ---*/
@@ -254,22 +287,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cardController.deleteCardType(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.post("/card/authenticate", _auth.verifyToken, function (req, res) {
-				var param = {
-					c_id: req.body.card
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				memberController.memberAuthenticate(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

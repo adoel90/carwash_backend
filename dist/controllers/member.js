@@ -7,6 +7,8 @@ exports.MemberController = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _token = require("../utils/token");
+
 var _controller = require("./controller");
 
 var _member = require("../models/member");
@@ -165,10 +167,48 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "memberAuthenticate",
 		value: function memberAuthenticate(param) {
+			var _this5 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+				var token = new _token.Token();
+
+				memberModel.getMemberByCardId(param.c_id).then(function (member) {
+					var memberToken = {
+						id: member.m_id,
+						card: member.c_id,
+						expired: _this5.moment(new Date()).add("10", "minutes")
+					};
+
+					var result = {
+						accessToken: token.encode(memberToken),
+						member: _this5.build.member(member)
+					};
+
+					return resolve(result);
+				}).catch(function (err) {
+					if (err.code == 0) {
+						return reject(30);
+					}
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Topup member balance
+  ** POST :: /member/topup
+  */
+
+	}, {
+		key: "topupMember",
+		value: function topupMember(param) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
-				memberModel.getMemberByCardId(param.c_id).then(function (member) {}).catch(function (err) {
+				memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
+					return resolve(true);
+				}).catch(function (err) {
 					return reject(err);
 				});
 			});

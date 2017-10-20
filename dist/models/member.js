@@ -62,6 +62,27 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Get member by c_id ***/
+
+	}, {
+		key: "getMemberByCardId",
+		value: function getMemberByCardId(c_id) {
+			this.db.select("member");
+			this.db.where("c_id", c_id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Increase member balance ***/
+
+	}, {
+		key: "increaseBalance",
+		value: function increaseBalance(c_id, balance) {
+			this.db.setQuery("UPDATE member SET m_balance = m_balance + $1", [balance]);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return MemberModel;

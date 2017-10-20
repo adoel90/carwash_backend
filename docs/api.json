@@ -351,6 +351,18 @@
 			"description" : "Member ID"
 		}]
 	},
+	"/member/topup" :{
+		"method" : "post",
+		"description" : "Topup member balance",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "balance",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Topup balance"
+		}]
+	},
 	"/service" :{
 		"method" : "get",
 		"description" : "Get service data",

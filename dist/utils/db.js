@@ -153,9 +153,10 @@ var Db = function () {
 			}
 		}
 	}, {
-		key: "query",
-		value: function query(_query) {
-			this.query = _query;
+		key: "setQuery",
+		value: function setQuery(query, data) {
+			this.query = query;
+			this.q_data = data;
 		}
 	}, {
 		key: "insert",
@@ -203,14 +204,16 @@ var Db = function () {
 	}, {
 		key: "build_query",
 		value: function build_query() {
-			if (this.q_insert) {
-				this.query = this.q_insert;
-			} else if (this.q_update && this.q_where) {
-				this.query = (0, _util.stringFormat)(_templateObject19, this.q_update, this.q_where);
-			} else if (this.q_delete && this.q_where) {
-				this.query = (0, _util.stringFormat)(_templateObject19, this.q_delete, this.q_where);
-			} else {
-				this.query = (0, _util.stringFormat)(_templateObject20, this.q_select, this.q_join, this.q_where, this.q_group, this.q_order, this.q_limit);
+			if (!this.query) {
+				if (this.q_insert) {
+					this.query = this.q_insert;
+				} else if (this.q_update && this.q_where) {
+					this.query = (0, _util.stringFormat)(_templateObject19, this.q_update, this.q_where);
+				} else if (this.q_delete && this.q_where) {
+					this.query = (0, _util.stringFormat)(_templateObject19, this.q_delete, this.q_where);
+				} else {
+					this.query = (0, _util.stringFormat)(_templateObject20, this.q_select, this.q_join, this.q_where, this.q_group, this.q_order, this.q_limit);
+				}
 			}
 
 			return this.query;
