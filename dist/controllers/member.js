@@ -84,8 +84,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							m_email: param.email,
 							m_address: param.address,
 							m_balance: param.balance,
-							c_id: card.c_id,
-							mt_id: param.card
+							c_id: card.c_id
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
 							return resolve(true);
@@ -153,6 +152,23 @@ var MemberController = exports.MemberController = function (_Controller) {
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
 					return resolve(true);
 				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Authenticate member by card id
+  ** POST :: /member/authenticate
+  */
+
+	}, {
+		key: "memberAuthenticate",
+		value: function memberAuthenticate(param) {
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getMemberByCardId(param.c_id).then(function (member) {}).catch(function (err) {
 					return reject(err);
 				});
 			});

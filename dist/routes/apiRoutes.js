@@ -132,7 +132,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
 					balance: req.body.balance,
-					type: req.body.type,
 					card: req.body.card
 				};
 
@@ -255,6 +254,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cardController.deleteCardType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/card/authenticate", _auth.verifyToken, function (req, res) {
+				var param = {
+					c_id: req.body.card
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.memberAuthenticate(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
