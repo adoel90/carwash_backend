@@ -579,7 +579,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					cf_id: req.query.cafe,
 					limit: req.query.limit ? req.query.limit : 10,
-					offset: req.query.offset ? req.query.offset : 0
+					offset: req.query.offset ? req.query.offset : 0,
+					name: req.query.name ? req.query.name : null
 				};
 
 				if (!_this2.checkParameters(param)) {

@@ -82,6 +82,11 @@
 			"type" : "integer",
 			"required" : false,
 			"description" : "Start of data, default 0"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : false,
+			"description" : "Filter data by menu name"
 		}]
 	},
 	"/cafe/menu/create" :{

@@ -198,7 +198,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
-				menuModel.getCafeMenuList(param.cf_id, param.limit, param.offset).then(function (menu) {
+				menuModel.getCafeMenuList(param.cf_id, param.limit, param.offset, param.name).then(function (menu) {
 					var result = {
 						row: menu[0][0].count,
 						data: []
