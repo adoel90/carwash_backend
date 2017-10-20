@@ -12,10 +12,6 @@ var _bodyParser = require("body-parser");
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _multer = require("multer");
-
-var _multer2 = _interopRequireDefault(_multer);
-
 var _auth = require("./middleware/auth");
 
 var _apiRoutes = require("./routes/apiRoutes");
@@ -36,7 +32,6 @@ app.engine('handlebars', exphbs({ extname: '.hbs' }));
 app.set('view engine', 'handlebars');
 app.set('views', __dirname);
 
-var upload = (0, _multer2.default)();
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true, limit: '50mb', parameterLimit: 1000000 }));
 app.use(function (req, res, next) {

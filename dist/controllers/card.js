@@ -27,7 +27,7 @@ var CardController = exports.CardController = function (_Controller) {
 	}
 
 	/*
- ** Get list of card type
+ ** Get card type
  ** GET :: /card/type
  */
 
@@ -47,6 +47,106 @@ var CardController = exports.CardController = function (_Controller) {
 					}
 
 					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get list of card type
+  ** GET :: /card/type/list
+  */
+
+	}, {
+		key: "cardTypeList",
+		value: function cardTypeList(param) {
+			var _this3 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+
+				cardModel.getCardTypeList(param.limit, param.offset).then(function (card) {
+					var result = {
+						row: card[0][0].count,
+						data: []
+					};
+					for (var i = 0; i < card[1].length; i++) {
+						result.data.push(_this3.build.card(card[1][i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Create new card type
+  ** POST :: /card/type/create
+  */
+
+	}, {
+		key: "createCardType",
+		value: function createCardType(param) {
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+
+				var cardParam = {
+					ct_name: param.name
+				};
+				cardModel.insertCardType(cardParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Update card type data
+  ** PUT :: /card/type/update
+  */
+
+	}, {
+		key: "updateCardType",
+		value: function updateCardType(param) {
+			var _this4 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+
+				var cardParam = {
+					ct_name: param.name,
+					updated_at: _this4.moment(new Date()).format()
+				};
+				cardModel.updateCardType(param.id, cardParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Delete card type data
+  ** PUT :: /card/type/delete
+  */
+
+	}, {
+		key: "deleteCardType",
+		value: function deleteCardType(param) {
+			var _this5 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+
+				var cardParam = {
+					deleted_at: _this5.moment(new Date()).format()
+				};
+				cardModel.updateCardType(param.id, cardParam).then(function (data) {
+					return resolve(true);
 				}).catch(function (err) {
 					return reject(err);
 				});

@@ -87,6 +87,7 @@
 	"/cafe/menu/create" :{
 		"method" : "post",
 		"description" : "Create new cafe menu",
+		"content_type" : "form-data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
@@ -108,6 +109,11 @@
 			"type" : "string",
 			"required" : false,
 			"description" : "Menu description"
+		},{
+			"name" : "image",
+			"type" : "file",
+			"required" : false,
+			"description" : "Menu image"
 		}]
 	},
 	"/cafe/menu/update" :{
@@ -190,6 +196,63 @@
 		"description" : "Get card type",
 		"token" : false,
 		"parameter" : []
+	},
+	"/card/type/list" :{
+		"method" : "get",
+		"description" : "Get list of card type",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		}]
+	},
+	"/card/type/create" :{
+		"method" : "post",
+		"description" : "Create new card type",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Card type name"
+		}]
+	},
+	"/card/type/update" :{
+		"method" : "put",
+		"description" : "Update card type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Card type ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Card type name"
+		}]
+	},
+	"/card/type/delete" :{
+		"method" : "put",
+		"description" : "Delete card type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Card type ID"
+		}]
 	},
 	"/member/list" :{
 		"method" : "get",

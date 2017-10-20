@@ -194,6 +194,72 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/card/type/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.cardTypeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/card/type/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.createCardType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/card/type/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.updateCardType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/card/type/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.deleteCardType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Card routes ---*/
 
 			/*--- Start Service routes ---*/

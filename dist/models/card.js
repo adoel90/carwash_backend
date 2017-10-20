@@ -71,6 +71,42 @@ var CardModel = exports.CardModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+
+		/*** Get card type list ***/
+
+	}, {
+		key: "getCardTypeList",
+		value: function getCardTypeList(limit, offset) {
+			this.db.select("card_type", "count(*)");
+			this.db.push();
+
+			this.db.select("card_type");
+			this.db.limit(limit, offset);
+			this.db.push();
+
+			return this.db.executeMany();
+		}
+
+		/*** Insert card type data ***/
+
+	}, {
+		key: "insertCardType",
+		value: function insertCardType(param) {
+			this.db.insert("card_type", param);
+
+			return this.db.execute();
+		}
+
+		/*** Update card type data ***/
+
+	}, {
+		key: "updateCardType",
+		value: function updateCardType(ct_id, param) {
+			this.db.update("card_type", param);
+			this.db.where("ct_id", ct_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CardModel;
