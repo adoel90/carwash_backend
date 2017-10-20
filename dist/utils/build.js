@@ -123,7 +123,7 @@ var Build = exports.Build = function () {
 				id: data.srv_id,
 				name: data.srv_name,
 				price: data.srv_price,
-				description: data.srv_description,
+				description: data.srv_desc,
 				image: this.checkImage(data.srv_img)
 			};
 
