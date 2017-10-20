@@ -27,7 +27,7 @@ var Build = exports.Build = function () {
 	_createClass(Build, [{
 		key: "checkImage",
 		value: function checkImage(filename) {
-			if (_fs2.default.existsSync("public/" + filename)) {
+			if (_fs2.default.existsSync(__dirname + "/../../public/" + filename)) {
 				return _config2.default.server.host + "public/" + filename;
 			} else {
 				return null;
