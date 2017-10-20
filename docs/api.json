@@ -305,11 +305,6 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Member card type"
-		},{
-			"name" : "type",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Member membership type"
 		}]
 	},
 	"/member/update" :{
