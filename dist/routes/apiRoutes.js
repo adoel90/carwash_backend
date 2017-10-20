@@ -131,7 +131,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					phone: req.body.phone ? req.body.phone : null,
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
-					balance: req.body.balance,
 					card: req.body.card
 				};
 

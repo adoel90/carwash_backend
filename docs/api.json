@@ -327,11 +327,6 @@
 			"required" : false,
 			"description" : "Member address"
 		},{
-			"name" : "balance",
-			"type" : "numeric",
-			"required" : true,
-			"description" : "Member inital balance"
-		},{
 			"name" : "card",
 			"type" : "integer",
 			"required" : true,

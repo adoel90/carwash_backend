@@ -85,7 +85,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							m_phone: param.phone,
 							m_email: param.email,
 							m_address: param.address,
-							m_balance: param.balance,
+							m_balance: parseFloat(card_type.ct_min) + parseFloat(card_type.ct_bonus),
 							c_id: card.c_id
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
