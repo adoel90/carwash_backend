@@ -74,11 +74,11 @@ var CafeController = exports.CafeController = function (_Controller) {
 				cafeModel.getCafeTypeList(param.limit, param.offset).then(function (cafe) {
 					var result = {
 						row: cafe[0][0].count,
-						data: []
+						cafe: []
 					};
 
 					for (var i = 0; i < cafe[1].length; i++) {
-						result.data.push(_this3.build.cafeType(cafe[1][i]));
+						result.cafe.push(_this3.build.cafeType(cafe[1][i]));
 					}
 
 					return resolve(result);
@@ -201,11 +201,11 @@ var CafeController = exports.CafeController = function (_Controller) {
 				menuModel.getCafeMenuList(param.cf_id, param.limit, param.offset, param.name).then(function (menu) {
 					var result = {
 						row: menu[0][0].count,
-						data: []
+						menu: []
 					};
 
 					for (var i = 0; i < menu[1].length; i++) {
-						result.data.push(_this7.build.menu(menu[1][i]));
+						result.menu.push(_this7.build.menu(menu[1][i]));
 					}
 
 					return resolve(result);

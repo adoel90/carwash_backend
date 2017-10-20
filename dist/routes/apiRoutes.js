@@ -246,7 +246,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.post("/card/type/create", _auth.verifyToken, function (req, res) {
 				var param = {
-					name: req.body.name
+					name: req.body.name,
+					min: req.body.minimum,
+					bonus: req.body.bonus
 				};
 
 				if (!_this2.checkParameters(param)) {

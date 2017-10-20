@@ -71,11 +71,11 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 				serviceModel.getServiceTypeList(param.limit, param.offset).then(function (type) {
 					var result = {
 						row: type[0][0].count,
-						data: []
+						type: []
 					};
 
 					for (var i = 0; i < type[1].length; i++) {
-						result.data.push(_this3.build.serviceType(type[1][i]));
+						result.type.push(_this3.build.serviceType(type[1][i]));
 					}
 
 					return resolve(result);
@@ -198,11 +198,11 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 				serviceModel.getServiceList(param.type, param.limit, param.offset).then(function (service) {
 					var result = {
 						row: service[0][0].count,
-						data: []
+						service: []
 					};
 
 					for (var i = 0; i < service[1].length; i++) {
-						result.data.push(_this7.build.service(service[1][i]));
+						result.service.push(_this7.build.service(service[1][i]));
 					}
 
 					return resolve(result);

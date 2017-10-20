@@ -83,11 +83,11 @@ var UserController = exports.UserController = function (_Controller) {
 				userModel.getUserList(param.limit, param.offset).then(function (user) {
 					var result = {
 						row: user[0][0].count,
-						data: []
+						user: []
 					};
 
 					for (var i = 0; i < user[1].length; i++) {
-						result.data.push(_this3.build.user(user[1][i]));
+						result.user.push(_this3.build.user(user[1][i]));
 					}
 
 					return resolve(result);

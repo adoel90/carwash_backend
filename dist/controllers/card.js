@@ -69,10 +69,10 @@ var CardController = exports.CardController = function (_Controller) {
 				cardModel.getCardTypeList(param.limit, param.offset).then(function (card) {
 					var result = {
 						row: card[0][0].count,
-						data: []
+						card: []
 					};
 					for (var i = 0; i < card[1].length; i++) {
-						result.data.push(_this3.build.card(card[1][i]));
+						result.card.push(_this3.build.card(card[1][i]));
 					}
 
 					return resolve(result);
@@ -94,8 +94,11 @@ var CardController = exports.CardController = function (_Controller) {
 				var cardModel = new _card.CardModel();
 
 				var cardParam = {
-					ct_name: param.name
+					ct_name: param.name,
+					ct_min: param.min,
+					ct_bonus: param.bonus
 				};
+
 				cardModel.insertCardType(cardParam).then(function (data) {
 					return resolve(true);
 				}).catch(function (err) {

@@ -47,11 +47,11 @@ var MemberController = exports.MemberController = function (_Controller) {
 				memberModel.getMemberList(param.limit, param.offset).then(function (member) {
 					var result = {
 						row: member[0][0].count,
-						data: []
+						member: []
 					};
 
 					for (var i = 0; i < member[1].length; i++) {
-						result.data.push(_this2.build.member(member[1][i]));
+						result.member.push(_this2.build.member(member[1][i]));
 					}
 
 					return resolve(result);
