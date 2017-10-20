@@ -463,6 +463,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.post("/service/transaction/create", _auth.verifyMemberToken, function (req, res) {
+				var param = {
+					member: res.locals.member.id,
+					service: req.body.service
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.createServiceTransaction(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Service routes ---*/
 
 			/*--- Start Cafe routes ---*/
@@ -625,6 +642,24 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cafeController.deleteCafeMenu(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/cafe/transaction/create", _auth.verifyMemberToken, function (req, res) {
+				var param = {
+					member: res.locals.member.id,
+					menu: req.body.menu,
+					quantity: req.body.quantity
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.createCafeTransaction(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

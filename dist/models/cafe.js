@@ -72,6 +72,16 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Insert cafe transaction ***/
+
+	}, {
+		key: "insertCafeTransaction",
+		value: function insertCafeTransaction(param) {
+			this.db.insert("transaction_cafe", param);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CafeModel;

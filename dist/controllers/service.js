@@ -11,6 +11,8 @@ var _controller = require("./controller");
 
 var _service = require("../models/service");
 
+var _member = require("../models/member");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -284,6 +286,52 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 				};
 				serviceModel.updateService(param.id, serviceParam).then(function (service) {
 					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Create service transaction
+  ** POST ::: /service/transaction/create
+  */
+
+	}, {
+		key: "createServiceTransaction",
+		value: function createServiceTransaction(param) {
+			var _this11 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getMemberById(param.member).then(function (member) {
+					serviceModel.getServiceById(param.service).then(function (service) {
+						if (member.m_balance < service.srv_price) {
+							return reject(31);
+						}
+
+						var transParam = {
+							m_id: param.member,
+							srv_id: service.srv_id,
+							tsrv_date: _this11.moment(new Date()).format(),
+							tsrv_price: service.srv_price
+						};
+						serviceModel.insertServiceTransaction(transParam).then(function (transaction) {
+							memberModel.decreaseBalance(transParam.m_id, transParam.tsrv_price).then(function (balance) {
+								var result = _this11.build.member(member);
+								result.balance -= service.srv_price;
+								return resolve(result);
+							}).catch(function (err) {
+								return reject(err);
+							});
+						}).catch(function (err) {
+							return reject(err);
+						});
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

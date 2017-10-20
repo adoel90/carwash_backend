@@ -158,6 +158,22 @@
 			"description" : "Menu ID"
 		}]
 	},
+	"/cafe/transaction/create" :{
+		"method" : "post",
+		"description" : "Create new cafe transaction",
+		"token" : true,
+		"parameter" : [{
+			"name" : "menu",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu ID"
+		},{
+			"name" : "quantity",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu quantity"
+		}]
+	},
 	"/user/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate user to get access token",
@@ -527,6 +543,18 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Service type ID"
+		}]
+	},
+	"/service/transaction/create" :{
+		"method" : "post",
+		"description" : "Create service transaction",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "service",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
 		}]
 	}
 }

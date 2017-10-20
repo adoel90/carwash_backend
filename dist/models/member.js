@@ -74,12 +74,33 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			return this.db.execute(true);
 		}
 
+		/*** Get member by m_id ***/
+
+	}, {
+		key: "getMemberById",
+		value: function getMemberById(m_id) {
+			this.db.select("member");
+			this.db.where("m_id", m_id);
+
+			return this.db.execute(true);
+		}
+
 		/*** Increase member balance ***/
 
 	}, {
 		key: "increaseBalance",
-		value: function increaseBalance(c_id, balance) {
-			this.db.setQuery("UPDATE member SET m_balance = m_balance + $1", [balance]);
+		value: function increaseBalance(m_id, balance) {
+			this.db.setQuery("UPDATE member SET m_balance = m_balance + $1 where m_id = $2", [balance, m_id]);
+
+			return this.db.execute();
+		}
+
+		/*** Decrease member balance ***/
+
+	}, {
+		key: "decreaseBalance",
+		value: function decreaseBalance(m_id, balance) {
+			this.db.setQuery("UPDATE member SET m_balance = m_balance - $1 where m_id = $2", [balance, m_id]);
 
 			return this.db.execute();
 		}

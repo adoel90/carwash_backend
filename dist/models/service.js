@@ -101,6 +101,17 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 			return this.db.executeMany();
 		}
 
+		/*** Get service data by srv_id ***/
+
+	}, {
+		key: "getServiceById",
+		value: function getServiceById(srv_id) {
+			this.db.select("service");
+			this.db.where("srv_id", srv_id);
+
+			return this.db.execute(true);
+		}
+
 		/*** Insert service data ***/
 
 	}, {
@@ -118,6 +129,16 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		value: function updateService(srv_id, param) {
 			this.db.update("service", param);
 			this.db.where("srv_id", srv_id);
+
+			return this.db.execute();
+		}
+
+		/*** Insert service transaction data ***/
+
+	}, {
+		key: "insertServiceTransaction",
+		value: function insertServiceTransaction(param) {
+			this.db.insert("transaction_service", param);
 
 			return this.db.execute();
 		}

@@ -72,6 +72,12 @@ var Response = function () {
 						error.set("message", "Member doesn't exit or not active");
 						break;
 					}
+				case 31:
+					{
+						error.set("status", 400);
+						error.set("message", "Insufficient member balance");
+						break;
+					}
 
 				// Response server error
 				default:
