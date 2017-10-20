@@ -99,8 +99,8 @@ var Db = function () {
 				this.q_data = {};
 			}
 
-			var v = "$(" + field + ")";
-			this.q_data[field] = value;
+			var v = "$(" + field.replace(".", "_") + ")";
+			this.q_data[field.replace(".", "_")] = value;
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject4, operator, field, v);
 			} else {
@@ -116,8 +116,8 @@ var Db = function () {
 				this.q_data = {};
 			}
 
-			var v = "$(" + field + ")";
-			this.q_data[field] = value;
+			var v = "$(" + field.replace(".", "_") + ")";
+			this.q_data[field.replace(".", "_")] = value;
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject6, operator, field, v);
 			} else {

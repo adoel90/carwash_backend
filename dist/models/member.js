@@ -69,7 +69,8 @@ var MemberModel = exports.MemberModel = function (_Model) {
 		key: "getMemberByCardId",
 		value: function getMemberByCardId(c_id) {
 			this.db.select("member");
-			this.db.where("c_id", c_id);
+			this.db.join("card", "card.c_id = member.c_id");
+			this.db.where("member.c_id", c_id);
 
 			return this.db.execute(true);
 		}

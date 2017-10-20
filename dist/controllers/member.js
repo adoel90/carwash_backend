@@ -177,6 +177,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					var memberToken = {
 						id: member.m_id,
 						card: member.c_id,
+						type: member.ct_id,
 						expired: _this5.moment(new Date()).add("10", "minutes")
 					};
 
@@ -205,9 +206,17 @@ var MemberController = exports.MemberController = function (_Controller) {
 		value: function topupMember(param) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
+				var cardModel = new _card.CardModel();
 
-				memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
-					return resolve(true);
+				param.balance = parseFloat(param.balance);
+				cardModel.getCardTypeById(param.type).then(function (card) {
+					var bonus = parseInt(param.balance / parseFloat(card.ct_min));
+					param.balance += parseFloat(card.ct_bonus * bonus);
+					memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

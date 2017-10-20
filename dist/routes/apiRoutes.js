@@ -200,6 +200,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.post("/member/topup", _auth.verifyMemberToken, function (req, res) {
 				var param = {
 					id: res.locals.member.id,
+					type: res.locals.member.type,
 					balance: req.body.balance
 				};
 
