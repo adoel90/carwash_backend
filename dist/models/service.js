@@ -31,6 +31,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		key: "getServiceType",
 		value: function getServiceType() {
 			this.db.select("service_type");
+			this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}

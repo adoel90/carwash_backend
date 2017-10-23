@@ -122,7 +122,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 
 				var serviceParam = {
 					srvt_name: param.name,
-					update_at: _this4.moment(new Date()).format()
+					updated_at: _this4.moment(new Date()).format()
 				};
 				serviceModel.updateServiceType(param.id, serviceParam).then(function (type) {
 					return resolve(true);
