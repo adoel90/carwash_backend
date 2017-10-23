@@ -26,7 +26,7 @@ var Routes = exports.Routes = function () {
 		_classCallCheck(this, Routes);
 
 		this.form = new _formidable2.default.IncomingForm();
-		this.upload = (0, _multer2.default)({ dest: 'public/' });
+		this.upload = (0, _multer2.default)({ dest: __dirname + '/../../public/' });
 	}
 
 	_createClass(Routes, [{

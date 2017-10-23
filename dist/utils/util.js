@@ -34,7 +34,7 @@ function rewriteImage(data) {
 	var path = data.path;
 	var mime = data.mimetype.split("/");
 	var filename = (0, _moment2.default)(new Date()).format("x") + "." + mime[1];
-	var newPath = "public/" + filename;
+	var newPath = __dirname + "/../../public/" + filename;
 
 	_fs2.default.rename(path, newPath, function (err) {
 		if (err) {
