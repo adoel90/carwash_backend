@@ -214,6 +214,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.put("/member/card/change", _auth.verifyToken, function (req, res) {
+				var param = {
+					member: req.body.member,
+					card: req.body.card
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.changeCard(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Member routes ---*/
 
 			/*--- Start Card routes ---*/

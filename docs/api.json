@@ -377,6 +377,18 @@
 			"description" : "Member ID"
 		}]
 	},
+	"/member/authenticate" :{
+		"method" : "post",
+		"description" : "Authenticate member using card id",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "card",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Member card ID"
+		}]
+	},
 	"/member/topup" :{
 		"method" : "post",
 		"description" : "Topup member balance",
@@ -387,6 +399,23 @@
 			"type" : "numeric",
 			"required" : true,
 			"description" : "Topup balance"
+		}]
+	},
+	"/member/card/change" :{
+		"method" : "put",
+		"description" : "Change member card",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "member",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member ID"
+		},{
+			"name" : "card",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Card type ID"
 		}]
 	},
 	"/service" :{

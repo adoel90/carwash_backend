@@ -222,6 +222,37 @@ var MemberController = exports.MemberController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Change member card
+  ** PUT :: /member/card/change
+  */
+
+	}, {
+		key: "changeCard",
+		value: function changeCard(param) {
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+				var cardModel = new _card.CardModel();
+
+				var cardParam = {
+					c_id: cardModel.generateCardId(param.card),
+					ct_id: param.card
+				};
+				cardModel.insertCard(cardParam).then(function (card) {
+					var memberParam = {
+						c_id: cardParam.c_id
+					};
+					memberModel.updateMember(param.member, memberParam).then(function (member) {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return MemberController;
