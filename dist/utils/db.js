@@ -116,8 +116,8 @@ var Db = function () {
 				this.q_data = {};
 			}
 
-			var v = "$(" + field.replace(".", "_") + ")";
-			this.q_data[field.replace(".", "_")] = value;
+			var v = "$(" + field.replace(".", "_").replace("(", "_").replace(")", "") + ")";
+			this.q_data[field.replace(".", "_").replace("(", "_").replace(")", "")] = value;
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject6, operator, field, v);
 			} else {
@@ -243,9 +243,13 @@ var Db = function () {
 		key: "execute",
 		value: function execute() {
 			var one = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+			var debug = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			this.build_query();
 
+			if (debug) {
+				console.log(this.query, this.q_data);
+			}
 			if (one) {
 				return dbConn.one(this.query, this.q_data);
 			} else {

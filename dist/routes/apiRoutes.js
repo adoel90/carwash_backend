@@ -111,7 +111,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.get("/member/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					limit: req.query.limit ? req.query.limit : 10,
-					offset: req.query.offset ? req.query.offset : 0
+					offset: req.query.offset ? req.query.offset : 0,
+					name: req.query.name ? req.query.name : null
 				};
 
 				if (!_this2.checkParameters(param)) {
