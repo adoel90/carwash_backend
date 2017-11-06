@@ -44,7 +44,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
-				memberModel.getMemberList(param.limit, param.offset).then(function (member) {
+				memberModel.getMemberList(param.limit, param.offset, param.name).then(function (member) {
 					var result = {
 						row: member[0][0].count,
 						member: []

@@ -29,8 +29,11 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 	_createClass(MemberModel, [{
 		key: "getMemberList",
-		value: function getMemberList(limit, offset) {
+		value: function getMemberList(limit, offset, name) {
 			this.db.select("member", "count(*)");
+			if (name) {
+				this.db.whereLike("lower(m_name)", "%" + name.toLowerCase() + "%");
+			}
 			this.db.push();
 
 			this.db.select("member");
