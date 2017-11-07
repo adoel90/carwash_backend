@@ -247,13 +247,17 @@ var Db = function () {
 
 			this.build_query();
 
+			var query = this.query;
+			var data = this.q_data;
+			this.init();
+
 			if (debug) {
-				console.log(this.query, this.q_data);
+				console.log(query, data);
 			}
 			if (one) {
-				return dbConn.one(this.query, this.q_data);
+				return dbConn.one(query, data);
 			} else {
-				return dbConn.any(this.query, this.q_data);
+				return dbConn.any(query, data);
 			}
 		}
 	}, {

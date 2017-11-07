@@ -69,6 +69,8 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "createMember",
 		value: function createMember(param) {
+			var _this3 = this;
+
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
@@ -89,7 +91,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 							c_id: card.c_id
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
-							return resolve(true);
+							memberModel.getMemberById(member.m_id).then(function (m) {
+								member = _this3.build.member(m);
+								return resolve(member);
+							}).catch(function (err) {
+								return reject(err);
+							});
 						}).catch(function (err) {
 							return reject(err);
 						});
@@ -113,7 +120,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "updateMember",
 		value: function updateMember(param) {
-			var _this3 = this;
+			var _this4 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -123,7 +130,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					m_phone: param.phone,
 					m_email: param.email,
 					m_address: param.address,
-					updated_at: _this3.moment(new Date()).format()
+					updated_at: _this4.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -142,13 +149,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "deleteMember",
 		value: function deleteMember(param) {
-			var _this4 = this;
+			var _this5 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
 				var memberParam = {
-					deleted_at: _this4.moment(new Date()).format()
+					deleted_at: _this5.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -167,7 +174,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "memberAuthenticate",
 		value: function memberAuthenticate(param) {
-			var _this5 = this;
+			var _this6 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -178,12 +185,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 						id: member.m_id,
 						card: member.c_id,
 						type: member.ct_id,
-						expired: _this5.moment(new Date()).add("10", "minutes")
+						expired: _this6.moment(new Date()).add("10", "minutes")
 					};
 
 					var result = {
 						accessToken: token.encode(memberToken),
-						member: _this5.build.member(member)
+						member: _this6.build.member(member)
 					};
 
 					return resolve(result);
