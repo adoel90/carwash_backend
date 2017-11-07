@@ -83,6 +83,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 	}, {
 		key: "getMemberById",
 		value: function getMemberById(m_id) {
+			this.db.init();
 			this.db.select("member");
 			this.db.where("m_id", m_id);
 
