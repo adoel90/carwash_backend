@@ -249,7 +249,6 @@ var Db = function () {
 
 			var query = this.query;
 			var data = this.q_data;
-			this.init();
 
 			if (debug) {
 				console.log(query, data);
