@@ -386,7 +386,7 @@
 		"method" : "post",
 		"description" : "Authenticate member using card id",
 		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
+		"token" : false,
 		"parameter" : [{
 			"name" : "card",
 			"type" : "numeric",

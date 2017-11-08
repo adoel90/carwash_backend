@@ -182,7 +182,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/member/authenticate", _auth.verifyToken, function (req, res) {
+			this.app.post("/member/authenticate", function (req, res) {
 				var param = {
 					c_id: req.body.card
 				};
