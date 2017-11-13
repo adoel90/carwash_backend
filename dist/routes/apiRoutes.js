@@ -283,7 +283,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.put("/card/type/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
-					name: req.body.name
+					name: req.body.name,
+					min: req.body.minimum,
+					bonus: req.body.bonus
 				};
 
 				if (!_this2.checkParameters(param)) {

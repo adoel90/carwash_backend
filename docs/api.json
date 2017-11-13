@@ -252,7 +252,7 @@
 		},{
 			"name" : "bonus",
 			"type" : "numeric",
-			"required" : false,
+			"required" : true,
 			"description" : "Card topup bonus value"
 		}]
 	},
@@ -271,6 +271,16 @@
 			"type" : "string",
 			"required" : true,
 			"description" : "Card type name"
+		},{
+			"name" : "minimun",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Card minimun topup value"
+		},{
+			"name" : "bonus",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Card topup bonus value"
 		}]
 	},
 	"/card/type/delete" :{
