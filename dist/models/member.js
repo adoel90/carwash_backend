@@ -87,6 +87,8 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			this.db.init();
 			this.db.select("member");
 			this.db.where("m_id", m_id);
+			this.db.join("card", "card.c_id = member.c_id");
+			this.db.join("card_type", "card_type.ct_id = card.ct_id");
 
 			return this.db.execute(true);
 		}
