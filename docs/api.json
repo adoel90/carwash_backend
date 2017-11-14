@@ -295,6 +295,17 @@
 			"description" : "Card type ID"
 		}]
 	},
+	"/member" :{
+		"method" : "get",
+		"description" : "Get members",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : false,
+			"description" : "Filter data by member name"
+		}]
+	},
 	"/member/list" :{
 		"method" : "get",
 		"description" : "Get members list",

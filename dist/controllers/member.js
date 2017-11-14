@@ -32,14 +32,41 @@ var MemberController = exports.MemberController = function (_Controller) {
 
 	/*
  ** Get member list
- ** GET :: /member/list
+ ** GET :: /member
  */
 
 
 	_createClass(MemberController, [{
+		key: "memberAll",
+		value: function memberAll(param) {
+			var _this2 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getMember(param.name).then(function (member) {
+					var result = [];
+
+					for (var i = 0; i < member.length; i++) {
+						result.push(_this2.build.member(member[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get member list
+  ** GET :: /member/list
+  */
+
+	}, {
 		key: "memberList",
 		value: function memberList(param) {
-			var _this2 = this;
+			var _this3 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -51,7 +78,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					};
 
 					for (var i = 0; i < member[1].length; i++) {
-						result.member.push(_this2.build.member(member[1][i]));
+						result.member.push(_this3.build.member(member[1][i]));
 					}
 
 					return resolve(result);
@@ -69,7 +96,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "createMember",
 		value: function createMember(param) {
-			var _this3 = this;
+			var _this4 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -92,7 +119,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
 							memberModel.getMemberById(member.m_id).then(function (m) {
-								member = _this3.build.member(m);
+								member = _this4.build.member(m);
 								return resolve(member);
 							}).catch(function (err) {
 								return reject(err);
@@ -120,7 +147,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "updateMember",
 		value: function updateMember(param) {
-			var _this4 = this;
+			var _this5 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -130,7 +157,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					m_phone: param.phone,
 					m_email: param.email,
 					m_address: param.address,
-					updated_at: _this4.moment(new Date()).format()
+					updated_at: _this5.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -149,13 +176,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "deleteMember",
 		value: function deleteMember(param) {
-			var _this5 = this;
+			var _this6 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
 				var memberParam = {
-					deleted_at: _this5.moment(new Date()).format()
+					deleted_at: _this6.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -174,7 +201,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "memberAuthenticate",
 		value: function memberAuthenticate(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -185,12 +212,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 						id: member.m_id,
 						card: member.c_id,
 						type: member.ct_id,
-						expired: _this6.moment(new Date()).add("10", "minutes")
+						expired: _this7.moment(new Date()).add("10", "minutes")
 					};
 
 					var result = {
 						accessToken: token.encode(memberToken),
-						member: _this6.build.member(member)
+						member: _this7.build.member(member)
 					};
 
 					return resolve(result);
