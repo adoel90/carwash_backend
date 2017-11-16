@@ -78,7 +78,9 @@ var Build = exports.Build = function () {
 		value: function card(data) {
 			var card = {
 				id: data.ct_id,
-				name: data.ct_name
+				name: data.ct_name,
+				min: data.ct_min,
+				bonus: data.ct_bonus
 			};
 
 			return card;
