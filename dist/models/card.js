@@ -56,7 +56,9 @@ var CardModel = exports.CardModel = function (_Model) {
 	}, {
 		key: "getCardType",
 		value: function getCardType() {
+			this.db.init();
 			this.db.select("card_type");
+			this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}
@@ -66,6 +68,7 @@ var CardModel = exports.CardModel = function (_Model) {
 	}, {
 		key: "getCardTypeById",
 		value: function getCardTypeById(ct_id) {
+			this.db.init();
 			this.db.select("card_type");
 			this.db.where("ct_id", ct_id);
 
@@ -77,7 +80,9 @@ var CardModel = exports.CardModel = function (_Model) {
 	}, {
 		key: "getCardTypeList",
 		value: function getCardTypeList(limit, offset) {
+			this.db.init();
 			this.db.select("card_type", "count(*)");
+			this.db.whereIsNull("deleted_at");
 			this.db.push();
 
 			this.db.select("card_type");

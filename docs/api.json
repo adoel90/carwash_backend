@@ -245,10 +245,10 @@
 			"required" : true,
 			"description" : "Card type name"
 		},{
-			"name" : "minimun",
+			"name" : "minimum",
 			"type" : "numeric",
 			"required" : true,
-			"description" : "Card minimun topup value"
+			"description" : "Card minimum topup value"
 		},{
 			"name" : "bonus",
 			"type" : "numeric",
