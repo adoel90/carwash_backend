@@ -310,25 +310,42 @@ var CafeController = exports.CafeController = function (_Controller) {
 				var menuModel = new _menu.MenuModel();
 				var memberModel = new _member.MemberModel();
 
+				var findMenu = [];
+				for (var i = 0; i < param.menu.length; i++) {
+					findMenu.push(param.menu[i].id);
+				}
+
 				memberModel.getMemberById(param.member).then(function (member) {
-					menuModel.getMenuById(param.menu).then(function (menu) {
-						if (member.m_balance < menu.mn_price) {
-							return reject(31);
+					var balance = member.m_balance;
+					var total = 0;
+					menuModel.findMenuById(findMenu).then(function (menu) {
+						for (var _i = 0; _i < menu.length; _i++) {
+							for (var j = 0; j < param.menu.length; j++) {
+								if (param.menu[j].id == menu[_i].mn_id) {
+									total += menu[_i].mn_price * param.menu[j].quantity;
+									if (balance - total < 0) {
+										return reject(31);
+									}
+
+									param.menu[j].price = menu[_i].mn_price;
+								}
+							}
 						}
 
 						var transParam = {
 							m_id: member.m_id,
-							mn_id: menu.mn_id,
-							tc_quantity: param.quantity,
-							tc_price: menu.mn_price
+							tc_total: total
 						};
-						var total = transParam.tc_quantity * transParam.tc_price;
 						cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
-							memberModel.decreaseBalance(transParam.m_id, total).then(function () {
-								var result = _this11.build.member(member);
-								result.balance -= total;
+							cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
+								memberModel.decreaseBalance(transParam.m_id, total).then(function () {
+									var result = _this11.build.member(member);
+									result.balance -= total;
 
-								return resolve(result);
+									return resolve(result);
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
@@ -341,6 +358,36 @@ var CafeController = exports.CafeController = function (_Controller) {
 				}).catch(function (err) {
 					return reject(err);
 				});
+				/*memberModel.getMemberById(param.member).then((member) => {
+    	menuModel.getMenuById(param.menu).then((menu) => {
+    		if(member.m_balance < menu.mn_price){
+    			return reject(31);
+    		}
+    		
+    		let transParam = {
+    			m_id : member.m_id,
+    			mn_id : menu.mn_id,
+    			tc_quantity : param.quantity,
+    			tc_price : menu.mn_price
+    		}
+    		let total = (transParam.tc_quantity * transParam.tc_price);
+    		cafeModel.insertCafeTransaction(transParam).then((transaction) => {
+    			memberModel.decreaseBalance(transParam.m_id, total).then(() => {
+    				let result = this.build.member(member);
+    				result.balance -= total;
+    					return resolve(result);
+    			}).catch((err) => {
+    				return reject(err);
+    			});
+    		}).catch((err) => {
+    			return reject(err);
+    		});
+    	}).catch((err) => {
+    		return reject(err);
+    	});
+    }).catch((err) => {
+    	return reject(err);
+    });*/
 			});
 		}
 	}]);

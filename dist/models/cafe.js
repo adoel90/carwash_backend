@@ -78,9 +78,29 @@ var CafeModel = exports.CafeModel = function (_Model) {
 	}, {
 		key: "insertCafeTransaction",
 		value: function insertCafeTransaction(param) {
-			this.db.insert("transaction_cafe", param);
+			this.db.insert("transaction_cafe", param, "tc_id");
 
-			return this.db.execute();
+			return this.db.execute(true);
+		}
+
+		/*** Insert cafe transaction menu ***/
+
+	}, {
+		key: "insertCafeTransactionMenu",
+		value: function insertCafeTransactionMenu(tc_id, menu) {
+			this.db.init();
+			for (var i = 0; i < menu.length; i++) {
+				var param = {
+					tc_id: tc_id,
+					mn_id: menu[i].id,
+					tcm_quantity: menu[i].quantity,
+					tcm_price: menu[i].price
+				};
+				this.db.insert("transaction_cafe_menu", param);
+				this.db.push(true);
+			}
+
+			return this.db.executeMany();
 		}
 	}]);
 

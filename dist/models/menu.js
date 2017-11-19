@@ -88,6 +88,19 @@ var MenuModel = exports.MenuModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+
+		/*** Find menu by many mn_id ***/
+
+	}, {
+		key: "findMenuById",
+		value: function findMenuById(mn_id) {
+			console.log(mn_id);
+			this.db.init();
+			this.db.select("menu");
+			this.db.whereAny("mn_id", mn_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return MenuModel;

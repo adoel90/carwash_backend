@@ -147,6 +147,22 @@ var Db = function () {
 			}
 		}
 	}, {
+		key: "whereAny",
+		value: function whereAny(field, value) {
+			var operator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "AND";
+
+			if (!this.q_data) {
+				this.q_data = {};
+			}
+
+			var v = "any(array" + JSON.stringify(value).replace(/"/g, "'") + ")";
+			if (this.q_where) {
+				this.q_where += (0, _util.stringFormat)(_templateObject4, operator, field, v);
+			} else {
+				this.q_where = (0, _util.stringFormat)(_templateObject5, field, v);
+			}
+		}
+	}, {
 		key: "group",
 		value: function group(by) {
 			this.q_group = (0, _util.stringFormat)(_templateObject12, by);
@@ -220,7 +236,12 @@ var Db = function () {
 	}, {
 		key: "push",
 		value: function push() {
+			var flush = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
 			this.q_batch.push(this.execute());
+			if (flush) {
+				this.q_data = {};
+			}
 		}
 	}, {
 		key: "build_query",
