@@ -31,7 +31,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
 		key: "getCafeType",
 		value: function getCafeType() {
 			this.db.select("cafe");
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}
@@ -42,7 +42,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
 		key: "getCafeTypeList",
 		value: function getCafeTypeList(limit, offset) {
 			this.db.select("cafe", "count(*)");
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 			this.db.push();
 
 			this.db.select("cafe");

@@ -30,7 +30,7 @@ var UserModel = exports.UserModel = function (_Model) {
 			this.db.select("users");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
 			this.db.where("u_username", username);
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute(true);
 		}
@@ -39,7 +39,7 @@ var UserModel = exports.UserModel = function (_Model) {
 		value: function getUserList(limit, offset) {
 			this.db.select("users", "count(*)");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");		
 			this.db.push();
 
 			this.db.select("users");

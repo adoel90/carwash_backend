@@ -43,6 +43,10 @@ var Build = exports.Build = function () {
 				email: data.u_email
 			};
 
+			if (data.deleted_at) {
+				user.deleted = true;
+			}
+
 			if (data.ul_name) {
 				user.level = {
 					id: data.ul_id,
@@ -83,6 +87,10 @@ var Build = exports.Build = function () {
 				bonus: data.ct_bonus
 			};
 
+			if (data.deleted_at) {
+				card.deleted = true;
+			}
+
 			return card;
 		}
 	}, {
@@ -102,6 +110,10 @@ var Build = exports.Build = function () {
 				id: data.cf_id,
 				name: data.cf_name
 			};
+
+			if (data.deleted_at) {
+				type.deleted = true;
+			}
 
 			return type;
 		}
