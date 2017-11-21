@@ -440,6 +440,27 @@
 			"description" : "Card type ID"
 		}]
 	},
+	"/report/cafe/transaction" :{
+		"method" : "get",
+		"description" : "Get report cafe transaction",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		},{
+			"name" : "cafe",
+			"type" : "string",
+			"required" : false,
+			"description" : "Filter data by cafe ID"
+		}]
+	},
 	"/service" :{
 		"method" : "get",
 		"description" : "Get service data",

@@ -31,6 +31,8 @@ var _service = require("../controllers/service");
 
 var _cafe = require("../controllers/cafe");
 
+var _report = require("../controllers/report");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -62,6 +64,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var cardController = new _card.CardController();
 			var serviceController = new _service.ServiceController();
 			var cafeController = new _cafe.CafeController();
+			var reportController = new _report.ReportController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -705,6 +708,26 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 
 			/*--- End Service routes ---*/
+
+			/*--- Start Report routes ---*/
+			this.app.get("/report/cafe/transaction", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0,
+					cafe: req.query.cafe ? req.query.cafe : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.cafeTransactionReport(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Report routes ---*/
 
 			return this.app;
 		}

@@ -131,6 +131,17 @@ var Build = exports.Build = function () {
 
 			return service;
 		}
+	}, {
+		key: "transactionCafe",
+		value: function transactionCafe(data) {
+			var transaction = {
+				id: data.tc_id,
+				date: data.tc_date,
+				member: this.member(data)
+			};
+
+			return transaction;
+		}
 	}]);
 
 	return Build;
