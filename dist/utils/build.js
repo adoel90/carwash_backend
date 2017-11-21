@@ -142,6 +142,17 @@ var Build = exports.Build = function () {
 
 			return transaction;
 		}
+	}, {
+		key: "transactionService",
+		value: function transactionService(data) {
+			var transaction = {
+				id: data.tsrv_id,
+				date: data.tsrv_date,
+				member: this.member(data)
+			};
+
+			return transaction;
+		}
 	}]);
 
 	return Build;

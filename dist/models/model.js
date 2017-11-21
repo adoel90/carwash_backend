@@ -20,5 +20,6 @@ var Model = exports.Model = function Model() {
 
 	this.db = new _db.Db();
 	this.db.init();
+	this.db.initBatch();
 	this.moment = _moment2.default;
 };

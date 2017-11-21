@@ -107,13 +107,14 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 	}, {
 		key: "getCafeTransactionReport",
-		value: function getCafeTransactionReport(limit, offset, cafe) {
+		value: function getCafeTransactionReport(limit, offset, start, end, cafe) {
 			this.db.init();
 			this.db.select("transaction_cafe", "count(*)");
 			this.db.join("transaction_cafe_menu", "transaction_cafe_menu.tc_id = transaction_cafe.tc_id");
 			this.db.join("menu", "menu.mn_id = transaction_cafe_menu.mn_id");
 			this.db.join("cafe", "cafe.cf_id = menu.cf_id");
 			this.db.join("member", "member.m_id = transaction_cafe.m_id");
+			this.db.whereBetween("date(tc_date)", start, end);
 			if (cafe) {
 				this.db.where("cafe.cf_id", cafe);
 			}

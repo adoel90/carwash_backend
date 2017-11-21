@@ -455,10 +455,51 @@
 			"required" : false,
 			"description" : "Start of data, default 0"
 		},{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "End date"
+		},{
 			"name" : "cafe",
 			"type" : "string",
 			"required" : false,
 			"description" : "Filter data by cafe ID"
+		}]
+	},
+	"/report/service/transaction" :{
+		"method" : "get",
+		"description" : "Get report service transaction",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		},{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "End date"
+		},{
+			"name" : "service",
+			"type" : "string",
+			"required" : false,
+			"description" : "Filter data by service ID"
 		}]
 	},
 	"/service" :{

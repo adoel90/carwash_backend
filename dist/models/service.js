@@ -52,6 +52,30 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 			return this.db.executeMany();
 		}
 
+		/*** Get service transaction report data ***/
+
+	}, {
+		key: "getServiceTransactionReport",
+		value: function getServiceTransactionReport(limit, offset, start, end, service) {
+			this.db.init();
+			this.db.select("transaction_service", "count(*)");
+			this.db.join("member", "transaction_service.m_id = member.m_id");
+			this.db.join("service", "service.srv_id = transaction_service.tsrv_id");
+			this.db.join("service_type", "service_type.srvt_id = service.srvt_id");
+			this.db.whereBetween("date(tsrv_date)", start, end);
+			if (service) {
+				this.db.where("service.srvt_id", service);
+			}
+			this.db.push();
+
+			this.db.select("transaction_service");
+			this.db.order("tsrv_date");
+			this.db.limit(limit, offset);
+			this.db.push();
+
+			return this.db.executeMany();
+		}
+
 		/*** Insert service type data ***/
 
 	}, {

@@ -11,6 +11,8 @@ var _controller = require("./controller");
 
 var _cafe = require("../models/cafe");
 
+var _service = require("../models/service");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -40,7 +42,7 @@ var ReportController = exports.ReportController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var cafeModel = new _cafe.CafeModel();
 
-                cafeModel.getCafeTransactionReport(param.limit, param.offset, param.cafe).then(function (transaction) {
+                cafeModel.getCafeTransactionReport(param.limit, param.offset, param.start_date, param.end_date, param.cafe).then(function (transaction) {
                     var result = {
                         row: transaction[0][0].count,
                         transaction: []
@@ -60,6 +62,39 @@ var ReportController = exports.ReportController = function (_Controller) {
                     return resolve(result);
                 }).catch(function (err) {
                     return reject(err);
+                });
+            });
+        }
+
+        /* 
+        ** Get report service transaction
+        ** GET :: /report/service/transaction
+        */
+
+    }, {
+        key: "serviceTransactionReport",
+        value: function serviceTransactionReport(param) {
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+                var serviceModel = new _service.ServiceModel();
+
+                serviceModel.getServiceTransactionReport(param.limit, param.offset, param.start_date, param.end_date, param.service).then(function (transaction) {
+                    var result = {
+                        row: transaction[0][0].count,
+                        transaction: []
+                    };
+
+                    for (var i = 0; i < transaction[1].length; i++) {
+                        var trans = _this3.build.transactionService(transaction[1][i]);
+                        trans.service = _this3.build.service(transaction[1][i]);
+                        trans.type = _this3.build.serviceType(transaction[1][i]);
+                        result.transaction.push(trans);
+                    }
+
+                    return resolve(result);
+                }).catch(function (err) {
+                    return _this3.error(res, err);
                 });
             });
         }
