@@ -502,6 +502,38 @@
 			"description" : "Filter data by service ID"
 		}]
 	},
+	"/report/summary/cafe" :{
+		"method" : "get",
+		"description" : "Get report summary cafe transaction",
+		"token" : true,
+		"parameter" : [{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		}]
+	},
+	"/report/summary/service" :{
+		"method" : "get",
+		"description" : "Get report summary service transaction",
+		"token" : true,
+		"parameter" : [,{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		}]
+	},
 	"/service" :{
 		"method" : "get",
 		"description" : "Get service data",

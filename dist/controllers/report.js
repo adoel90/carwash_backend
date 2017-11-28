@@ -118,15 +118,24 @@ var ReportController = exports.ReportController = function (_Controller) {
                     };
 
                     for (var i = 0; i < cafe.length; i++) {
-                        cf[cafe[i].cf_name] = {
+                        cf[cafe[i].cf_id] = {
                             name: cafe[i].cf_name,
                             total: 0
                         };
                     }
-
+                    "";
                     cafeModel.getCafeTransactionSummary(param.start_date, param.end_date).then(function (transaction) {
-                        console.log(transaction);
-                        var result = transaction;
+                        var result = {};
+                        for (var _i = 0; _i < transaction.length; _i++) {
+                            cf[transaction[_i].cf_id].total = transaction[_i].sum;
+                            cf[0].total += parseFloat(transaction[_i].sum);
+                        }
+
+                        for (var _i2 in cf) {
+                            result[cf[_i2].name] = {
+                                total: cf[_i2].total
+                            };
+                        }
                         return resolve(result);
                     }).catch(function (err) {
                         return reject(err);
@@ -134,10 +143,53 @@ var ReportController = exports.ReportController = function (_Controller) {
                 }).catch(function (err) {
                     return reject(err);
                 });
-                /* cafeModel.getCafeTransactionSummary(param.start_date, param.end_date).then((transaction) => {
-                 }).catch((err) => {
+            });
+        }
+
+        /*
+        ** Get report summary services
+        ** GET :: /report/summary/service
+        */
+
+    }, {
+        key: "serviceSummaryReport",
+        value: function serviceSummaryReport(param) {
+            return new Promise(function (resolve, reject) {
+                var serviceModel = new _service.ServiceModel();
+
+                serviceModel.getServiceType().then(function (type) {
+                    var srv = {};
+                    srv[0] = {
+                        name: "Overall",
+                        total: 0
+                    };
+                    for (var i = 0; i < type.length; i++) {
+                        srv[type[i].srvt_id] = {
+                            name: type[i].srvt_name,
+                            total: 0
+                        };
+                    }
+
+                    serviceModel.getServiceTransactionSummary(param.start_date, param.end_date).then(function (transaction) {
+                        var result = {};
+                        for (var _i3 = 0; _i3 < transaction.length; _i3++) {
+                            srv[transaction[_i3].srvt_id].total = transaction[_i3].sum;
+                            srv[0].total += parseFloat(transaction[_i3].sum);
+                        }
+
+                        for (var _i4 in srv) {
+                            result[srv[_i4].name] = {
+                                total: srv[_i4].total
+                            };
+                        }
+
+                        return resolve(result);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
                     return reject(err);
-                }); */
+                });
             });
         }
     }]);

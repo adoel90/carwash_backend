@@ -762,6 +762,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/report/summary/service", _auth.verifyToken, function (req, res) {
+				var param = {
+					start_date: req.query.start_date,
+					end_date: req.query.end_date
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.serviceSummaryReport(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Report routes ---*/
 
 			return this.app;

@@ -167,6 +167,21 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Get summary transaction services ***/
+
+	}, {
+		key: "getServiceTransactionSummary",
+		value: function getServiceTransactionSummary(start, end) {
+			this.db.init();
+			this.db.select("transaction_service", "service_type.srvt_id, sum(tsrv_price)");
+			this.db.join("service", "service.srv_id = transaction_service.srv_id");
+			this.db.join("service_type", "service_type.srvt_id = service.srvt_id");
+			this.db.whereBetween("date(tsrv_date)", start, end);
+			this.db.group("service_type.srvt_id");
+
+			return this.db.execute();
+		}
 	}]);
 
 	return ServiceModel;

@@ -132,11 +132,11 @@ var CafeModel = exports.CafeModel = function (_Model) {
 		key: "getCafeTransactionSummary",
 		value: function getCafeTransactionSummary(start, end) {
 			this.db.init();
-			this.db.select("transaction_cafe", "sum(tcm_quantity * tcm_price)");
+			this.db.select("transaction_cafe", "cf_id, sum(tcm_quantity * tcm_price)");
 			this.db.join("transaction_cafe_menu", "transaction_cafe_menu.tc_id = transaction_cafe.tc_id");
 			this.db.join("menu", "menu.mn_id = transaction_cafe_menu.mn_id");
 			this.db.whereBetween("date(tc_date)", start, end);
-			this.db.group("menu.mn_id");
+			this.db.group("cf_id");
 
 			return this.db.execute();
 		}
