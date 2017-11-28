@@ -247,7 +247,11 @@ var MemberController = exports.MemberController = function (_Controller) {
 					var bonus = parseInt(param.balance / parseFloat(card.ct_min));
 					param.balance += parseFloat(card.ct_bonus * bonus);
 					memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
-						return resolve(true);
+						memberModel.getMemberById(param.id).then(function (member) {
+							return resolve(true);
+						}).catch(function (err) {
+							return reject(err);
+						});
 					}).catch(function (err) {
 						return reject(err);
 					});
