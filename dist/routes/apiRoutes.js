@@ -710,7 +710,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Service routes ---*/
 
 			/*--- Start Report routes ---*/
-			this.app.get("/report/cafe/transaction", _auth.verifyToken, function (req, res) {
+			this.app.get("/report/transaction/cafe", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
@@ -728,7 +728,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/report/service/transaction", _auth.verifyToken, function (req, res) {
+			this.app.get("/report/transaction/service", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
