@@ -440,7 +440,7 @@
 			"description" : "Card type ID"
 		}]
 	},
-	"/report/cafe/transaction" :{
+	"/report/transaction/cafe" :{
 		"method" : "get",
 		"description" : "Get report cafe transaction",
 		"token" : true,
@@ -471,7 +471,7 @@
 			"description" : "Filter data by cafe ID"
 		}]
 	},
-	"/report/service/transaction" :{
+	"/report/transaction/service" :{
 		"method" : "get",
 		"description" : "Get report service transaction",
 		"token" : true,
