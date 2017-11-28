@@ -64,6 +64,7 @@ var Db = function () {
 			this.q_insert = null;
 			this.q_update = null;
 			this.q_delete = null;
+			this.q_data = {};
 			this.execQuery = false;
 		}
 	}, {

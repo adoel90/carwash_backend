@@ -56,7 +56,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 
 	}, {
 		key: "getServiceTransactionReport",
-		value: function getServiceTransactionReport(limit, offset, start, end, service) {
+		value: function getServiceTransactionReport(start, end, service) {
 			this.db.init();
 			this.db.select("transaction_service", "count(*)");
 			this.db.join("member", "transaction_service.m_id = member.m_id");

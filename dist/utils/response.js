@@ -78,6 +78,12 @@ var Response = function () {
 						error.set("message", "Insufficient member balance");
 						break;
 					}
+				case 32:
+					{
+						error.set("status", 400);
+						error.set("message", "Topup balance below topup minimum");
+						break;
+					}
 
 				// Response server error
 				default:

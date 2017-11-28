@@ -107,7 +107,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 	}, {
 		key: "getCafeTransactionReport",
-		value: function getCafeTransactionReport(limit, offset, start, end, cafe) {
+		value: function getCafeTransactionReport(start, end, cafe) {
 			this.db.init();
 			this.db.select("transaction_cafe", "count(*)");
 			this.db.join("transaction_cafe_menu", "transaction_cafe_menu.tc_id = transaction_cafe.tc_id");
@@ -121,10 +121,24 @@ var CafeModel = exports.CafeModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("transaction_cafe");
-			this.db.limit(limit, offset);
 			this.db.push();
 
 			return this.db.executeMany();
+		}
+
+		/*** Get cafe transaction summary ***/
+
+	}, {
+		key: "getCafeTransactionSummary",
+		value: function getCafeTransactionSummary(start, end) {
+			this.db.init();
+			this.db.select("transaction_cafe", "sum(tcm_quantity * tcm_price)");
+			this.db.join("transaction_cafe_menu", "transaction_cafe_menu.tc_id = transaction_cafe.tc_id");
+			this.db.join("menu", "menu.mn_id = transaction_cafe_menu.mn_id");
+			this.db.whereBetween("date(tc_date)", start, end);
+			this.db.group("menu.mn_id");
+
+			return this.db.execute();
 		}
 	}]);
 

@@ -42,7 +42,7 @@ var ReportController = exports.ReportController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var cafeModel = new _cafe.CafeModel();
 
-                cafeModel.getCafeTransactionReport(param.limit, param.offset, param.start_date, param.end_date, param.cafe).then(function (transaction) {
+                cafeModel.getCafeTransactionReport(param.start_date, param.end_date, param.cafe).then(function (transaction) {
                     var result = {
                         row: transaction[0][0].count,
                         transaction: []
@@ -79,7 +79,7 @@ var ReportController = exports.ReportController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var serviceModel = new _service.ServiceModel();
 
-                serviceModel.getServiceTransactionReport(param.limit, param.offset, param.start_date, param.end_date, param.service).then(function (transaction) {
+                serviceModel.getServiceTransactionReport(param.start_date, param.end_date, param.service).then(function (transaction) {
                     var result = {
                         row: transaction[0][0].count,
                         transaction: []
@@ -96,6 +96,48 @@ var ReportController = exports.ReportController = function (_Controller) {
                 }).catch(function (err) {
                     return _this3.error(res, err);
                 });
+            });
+        }
+
+        /*
+        ** Get report summary cafe
+        ** GET :: /report/summary/cafe
+        */
+
+    }, {
+        key: "cafeSummaryReport",
+        value: function cafeSummaryReport(param) {
+            return new Promise(function (resolve, reject) {
+                var cafeModel = new _cafe.CafeModel();
+
+                cafeModel.getCafeType().then(function (cafe) {
+                    var cf = {};
+                    cf[0] = {
+                        name: "Overall",
+                        total: 0
+                    };
+
+                    for (var i = 0; i < cafe.length; i++) {
+                        cf[cafe[i].cf_name] = {
+                            name: cafe[i].cf_name,
+                            total: 0
+                        };
+                    }
+
+                    cafeModel.getCafeTransactionSummary(param.start_date, param.end_date).then(function (transaction) {
+                        console.log(transaction);
+                        var result = transaction;
+                        return resolve(result);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    return reject(err);
+                });
+                /* cafeModel.getCafeTransactionSummary(param.start_date, param.end_date).then((transaction) => {
+                 }).catch((err) => {
+                    return reject(err);
+                }); */
             });
         }
     }]);

@@ -712,8 +712,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- Start Report routes ---*/
 			this.app.get("/report/cafe/transaction", _auth.verifyToken, function (req, res) {
 				var param = {
-					limit: req.query.limit ? req.query.limit : 10,
-					offset: req.query.offset ? req.query.offset : 0,
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
 					cafe: req.query.cafe ? req.query.cafe : null
@@ -732,8 +730,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.get("/report/service/transaction", _auth.verifyToken, function (req, res) {
 				var param = {
-					limit: req.query.limit ? req.query.limit : 10,
-					offset: req.query.offset ? req.query.offset : 0,
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
 					service: req.query.service ? req.query.service : null
@@ -744,6 +740,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				reportController.serviceTransactionReport(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/report/summary/cafe", _auth.verifyToken, function (req, res) {
+				var param = {
+					start_date: req.query.start_date,
+					end_date: req.query.end_date
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.cafeSummaryReport(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

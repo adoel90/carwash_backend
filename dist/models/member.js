@@ -112,6 +112,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 	}, {
 		key: "increaseBalance",
 		value: function increaseBalance(m_id, balance) {
+			this.db.init();
 			this.db.setQuery("UPDATE member SET m_balance = m_balance + $1 where m_id = $2", [balance, m_id]);
 
 			return this.db.execute();
