@@ -522,7 +522,7 @@
 		"method" : "get",
 		"description" : "Get report summary service transaction",
 		"token" : true,
-		"parameter" : [,{
+		"parameter" : [{
 			"name" : "start_date",
 			"type" : "date",
 			"required" : true,
