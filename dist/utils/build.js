@@ -84,11 +84,12 @@ var Build = exports.Build = function () {
 				id: data.ct_id,
 				name: data.ct_name,
 				min: data.ct_min,
-				bonus: data.ct_bonus
+				bonus: data.ct_bonus,
+				status: true
 			};
 
 			if (data.deleted_at) {
-				card.deleted = true;
+				card.status = false;
 			}
 
 			return card;
