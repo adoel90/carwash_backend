@@ -174,7 +174,7 @@ var CardController = exports.CardController = function (_Controller) {
 				var cardModel = new _card.CardModel();
 
 				var cardParam = {
-					deleted_at: param.status ? null : _this6.moment(new Date()).format()
+					deleted_at: param.status == "true" ? null : _this6.moment(new Date()).format()
 				};
 				cardModel.updateCardType(param.id, cardParam).then(function (data) {
 					return resolve(true);
