@@ -338,8 +338,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.put("/card/type/status", _auth.verifyToken, function (req, res) {
 				var param = {
-					id: req.body.id,
-					status: req.body.status
+					id: req.body.id
 				};
 
 				if (!_this2.checkParameters(param)) {

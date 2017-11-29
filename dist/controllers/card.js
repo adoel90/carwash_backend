@@ -11,6 +11,8 @@ var _controller = require("./controller");
 
 var _card = require("../models/card");
 
+var _os = require("os");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -173,11 +175,15 @@ var CardController = exports.CardController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var cardModel = new _card.CardModel();
 
-				var cardParam = {
-					deleted_at: param.status == "true" ? null : _this6.moment(new Date()).format()
-				};
-				cardModel.updateCardType(param.id, cardParam).then(function (data) {
-					return resolve(true);
+				cardModel.getCardTypeById(param.id).then(function (type) {
+					var cardParam = {
+						deleted_at: type.deleted_at ? null : _this6.moment(new Date()).format()
+					};
+					cardModel.updateCardType(param.id, cardParam).then(function (data) {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
