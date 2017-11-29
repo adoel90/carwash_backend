@@ -250,6 +250,11 @@
 			"type" : "numeric",
 			"required" : true,
 			"description" : "Card topup bonus value"
+		},{
+			"name" : "refund",
+			"type" : "boolean",
+			"required" : true,
+			"description" : "Card topup refund"
 		}]
 	},
 	"/card/type/update" :{
@@ -277,6 +282,11 @@
 			"type" : "numeric",
 			"required" : true,
 			"description" : "Card topup bonus value"
+		},{
+			"name" : "refund",
+			"type" : "boolean",
+			"required" : true,
+			"description" : "Card topup refund"
 		}]
 	},
 	"/card/type/delete" :{
