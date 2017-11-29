@@ -301,6 +301,23 @@
 			"description" : "Card type ID"
 		}]
 	},
+	"/card/type/status" :{
+		"method" : "put",
+		"description" : "Change card type deleted status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Card type ID"
+		},{
+			"name" : "status",
+			"type" : "boolean",
+			"required" : true,
+			"description" : "Card type status"
+		}]
+	},
 	"/member" :{
 		"method" : "get",
 		"description" : "Get members",

@@ -335,6 +335,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.put("/card/type/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					status: req.body.status
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.updateCardTypeStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Card routes ---*/
 
 			/*--- Start Service routes ---*/

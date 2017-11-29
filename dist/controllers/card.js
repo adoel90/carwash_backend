@@ -159,6 +159,30 @@ var CardController = exports.CardController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Change card type deleted status
+  ** PUT :: /card/type/status
+  */
+
+	}, {
+		key: "updateCardTypeStatus",
+		value: function updateCardTypeStatus(param) {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+
+				var cardParam = {
+					deleted_at: param.status ? null : _this6.moment(new Date()).format()
+				};
+				cardModel.updateCardType(param.id, cardParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return CardController;
