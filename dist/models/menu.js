@@ -37,6 +37,18 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			return this.db.execute();
 		}
 
+		/*** Get cafe menu by mn_id ***/
+
+	}, {
+		key: "getCafeMenuById",
+		value: function getCafeMenuById(mn_id) {
+			this.db.init();
+			this.db.select("menu");
+			this.db.where("mn_id", mn_id);
+
+			return this.db.execute(true);
+		}
+
 		/*** Get cafe menu list ***/
 
 	}, {

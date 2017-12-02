@@ -201,6 +201,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.put("/member/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.changeMemberStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.post("/member/authenticate", function (req, res) {
 				var param = {
 					c_id: req.body.card
@@ -434,6 +450,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.put("/service/type/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.changeServiceTypeStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/service", _auth.verifyToken, function (req, res) {
 				var param = {
 					type: req.query.type
@@ -517,6 +549,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				serviceController.deleteService(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.changeServiceStatus(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
@@ -618,6 +666,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.put("/cafe/type/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.changeCafeStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/cafe/menu", _auth.verifyToken, function (req, res) {
 				var param = {
 					cf_id: req.query.cafe
@@ -702,6 +766,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cafeController.deleteCafeMenu(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/cafe/menu/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.changeCafeMenuStatus(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

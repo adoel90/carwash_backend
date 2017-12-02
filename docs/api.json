@@ -52,6 +52,18 @@
 			"description" : "Cafe ID"
 		}]
 	},
+	"/cafe/type/status" :{
+		"method" : "put",
+		"description" : "Change cafe type status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		}]
+	},
 	"/cafe/menu" :{
 		"method" : "get",
 		"description" : "Get cafe menu",
@@ -155,6 +167,17 @@
 	"/cafe/menu/delete" :{
 		"method" : "put",
 		"description" : "Delete cafe menu data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu ID"
+		}]
+	},
+	"/cafe/menu/status" :{
+		"method" : "put",
+		"description" : "Change cafe menu status",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -426,6 +449,18 @@
 			"description" : "Member ID"
 		}]
 	},
+	"/member/status" :{
+		"method" : "put",
+		"description" : "Change member status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member ID"
+		}]
+	},
 	"/member/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate member using card id",
@@ -664,6 +699,18 @@
 			"description" : "Service ID"
 		}]
 	},
+	"/service/status" :{
+		"method" : "put",
+		"description" : "Change service status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
+		}]
+	},
 	"/service/type" :{
 		"method" : "get",
 		"description" : "Get service type",
@@ -718,6 +765,18 @@
 	"/service/type/delete" :{
 		"method" : "put",
 		"description" : "Delete service type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		}]
+	},
+	"/service/type/status" :{
+		"method" : "put",
+		"description" : "Change service type status",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{

@@ -40,11 +40,12 @@ var Build = exports.Build = function () {
 				id: data.u_id,
 				name: data.u_name,
 				username: data.u_username,
-				email: data.u_email
+				email: data.u_email,
+				status: true
 			};
 
 			if (data.deleted_at) {
-				user.deleted = true;
+				user.status = false;
 			}
 
 			if (data.ul_name) {
@@ -68,11 +69,16 @@ var Build = exports.Build = function () {
 				balance: data.m_balance,
 				card: {
 					id: data.c_id
-				}
+				},
+				status: true
 			};
 
 			if (data.ct_id) {
 				member.card.type = this.card(data);
+			}
+
+			if (data.deleted_at) {
+				member.status = false;
 			}
 
 			return member;
@@ -100,8 +106,13 @@ var Build = exports.Build = function () {
 		value: function serviceType(data) {
 			var type = {
 				id: data.srvt_id,
-				name: data.srvt_name
+				name: data.srvt_name,
+				status: true
 			};
+
+			if (data.deleted_at) {
+				type.status = false;
+			}
 
 			return type;
 		}
@@ -110,11 +121,12 @@ var Build = exports.Build = function () {
 		value: function cafeType(data) {
 			var type = {
 				id: data.cf_id,
-				name: data.cf_name
+				name: data.cf_name,
+				status: true
 			};
 
 			if (data.deleted_at) {
-				type.deleted = true;
+				type.status = true;
 			}
 
 			return type;
@@ -127,8 +139,13 @@ var Build = exports.Build = function () {
 				name: data.mn_name,
 				price: data.mn_price,
 				description: data.mn_desc,
-				image: this.checkImage(data.mn_img)
+				image: this.checkImage(data.mn_img),
+				status: true
 			};
+
+			if (data.deleted_at) {
+				menu.status = false;
+			}
 
 			return menu;
 		}
@@ -140,8 +157,13 @@ var Build = exports.Build = function () {
 				name: data.srv_name,
 				price: data.srv_price,
 				description: data.srv_desc,
-				image: this.checkImage(data.srv_img)
+				image: this.checkImage(data.srv_img),
+				status: true
 			};
+
+			if (data.deleted_at) {
+				service.status = false;
+			}
 
 			return service;
 		}

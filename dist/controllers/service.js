@@ -157,6 +157,34 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 		}
 
 		/*
+  ** Change status service type
+  ** PUT :: /service/type/status
+  */
+
+	}, {
+		key: "changeServiceTypeStatus",
+		value: function changeServiceTypeStatus(param) {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getServiceType(param.id).then(function (service) {
+					var serviceParam = {
+						deleted_at: service.deleted_at ? null : _this6.moment(new Date()).format()
+					};
+					serviceModel.updateServiceType(param.id, serviceParam).then(function (type) {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Get service data
   ** GET :: /service
   */
@@ -164,7 +192,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "service",
 		value: function service(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
@@ -172,7 +200,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 				serviceModel.getService(param.type).then(function (service) {
 					var result = [];
 					for (var i = 0; i < service.length; i++) {
-						result.push(_this6.build.service(service[i]));
+						result.push(_this7.build.service(service[i]));
 					}
 
 					return resolve(result);
@@ -190,7 +218,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "serviceList",
 		value: function serviceList(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
@@ -202,7 +230,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 					};
 
 					for (var i = 0; i < service[1].length; i++) {
-						result.service.push(_this7.build.service(service[1][i]));
+						result.service.push(_this8.build.service(service[1][i]));
 					}
 
 					return resolve(result);
@@ -220,12 +248,12 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "createService",
 		value: function createService(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
 
-				var image = _this8.rewriteImage(param.img);
+				var image = _this9.rewriteImage(param.img);
 				var serviceParam = {
 					srvt_id: param.type,
 					srv_name: param.name,
@@ -249,7 +277,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "updateService",
 		value: function updateService(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
@@ -258,7 +286,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 					srv_name: param.name,
 					srv_price: param.price,
 					srv_desc: param.desc,
-					updated_at: _this9.moment(new Date()).format()
+					updated_at: _this10.moment(new Date()).format()
 				};
 				serviceModel.updateService(param.id, serviceParam).then(function (service) {
 					return resolve(true);
@@ -276,16 +304,44 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "deleteService",
 		value: function deleteService(param) {
-			var _this10 = this;
+			var _this11 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
 
 				var serviceParam = {
-					deleted_at: _this10.moment(new Date()).format()
+					deleted_at: _this11.moment(new Date()).format()
 				};
 				serviceModel.updateService(param.id, serviceParam).then(function (service) {
 					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Change service status
+  ** PUT :: /service/change
+  */
+
+	}, {
+		key: "changeServiceStatus",
+		value: function changeServiceStatus(param) {
+			var _this12 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getServiceById(param.id).then(function (service) {
+					var serviceParam = {
+						deleted_at: service.deleted_at ? null : _this12.moment(new Date()).format()
+					};
+					serviceModel.updateService(param.id, serviceParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
@@ -300,7 +356,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 	}, {
 		key: "createServiceTransaction",
 		value: function createServiceTransaction(param) {
-			var _this11 = this;
+			var _this13 = this;
 
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
@@ -315,12 +371,12 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 						var transParam = {
 							m_id: param.member,
 							srv_id: service.srv_id,
-							tsrv_date: _this11.moment(new Date()).format(),
+							tsrv_date: _this13.moment(new Date()).format(),
 							tsrv_price: service.srv_price
 						};
 						serviceModel.insertServiceTransaction(transParam).then(function (transaction) {
 							memberModel.decreaseBalance(transParam.m_id, transParam.tsrv_price).then(function (balance) {
-								var result = _this11.build.member(member);
+								var result = _this13.build.member(member);
 								result.balance -= service.srv_price;
 								return resolve(result);
 							}).catch(function (err) {

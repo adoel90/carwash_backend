@@ -42,7 +42,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		key: "getServiceTypeList",
 		value: function getServiceTypeList(limit, offset) {
 			this.db.select("service_type", "count(*)");
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 			this.db.push();
 
 			this.db.select("service_type");
@@ -116,7 +116,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		value: function getServiceList(srvt_id, limit, offset) {
 			this.db.select("service", "count(*)");
 			this.db.where("srvt_id", srvt_id);
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 			this.db.push();
 
 			this.db.select("service");
@@ -131,8 +131,21 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 	}, {
 		key: "getServiceById",
 		value: function getServiceById(srv_id) {
+			this.db.init();
 			this.db.select("service");
 			this.db.where("srv_id", srv_id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Get service type by srvt_id ***/
+
+	}, {
+		key: "getServiceTypeById",
+		value: function getServiceTypeById(srvt_id) {
+			this.db.init();
+			this.db.select("service_type");
+			this.db.where("srvt_id", srvt_id);
 
 			return this.db.execute(true);
 		}

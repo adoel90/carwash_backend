@@ -36,6 +36,18 @@ var CafeModel = exports.CafeModel = function (_Model) {
 			return this.db.execute();
 		}
 
+		/*** Get cafe type by ct_id ***/
+
+	}, {
+		key: "getCafeTypeById",
+		value: function getCafeTypeById(cf_id) {
+			this.db.init();
+			this.db.select("cafe");
+			this.db.where("cf_id", cf_id);
+
+			return this.db.execute(true);
+		}
+
 		/*** Get cafe type list ***/
 
 	}, {

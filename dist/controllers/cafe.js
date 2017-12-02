@@ -160,6 +160,34 @@ var CafeController = exports.CafeController = function (_Controller) {
 		}
 
 		/*
+  ** Change cafe type status
+  ** PUT :: /cafe/type/status
+  */
+
+	}, {
+		key: "changeCafeStatus",
+		value: function changeCafeStatus(param) {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cafeModel = new _cafe.CafeModel();
+
+				cafeModel.getCafeTypeById(param.id).then(function (cafe) {
+					var cafeParam = {
+						deleted_at: cafe.deleted_at ? null : _this6.moment(new Date()).format()
+					};
+					cafeModel.updateCafe(param.id, cafeParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Get cafe menu
   ** GET :: /cafe/menu
   */
@@ -167,7 +195,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeMenu",
 		value: function cafeMenu(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -175,7 +203,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 				menuModel.getCafeMenu(param.cf_id).then(function (menu) {
 					var result = [];
 					for (var i = 0; i < menu.length; i++) {
-						result.push(_this6.build.menu(menu[i]));
+						result.push(_this7.build.menu(menu[i]));
 					}
 
 					return resolve(result);
@@ -193,7 +221,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeMenuList",
 		value: function cafeMenuList(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -205,7 +233,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 					};
 
 					for (var i = 0; i < menu[1].length; i++) {
-						result.menu.push(_this7.build.menu(menu[1][i]));
+						result.menu.push(_this8.build.menu(menu[1][i]));
 					}
 
 					return resolve(result);
@@ -223,12 +251,12 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafeMenu",
 		value: function createCafeMenu(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
-				var image = _this8.rewriteImage(param.image);
+				var image = _this9.rewriteImage(param.image);
 				var menuParam = {
 					cf_id: param.cf_id,
 					mn_name: param.name,
@@ -252,7 +280,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "updateCafeMenu",
 		value: function updateCafeMenu(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -261,7 +289,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
-					updated_at: _this9.moment(new Date()).format()
+					updated_at: _this10.moment(new Date()).format()
 				};
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
@@ -279,16 +307,44 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "deleteCafeMenu",
 		value: function deleteCafeMenu(param) {
-			var _this10 = this;
+			var _this11 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				var menuParam = {
-					deleted_at: _this10.moment(new Date()).format()
+					deleted_at: _this11.moment(new Date()).format()
 				};
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Change cafe menu status
+  ** PUT :: /cafe/menu/status
+  */
+
+	}, {
+		key: "changeCafeMenuStatus",
+		value: function changeCafeMenuStatus(param) {
+			var _this12 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				menuModel.getCafeMenuById(param.id).then(function (menu) {
+					var menuParam = {
+						deleted_at: menu.deleted_at ? null : _this12.moment(new Date()).format()
+					};
+					menuModel.updateCafeMenu(param.id, menuParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
@@ -303,7 +359,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafeTransaction",
 		value: function createCafeTransaction(param) {
-			var _this11 = this;
+			var _this13 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
@@ -339,7 +395,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 						cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
 							cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
 								memberModel.decreaseBalance(transParam.m_id, total).then(function () {
-									var result = _this11.build.member(member);
+									var result = _this13.build.member(member);
 									result.balance -= total;
 
 									return resolve(result);

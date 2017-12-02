@@ -194,6 +194,34 @@ var MemberController = exports.MemberController = function (_Controller) {
 		}
 
 		/*
+  ** Change member status
+  ** PUT :: /member/status
+  */
+
+	}, {
+		key: "changeMemberStatus",
+		value: function changeMemberStatus(param) {
+			var _this7 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getMemberById(param.id).then(function (member) {
+					var memberParam = {
+						deleted_at: member.deleted_at ? null : _this7.moment(new Date()).format()
+					};
+					memberModel.updateMember(param.id, memberParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Authenticate member by card id
   ** POST :: /member/authenticate
   */
@@ -201,7 +229,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "memberAuthenticate",
 		value: function memberAuthenticate(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -212,12 +240,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 						id: member.m_id,
 						card: member.c_id,
 						type: member.ct_id,
-						expired: _this7.moment(new Date()).add("10", "minutes")
+						expired: _this8.moment(new Date()).add("10", "minutes")
 					};
 
 					var result = {
 						accessToken: token.encode(memberToken),
-						member: _this7.build.member(member)
+						member: _this8.build.member(member)
 					};
 
 					return resolve(result);
@@ -238,7 +266,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "topupMember",
 		value: function topupMember(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -253,7 +281,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					param.balance += parseFloat(card.ct_bonus * bonus);
 					memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
 						memberModel.getMemberById(param.id).then(function (member) {
-							member = _this8.build.member(member);
+							member = _this9.build.member(member);
 							return resolve(member);
 						}).catch(function (err) {
 							return reject(err);
