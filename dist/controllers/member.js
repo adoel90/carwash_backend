@@ -208,7 +208,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 
 				memberModel.getMemberById(param.id).then(function (member) {
 					var memberParam = {
-						deleted_at: member.deleted_at ? null : _this7.moment(new Date()).format()
+						deleted_at: member.deleted ? null : _this7.moment(new Date()).format()
 					};
 					memberModel.updateMember(param.id, memberParam).then(function () {
 						return resolve(true);
