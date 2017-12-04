@@ -54,7 +54,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			if (name) {
 				this.db.whereLike("lower(m_name)", "%" + name.toLowerCase() + "%");
 			}
-			this.db.whereIsNull("member.deleted_at");
+			// this.db.whereIsNull("member.deleted_at");
 			this.db.push();
 
 			return this.db.execute();
