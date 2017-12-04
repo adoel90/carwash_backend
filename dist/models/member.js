@@ -34,10 +34,10 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			if (name) {
 				this.db.whereLike("lower(m_name)", "%" + name.toLowerCase() + "%");
 			}
-			this.db.whereIsNull("member.deleted_at");
+			// this.db.whereIsNull("member.deleted_at");
 			this.db.push();
 
-			this.db.select("member");
+			this.db.select("member", "member.deleted_at as deleted, *");
 			this.db.join("card", "card.c_id = member.c_id");
 			this.db.join("card_type", "card.ct_id = card_type.ct_id");
 			this.db.limit(limit, offset);

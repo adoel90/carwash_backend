@@ -77,7 +77,7 @@ var Build = exports.Build = function () {
 				member.card.type = this.card(data);
 			}
 
-			if (data.deleted_at) {
+			if (data.deleted) {
 				member.status = false;
 			}
 
