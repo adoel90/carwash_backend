@@ -31,7 +31,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		key: "getServiceType",
 		value: function getServiceType() {
 			this.db.select("service_type");
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}
@@ -104,7 +104,7 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 		value: function getService(srvt_id) {
 			this.db.select("service");
 			this.db.where("srvt_id", srvt_id);
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}

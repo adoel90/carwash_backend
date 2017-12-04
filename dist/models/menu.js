@@ -32,7 +32,7 @@ var MenuModel = exports.MenuModel = function (_Model) {
 		value: function getCafeMenu(cf_id) {
 			this.db.select("menu");
 			this.db.where("cf_id", cf_id);
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}
@@ -56,7 +56,7 @@ var MenuModel = exports.MenuModel = function (_Model) {
 		value: function getCafeMenuList(cf_id, limit, offset, mn_name) {
 			this.db.select("menu", "count(*)");
 			this.db.where("cf_id", cf_id);
-			this.db.whereIsNull("deleted_at");
+			// this.db.whereIsNull("deleted_at");
 			if (mn_name) {
 				this.db.whereLike("mn_name", "%" + mn_name + "%");
 			}
