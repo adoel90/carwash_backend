@@ -169,7 +169,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var serviceModel = new _service.ServiceModel();
 
-				serviceModel.getServiceType(param.id).then(function (service) {
+				serviceModel.getServiceTypeById(param.id).then(function (service) {
 					var serviceParam = {
 						deleted_at: service.deleted_at ? null : _this6.moment(new Date()).format()
 					};
