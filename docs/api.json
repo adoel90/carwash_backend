@@ -487,7 +487,7 @@
 	},
 	"/member/refund" :{
 		"method" : "post",
-		"description" : "Refund member card, Require member access token",
+		"description" : "Refund member card, Require member access token`",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : []

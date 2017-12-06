@@ -126,7 +126,7 @@ var Build = exports.Build = function () {
 			};
 
 			if (data.deleted_at) {
-				type.status = true;
+				type.status = false;
 			}
 
 			return type;
