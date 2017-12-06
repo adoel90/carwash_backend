@@ -236,6 +236,9 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var token = new _token.Token();
 
 				memberModel.getMemberByCardId(param.c_id).then(function (member) {
+					if (member.card_delete) {
+						return reject(21);
+					}
 					var memberToken = {
 						id: member.m_id,
 						card: member.c_id,
@@ -317,6 +320,49 @@ var MemberController = exports.MemberController = function (_Controller) {
 					};
 					memberModel.updateMember(param.member, memberParam).then(function (member) {
 						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Refund member card
+  ** POST :: /member/refund
+  */
+
+	}, {
+		key: "refundMember",
+		value: function refundMember(param) {
+			var _this10 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+				var cardModel = new _card.CardModel();
+
+				cardModel.getCardTypeById(param.type).then(function (type) {
+					if (!type.ct_refund) {
+						return reject(22);
+					}
+					memberModel.getMemberById(param.id).then(function (member) {
+						var memberParam = {
+							c_id: null
+						};
+						memberModel.updateMember(param.id, memberParam).then(function () {
+							var cardParam = {
+								deleted_at: _this10.moment(new Date()).format()
+							};
+							cardModel.updateCard(param.card, cardParam).then(function () {
+								return resolve(true);
+							}).catch(function (err) {
+								return reject(err);
+							});
+						}).catch(function (err) {
+							return reject(err);
+						});
 					}).catch(function (err) {
 						return reject(err);
 					});

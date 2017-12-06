@@ -64,6 +64,18 @@ var Response = function () {
 						error.set("message", "Card type doesn't exist");
 						break;
 					}
+				case 21:
+					{
+						error.set("status", 400);
+						error.set("message", "Card is blocked or deleted");
+						break;
+					}
+				case 22:
+					{
+						error.set("status", 400);
+						error.set("message", "Card is not refundable");
+						break;
+					}
 
 				// Response member error
 				case 30:

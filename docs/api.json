@@ -485,6 +485,13 @@
 			"description" : "Topup balance"
 		}]
 	},
+	"/member/refund" :{
+		"method" : "post",
+		"description" : "Refund member card, Require member access token",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : []
+	},
 	"/member/card/change" :{
 		"method" : "put",
 		"description" : "Change member card",

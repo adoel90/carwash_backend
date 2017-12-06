@@ -251,6 +251,24 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.post("/member/refund", _auth.verifyMemberToken, function (req, res) {
+				var param = {
+					id: res.locals.member.id,
+					card: res.locals.member.card,
+					type: res.locals.member.type
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				};
+
+				memberController.refundMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.put("/member/card/change", _auth.verifyToken, function (req, res) {
 				var param = {
 					member: req.body.member,

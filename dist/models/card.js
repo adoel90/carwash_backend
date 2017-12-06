@@ -112,6 +112,17 @@ var CardModel = exports.CardModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Update card data ***/
+
+	}, {
+		key: "updateCard",
+		value: function updateCard(c_id, param) {
+			this.db.update("card", param);
+			this.db.where("c_id", c_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CardModel;

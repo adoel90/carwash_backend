@@ -86,7 +86,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 	}, {
 		key: "getMemberByCardId",
 		value: function getMemberByCardId(c_id) {
-			this.db.select("member");
+			this.db.select("member", "card.deleted_at as card_delete, *");
 			this.db.join("card", "card.c_id = member.c_id");
 			this.db.where("member.c_id", c_id);
 
