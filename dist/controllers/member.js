@@ -343,15 +343,15 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
 
-				cardModel.getCardTypeById(param.type).then(function (type) {
-					if (!type.ct_refund) {
+				cardModel.getCardById(param.type).then(function (card) {
+					if (!card.ct_refund) {
 						return reject(22);
 					}
-					memberModel.getMemberById(param.id).then(function (member) {
+					memberModel.getMemberById(card.m_id).then(function (member) {
 						var memberParam = {
 							c_id: null
 						};
-						memberModel.updateMember(param.id, memberParam).then(function () {
+						memberModel.updateMember(card.m_id, memberParam).then(function () {
 							var cardParam = {
 								deleted_at: _this10.moment(new Date()).format()
 							};

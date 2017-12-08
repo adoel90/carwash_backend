@@ -487,10 +487,15 @@
 	},
 	"/member/refund" :{
 		"method" : "post",
-		"description" : "Refund member card, Require member access token`",
+		"description" : "Refund member card",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
-		"parameter" : []
+		"parameter" : [{
+			"name" : "card",
+			"type" : "string",
+			"required" : true,
+			"description" : "Card ID"
+		}]
 	},
 	"/member/card/change" :{
 		"method" : "put",

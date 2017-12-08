@@ -251,11 +251,12 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/member/refund", _auth.verifyMemberToken, function (req, res) {
+			this.app.post("/member/refund", _auth.verifyToken, function (req, res) {
 				var param = {
-					id: res.locals.member.id,
-					card: res.locals.member.card,
-					type: res.locals.member.type
+					/* id : res.locals.member.id,
+     card : res.locals.member.card,
+     type : res.locals.member.type */
+					card: req.body.card
 				};
 
 				if (!_this2.checkParameters(param)) {

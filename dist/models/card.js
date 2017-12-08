@@ -40,6 +40,17 @@ var CardModel = exports.CardModel = function (_Model) {
 
 			return type + c_id;
 		}
+	}, {
+		key: "getCardById",
+		value: function getCardById(c_id) {
+			this.db.init();
+			this.db.select("card");
+			this.db.join("card_type", "card_type.ct_id = card.ct_id");
+			this.db.join("member", "member.c_id = card.c_id");
+			this.db.where("card.c_id", card);
+
+			return this.db.execute(true);
+		}
 
 		/*** Insert card data ***/
 
