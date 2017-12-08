@@ -152,6 +152,33 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Get cafe transaction by id ***/
+
+	}, {
+		key: "getCafeTransactionById",
+		value: function getCafeTransactionById(id) {
+			this.db.init();
+			this.db.select("transaction_cafe");
+			this.db.join("member", "member.m_id = transaction_cafe.m_id");
+			this.db.where("tc_id", id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Get cafe transaction menu by tc_id ***/
+
+	}, {
+		key: "getCafeTransactionMenuById",
+		value: function getCafeTransactionMenuById(tc_id) {
+			this.db.init();
+			this.db.select("transaction_cafe_menu");
+			this.db.join("menu", "menu.mn_id = transaction_cafe_menu.mn_id");
+			this.db.join("cafe", "cafe.cf_id = menu.cf_id");
+			this.db.where("tc_id", tc_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CafeModel;

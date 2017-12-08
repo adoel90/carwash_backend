@@ -176,9 +176,9 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 	}, {
 		key: "insertServiceTransaction",
 		value: function insertServiceTransaction(param) {
-			this.db.insert("transaction_service", param);
+			this.db.insert("transaction_service", param, "tsrv_id");
 
-			return this.db.execute();
+			return this.db.execute(true);
 		}
 
 		/*** Get summary transaction services ***/
@@ -194,6 +194,21 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 			this.db.group("service_type.srvt_id");
 
 			return this.db.execute();
+		}
+
+		/*** Get service transaction data ***/
+
+	}, {
+		key: "getServiceTransactionById",
+		value: function getServiceTransactionById(id) {
+			this.db.init();
+			this.db.select("transaction_service");
+			this.db.join("service", "service.srv_id = transaction_service.srv_id");
+			this.db.join("service_type", "service_type.srvt_id = service.srvt_id");
+			this.db.join("member", "member.m_id = transaction_service.m_id");
+			this.db.where("tsrv_id", id);
+
+			return this.db.execute(true);
 		}
 	}]);
 

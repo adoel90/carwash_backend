@@ -396,6 +396,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 							cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
 								memberModel.decreaseBalance(transParam.m_id, total).then(function () {
 									var result = _this13.build.member(member);
+									result.transaction = transaction.tc_id;
 									result.balance -= total;
 
 									return resolve(result);
@@ -444,6 +445,38 @@ var CafeController = exports.CafeController = function (_Controller) {
     }).catch((err) => {
     	return reject(err);
     });*/
+			});
+		}
+
+		/*
+  ** Get cafe transaction print data
+  ** GET :: /cafe/transaction/print
+  */
+
+	}, {
+		key: "cafeTransactionDetail",
+		value: function cafeTransactionDetail(param) {
+			var _this14 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cafeModel = new _cafe.CafeModel();
+
+				cafeModel.getCafeTransactionById(param.id).then(function (transaction) {
+					var result = _this14.build.transactionCafe(transaction);
+					cafeModel.getCafeTransactionMenuById(param.id).then(function (menu) {
+						result.menu = [];
+						for (var i = 0; i < menu.length; i++) {
+							var mn = _this14.build.menu(menu[i]);
+							mn.cafe = _this14.build.cafeType(menu[i]);
+							result.menu.push(mn);
+						}
+						return resolve(result);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
 			});
 		}
 	}]);

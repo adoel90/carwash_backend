@@ -198,6 +198,17 @@
 			"description" : "Transaction menu, Array of object => {\"id\":<menu ID>, \"quantity\": <menu quantity>}"
 		}]
 	},
+	"/cafe/transaction/print" :{
+		"method" : "get",
+		"description" : "Get cafe transaction print data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe transaction ID"
+		}]
+	},
 	"/user/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate user to get access token",
@@ -808,6 +819,17 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Service ID"
+		}]
+	},
+	"/service/transaction/print" :{
+		"method" : "get",
+		"description" : "Get service transaction print data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service Transaction ID"
 		}]
 	}
 }

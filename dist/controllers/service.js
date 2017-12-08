@@ -377,6 +377,7 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 						serviceModel.insertServiceTransaction(transParam).then(function (transaction) {
 							memberModel.decreaseBalance(transParam.m_id, transParam.tsrv_price).then(function (balance) {
 								var result = _this13.build.member(member);
+								result.transaction = transaction.tsrv_id;
 								result.balance -= service.srv_price;
 								return resolve(result);
 							}).catch(function (err) {
@@ -388,6 +389,30 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 					}).catch(function (err) {
 						return reject(err);
 					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get service transaction print data
+  ** GET :: /service/transaction/print
+  */
+
+	}, {
+		key: "serviceTransactionDetail",
+		value: function serviceTransactionDetail(param) {
+			var _this14 = this;
+
+			return new Promise(function (resolve, reject) {
+				var serviceModel = new _service.ServiceModel();
+
+				serviceModel.getServiceTransactionById(param.id).then(function (transaction) {
+					var result = _this14.build.transactionService(transaction);
+					result.service = _this14.build.service(transaction);
+					result.service.type = _this14.build.serviceType(transaction);
+					return resolve(result);
 				}).catch(function (err) {
 					return reject(err);
 				});
