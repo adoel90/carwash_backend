@@ -343,7 +343,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
 
-				cardModel.getCardById(param.type).then(function (card) {
+				cardModel.getCardById(param.card).then(function (card) {
 					if (!card.ct_refund) {
 						return reject(22);
 					}
