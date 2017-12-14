@@ -37,6 +37,18 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+	}, {
+		key: "getUser",
+		value: function getUser(name) {
+			this.db.init();
+			this.db.select("users");
+			this.db.join("user_level", "user_level.ul_id = users.ul_id");
+			if (name) {
+				this.db.whereLike("lower(u_name)", "%" + name.toLowerCase() + "%");
+			}
+
+			return this.db.execute();
+		}
 
 		/*** Get user list ***/
 

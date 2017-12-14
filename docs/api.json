@@ -320,6 +320,17 @@
 			"description" : "User's ID"
 		}]
 	},
+	"/user" :{
+		"method" : "get",
+		"description" : "Get all users",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "String",
+			"required" : false,
+			"description" : "Filter data by user's name"
+		}]
+	},
 	"/user/list" :{
 		"method" : "get",
 		"description" : "Get users list",

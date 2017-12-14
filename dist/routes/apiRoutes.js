@@ -95,6 +95,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.get("/user", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.query.name ? req.query.name : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				userController.allUser(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/user/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					limit: req.query.limit ? req.query.limit : 10,
