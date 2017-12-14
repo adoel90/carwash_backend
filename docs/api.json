@@ -226,6 +226,94 @@
 			"description" : "User's password"
 		}]
 	},
+	"/user/create" :{
+		"method" : "post",
+		"description" : "Create new users",
+		"token" : true,
+		"parameter" : [{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's password"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's email"
+		},{
+			"name" : "level",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's access level ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User's cafe type ID"
+		}]
+	},
+	"/user/update" :{
+		"method" : "put",
+		"description" : "Update users data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's ID"
+		},{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's password, Send if want to change password"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's email"
+		},{
+			"name" : "level",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's access level ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User's cafe type ID"
+		}]
+	},
+	"/user/delete" :{
+		"method" : "put",
+		"description" : "Delete users data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's ID"
+		}]
+	},
 	"/user/list" :{
 		"method" : "get",
 		"description" : "Get users list",

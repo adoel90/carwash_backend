@@ -108,6 +108,66 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.post("/user/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					username: req.body.username,
+					password: req.body.password,
+					name: req.body.name,
+					email: req.body.email ? req.body.email : null,
+					level: req.body.level,
+					cafe: req.body.cafe ? req.body.cafe : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				userController.createUser(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/user/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					username: req.body.username,
+					password: req.body.password ? req.body.password : null,
+					name: req.body.name,
+					email: req.body.email ? req.body.email : null,
+					level: req.body.level,
+					cafe: req.body.cafe ? req.body.cafe : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				userController.updateUser(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/user/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				userController.deleteUser(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			/*--- End User routes ---*/
 
 			/*--- Start Member routes ---*/
@@ -144,6 +204,16 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			/* this.app.get("/member/detail", verifyToken, (req, res) => {
+   	let param = {
+   		id : req.query.id
+   	}
+   		if(!this.checkParameters(param)){
+   		return this.error(res, 1);
+   	}
+   		memberController.member
+   }); */
 
 			this.app.post("/member/create", _auth.verifyToken, function (req, res) {
 				var param = {
