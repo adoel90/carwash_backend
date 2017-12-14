@@ -33,6 +33,8 @@ var _cafe = require("../controllers/cafe");
 
 var _report = require("../controllers/report");
 
+var _access = require("../controllers/access");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,6 +67,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var serviceController = new _service.ServiceController();
 			var cafeController = new _cafe.CafeController();
 			var reportController = new _report.ReportController();
+			var accessController = new _access.AccessController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -169,6 +172,24 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 
 			/*--- End User routes ---*/
+
+			/*--- Start Access routes ---*/
+
+			this.app.get("/access", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				accessController.getAllAccess(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			/*--- End Access routes ---*/
 
 			/*--- Start Member routes ---*/
 			this.app.get("/member", _auth.verifyToken, function (req, res) {

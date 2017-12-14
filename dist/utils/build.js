@@ -49,13 +49,19 @@ var Build = exports.Build = function () {
 			}
 
 			if (data.ul_name) {
-				user.level = {
-					id: data.ul_id,
-					name: data.ul_name
-				};
+				user.level = this.accessLevel(data);
 			}
 
 			return user;
+		}
+	}, {
+		key: "accessLevel",
+		value: function accessLevel(data) {
+			var access = {
+				id: data.ul_id,
+				name: data.ul_name
+			};
+			return access;
 		}
 	}, {
 		key: "member",

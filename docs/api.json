@@ -1,4 +1,10 @@
 {
+	"/access" :{
+		"method" : "get",
+		"description" : "Get all access level",
+		"token" : true,
+		"parameter" : []
+	},
 	"/cafe/type" :{
 		"method" : "get",
 		"description" : "Get cafe type",
