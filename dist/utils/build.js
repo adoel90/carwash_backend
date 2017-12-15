@@ -11,6 +11,10 @@ var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _moment = require("moment");
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _config = require("../../config.json");
 
 var _config2 = _interopRequireDefault(_config);
@@ -194,6 +198,30 @@ var Build = exports.Build = function () {
 			};
 
 			return transaction;
+		}
+	}, {
+		key: "reportRangeDate",
+		value: function reportRangeDate(start, end, data) {
+			var result = [];
+			start = (0, _moment2.default)(start);
+			end = (0, _moment2.default)(end);
+			var diff = end.diff(start, "days");
+
+			var c = 0;
+			for (var i = 0; i <= diff; i++) {
+				var total = 0;
+				if ((0, _moment2.default)(data[c].date).format("DDMMYYYY") == (0, _moment2.default)(start).format("DDMMYYYY")) {
+					total = data[c].sum;
+					c++;
+				}
+				result.push({
+					date: (0, _moment2.default)(start).format("DD-MM-YYYY"),
+					total: total
+				});
+				start = (0, _moment2.default)(start).add(1, "days");
+			}
+
+			return result;
 		}
 	}]);
 

@@ -42,22 +42,27 @@ var ReportController = exports.ReportController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var cafeModel = new _cafe.CafeModel();
 
-                cafeModel.getCafeTransactionReport(param.start_date, param.end_date, param.cafe).then(function (transaction) {
-                    var result = {
-                        row: transaction[0][0].count,
-                        transaction: []
-                    };
-
-                    for (var i = 0; i < transaction[1].length; i++) {
-                        var trans = _this2.build.transactionCafe(transaction[1][i]);
-                        trans.menu = _this2.build.menu(transaction[1][i]);
+                /* cafeModel.getCafeTransactionReport(param.start_date, param.end_date, param.cafe).then((transaction) => {
+                    let result = {
+                        row : transaction[0][0].count,
+                        transaction : []
+                    }
+                     for(let i=0; i<transaction[1].length; i++){
+                        let trans = this.build.transactionCafe(transaction[1][i]);
+                        trans.menu = this.build.menu(transaction[1][i]);
                         delete trans.menu.price;
-
-                        trans.quantity = transaction[1][i].tcm_quantity;
+                         trans.quantity = transaction[1][i].tcm_quantity;
                         trans.price = transaction[1][i].tcm_price;
-                        trans.cafe = _this2.build.cafeType(transaction[1][i]);
+                        trans.cafe = this.build.cafeType(transaction[1][i]);
                         result.transaction.push(trans);
                     }
+                     return resolve(result);
+                }).catch((err) => {
+                    return reject(err);
+                }); */
+
+                cafeModel.cafeTransactoinReport(param.start_date, param.end_date, param.cafe).then(function (transaction) {
+                    var result = _this2.build.reportRangeDate(param.start_date, param.end_date, transaction);
 
                     return resolve(result);
                 }).catch(function (err) {
