@@ -63,9 +63,24 @@ var Build = exports.Build = function () {
 		value: function accessLevel(data) {
 			var access = {
 				id: data.ul_id,
-				name: data.ul_name
+				name: data.ul_name,
+				status: true
 			};
+
+			if (data.deleted_at) {
+				access.status = false;
+			}
 			return access;
+		}
+	}, {
+		key: "module",
+		value: function module(data) {
+			var module = {
+				id: data.mod_id,
+				name: data.mod_name
+			};
+
+			return module;
 		}
 	}, {
 		key: "member",

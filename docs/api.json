@@ -5,6 +5,56 @@
 		"token" : true,
 		"parameter" : []
 	},
+	"/access/create" :{
+		"method" : "post",
+		"content_type" : "application/json",
+		"description" : "Create new access level",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Access level name"
+		},{
+			"name" : "module",
+			"type" : "Array",
+			"required" : true,
+			"description" : "Access level modules"
+		}]
+	},
+	"/access/update" :{
+		"method" : "put",
+		"content_type" : "application/json",
+		"description" : "Update access level data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Access level ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Access level name"
+		},{
+			"name" : "module",
+			"type" : "Array",
+			"required" : true,
+			"description" : "Access level modules"
+		}]
+	},
+	"/access/status" :{
+		"method" : "put",
+		"description" : "Change access level status",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Access level ID"
+		}]
+	},
 	"/cafe/type" :{
 		"method" : "get",
 		"description" : "Get cafe type",
@@ -629,6 +679,12 @@
 			"required" : true,
 			"description" : "Card type ID"
 		}]
+	},
+	"/module" :{
+		"method" : "get",
+		"description" : "Get all module",
+		"token" : true,
+		"parameter" : []
 	},
 	"/report/transaction/cafe" :{
 		"method" : "get",

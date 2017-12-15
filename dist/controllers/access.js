@@ -52,6 +52,147 @@ var AccessController = exports.AccessController = function (_Controller) {
                 });
             });
         }
+
+        /*
+        ** Get access level detail
+        ** GET :: /access/detail
+        */
+
+    }, {
+        key: "accessDetail",
+        value: function accessDetail(param) {
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+                var accessModel = new _access.AccessModel();
+
+                accessModel.getAccessById(param.id).then(function (access) {
+                    var result = _this3.build.accessLevel(access);
+                    result.module = [];
+                    accessModel.getAccessModule(param.id).then(function (module) {
+                        for (var i = 0; i < module.length; i++) {
+                            result.module.push(_this3.build.module(module[i]));
+                        }
+
+                        return resolve(result);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Create new access level
+        ** POST :: /access/create
+        */
+
+    }, {
+        key: "createAccess",
+        value: function createAccess(param) {
+            return new Promise(function (resolve, reject) {
+                var accessModel = new _access.AccessModel();
+
+                var accessParam = {
+                    ul_name: param.name
+                };
+                accessModel.insertAccess(accessParam).then(function (access) {
+                    accessModel.insertAccessModule(access.ul_id, param.module).then(function () {
+                        return resolve(true);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Update access level data
+        ** PUT :: /access/update
+        */
+
+    }, {
+        key: "updateAccess",
+        value: function updateAccess(param) {
+            return new Promise(function (resolve, reject) {
+                var accessModel = new _access.AccessModel();
+
+                var accessParam = {
+                    ul_name: param.name
+                };
+                accessModel.updateAccess(param.id, accessParam).then(function () {
+                    accessModel.deleteAccessModule(param.id).then(function () {
+                        accessModel.insertAccessModule(param.id, param.module).then(function () {
+                            return resolve(true);
+                        }).catch(function (err) {
+                            return reject(err);
+                        });
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Change status access level
+        ** PUT :: /access/status
+        */
+
+    }, {
+        key: "statusAccess",
+        value: function statusAccess(param) {
+            var _this4 = this;
+
+            return new Promise(function (resolve, reject) {
+                var accessModel = new _access.AccessModel();
+
+                accessModel.getAccessById(param.id).then(function (access) {
+                    var accessParam = {
+                        deleted_at: access.deleted_at ? null : _this4.moment(new Date()).format()
+                    };
+                    accessModel.updateAccess(param.id, accessParam).then(function () {
+                        return resolve(true);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Get all module
+        ** GET :: /module
+        */
+
+    }, {
+        key: "allModule",
+        value: function allModule(param) {
+            var _this5 = this;
+
+            return new Promise(function (resolve, reject) {
+                var accessModel = new _access.AccessModel();
+
+                accessModel.getModule().then(function (module) {
+                    var result = [];
+                    for (var i = 0; i < module.length; i++) {
+                        result.push(_this5.build.module(module[i]));
+                    }
+
+                    return resolve(result);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
     }]);
 
     return AccessController;

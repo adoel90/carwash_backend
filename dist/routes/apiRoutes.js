@@ -205,6 +205,89 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.get("/access/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				accessController.accessDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/access/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name,
+					module: req.body.module
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+				if (!Array.isArray(param.module) || param.module.length < 1) {
+					return _this2.error(res, 1);
+				}
+
+				accessController.createAccess(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/access/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name,
+					module: req.body.module
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+				if (!Array.isArray(param.module) || param.module.length < 1) {
+					return _this2.error(res, 1);
+				}
+
+				accessController.updateAccess(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/access/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				accessController.statusAccess(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/module", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				accessController.allModule(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			/*--- End Access routes ---*/
 
 			/*--- Start Member routes ---*/
