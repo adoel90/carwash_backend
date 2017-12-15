@@ -13,6 +13,8 @@ var _token = require("../utils/token");
 
 var _user = require("../models/user");
 
+var _access = require("../models/access");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -41,21 +43,30 @@ var UserController = exports.UserController = function (_Controller) {
 
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
+				var accessModel = new _access.AccessModel();
 				var token = new _token.Token();
 
 				userModel.getUserByUsername(param.username).then(function (user) {
-					param.password = _this2.encrypt(param.password);
-					if (user.u_password != param.password) {
-						return reject(11);
-					}
+					accessModel.getAccessModule(user.ul_id).then(function (access) {
+						param.password = _this2.encrypt(param.password);
+						if (user.u_password != param.password) {
+							return reject(11);
+						}
 
-					var userData = _this2.build.user(user);
+						var userData = _this2.build.user(user);
 
-					var result = {
-						accessToken: token.encode(user),
-						user: userData
-					};
-					return resolve(result);
+						var result = {
+							accessToken: token.encode(user),
+							user: userData
+						};
+						result.user.module = [];
+						for (var i = 0; i < access.length; i++) {
+							result.user.module.push(_this2.build.module(access[i]));
+						}
+						return resolve(result);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 
 					if (err.code == 0) {

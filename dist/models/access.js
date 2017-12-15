@@ -107,11 +107,11 @@ var AccessModel = exports.AccessModel = function (_Model) {
 
     }, {
         key: "getAccessModule",
-        value: function getAccessModule(id) {
+        value: function getAccessModule(ul_id) {
             this.db.init();
             this.db.select("mod_access");
             this.db.join("module", "module.mod_id = mod_access.mod_id");
-            this.db.where("ul_id", id);
+            this.db.where("ul_id", ul_id);
 
             return this.db.execute();
         }
