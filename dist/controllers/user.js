@@ -109,6 +109,29 @@ var UserController = exports.UserController = function (_Controller) {
 		}
 
 		/*
+  ** Get user detail
+  ** GET :: /user/detail
+  */
+
+	}, {
+		key: "userDetail",
+		value: function userDetail(param) {
+			var _this4 = this;
+
+			return new Promise(function (resolve, reject) {
+				var userModel = new _user.UserModel();
+
+				userModel.getUserById(param.id).then(function (user) {
+					var result = _this4.build.user(user);
+
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Get all user
   ** GET :: /user
   */
@@ -116,7 +139,7 @@ var UserController = exports.UserController = function (_Controller) {
 	}, {
 		key: "allUser",
 		value: function allUser(param) {
-			var _this4 = this;
+			var _this5 = this;
 
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
@@ -124,7 +147,7 @@ var UserController = exports.UserController = function (_Controller) {
 				userModel.getUser(param.name).then(function (user) {
 					var result = [];
 					for (var i = 0; i < user.length; i++) {
-						result.push(_this4.build.user(user[i]));
+						result.push(_this5.build.user(user[i]));
 					}
 
 					return resolve(result);
@@ -142,7 +165,7 @@ var UserController = exports.UserController = function (_Controller) {
 	}, {
 		key: "createUser",
 		value: function createUser(param) {
-			var _this5 = this;
+			var _this6 = this;
 
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
@@ -151,7 +174,7 @@ var UserController = exports.UserController = function (_Controller) {
 					u_name: param.name,
 					u_username: param.username,
 					u_email: param.email,
-					u_password: _this5.encrypt(param.password),
+					u_password: _this6.encrypt(param.password),
 					ul_id: param.level,
 					cf_id: param.cafe
 				};
@@ -171,7 +194,7 @@ var UserController = exports.UserController = function (_Controller) {
 	}, {
 		key: "updateUser",
 		value: function updateUser(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
@@ -182,10 +205,10 @@ var UserController = exports.UserController = function (_Controller) {
 					u_email: param.email,
 					ul_id: param.level,
 					cf_id: param.cafe,
-					updated_at: _this6.moment(new Date()).format()
+					updated_at: _this7.moment(new Date()).format()
 				};
 				if (param.password) {
-					userParam.u_password = _this6.encrypt(param.password);
+					userParam.u_password = _this7.encrypt(param.password);
 				}
 				userModel.updateUser(param.id, userParam).then(function () {
 					return resolve(true);
@@ -203,7 +226,7 @@ var UserController = exports.UserController = function (_Controller) {
 	}, {
 		key: "deleteUser",
 		value: function deleteUser(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
@@ -211,7 +234,7 @@ var UserController = exports.UserController = function (_Controller) {
 				userModel.getUserById(param.id).then(function (user) {
 					console.log(user);
 					var userParam = {
-						deleted_at: user.deleted_at ? null : _this7.moment(new Date()).format()
+						deleted_at: user.deleted_at ? null : _this8.moment(new Date()).format()
 					};
 					userModel.updateUser(param.id, userParam).then(function () {
 						return resolve(true);

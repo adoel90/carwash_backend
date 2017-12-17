@@ -128,6 +128,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.get("/user/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, err);
+				}
+
+				userController.userDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.post("/user/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					username: req.body.username,
