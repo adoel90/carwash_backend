@@ -359,9 +359,9 @@
 			"description" : "User's cafe type ID"
 		}]
 	},
-	"/user/delete" :{
+	"/user/status" :{
 		"method" : "put",
-		"description" : "Delete users data",
+		"description" : "Change users status",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",

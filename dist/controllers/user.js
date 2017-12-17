@@ -196,8 +196,8 @@ var UserController = exports.UserController = function (_Controller) {
 		}
 
 		/*
-  ** Delete user data
-  ** PUT :: /user/delete
+  ** Change user status
+  ** PUT :: /user/status
   */
 
 	}, {
@@ -208,11 +208,16 @@ var UserController = exports.UserController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
 
-				var userParam = {
-					deleted_at: _this7.moment(new Date()).format()
-				};
-				userModel.updateUser(param.id, userParam).then(function () {
-					return resolve(true);
+				userModel.getUserById(param.id).then(function (user) {
+					console.log(user);
+					var userParam = {
+						deleted_at: user.deleted_at ? null : _this7.moment(new Date()).format()
+					};
+					userModel.updateUser(param.id, userParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

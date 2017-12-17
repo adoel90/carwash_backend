@@ -48,7 +48,7 @@ var Build = exports.Build = function () {
 				status: true
 			};
 
-			if (data.deleted_at) {
+			if (data.deleted_at || data.users_deleted) {
 				user.status = false;
 			}
 

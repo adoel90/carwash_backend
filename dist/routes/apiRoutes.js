@@ -171,7 +171,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/user/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/user/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};

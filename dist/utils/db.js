@@ -142,8 +142,8 @@ var Db = function () {
 				this.q_data = {};
 			}
 
-			var v = "$(" + field.replace(".", "_") + ")";
-			this.q_data[field.replace(".", "_")] = value;
+			var v = "$(" + field.replace(".", "_").replace("(", "_").replace(")", "") + ")";
+			this.q_data[field.replace(".", "_").replace("(", "_").replace(")", "")] = value;
 			if (this.q_where) {
 				this.q_where += (0, _util.stringFormat)(_templateObject8, operator, field, v);
 			} else {

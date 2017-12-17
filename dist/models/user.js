@@ -24,10 +24,19 @@ var UserModel = exports.UserModel = function (_Model) {
 		return _possibleConstructorReturn(this, (UserModel.__proto__ || Object.getPrototypeOf(UserModel)).call(this));
 	}
 
-	/*** Get user by username ***/
-
-
 	_createClass(UserModel, [{
+		key: "getUserById",
+		value: function getUserById(u_id) {
+			this.db.init();
+			this.db.select("users");
+			this.db.where("u_id", u_id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Get user by username ***/
+
+	}, {
 		key: "getUserByUsername",
 		value: function getUserByUsername(username) {
 			this.db.select("users");
@@ -41,7 +50,7 @@ var UserModel = exports.UserModel = function (_Model) {
 		key: "getUser",
 		value: function getUser(name) {
 			this.db.init();
-			this.db.select("users");
+			this.db.select("users", "users.deleted_at as users_deleted, *");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
 			if (name) {
 				this.db.whereLike("lower(u_name)", "%" + name.toLowerCase() + "%");
