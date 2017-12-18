@@ -45,6 +45,7 @@ var Build = exports.Build = function () {
 				name: data.u_name,
 				username: data.u_username,
 				email: data.u_email,
+				cafe: data.cf_id,
 				status: true
 			};
 
@@ -198,6 +199,7 @@ var Build = exports.Build = function () {
 			var transaction = {
 				id: data.tc_id,
 				date: data.tc_date,
+				queue: data.tc_queue,
 				member: this.member(data)
 			};
 

@@ -106,7 +106,6 @@ var MenuModel = exports.MenuModel = function (_Model) {
 	}, {
 		key: "findMenuById",
 		value: function findMenuById(mn_id) {
-			console.log(mn_id);
 			this.db.init();
 			this.db.select("menu");
 			this.db.whereAny("mn_id", mn_id);

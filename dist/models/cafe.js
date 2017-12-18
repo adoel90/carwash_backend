@@ -197,6 +197,39 @@ var CafeModel = exports.CafeModel = function (_Model) {
 
 			return this.db.execute();
 		}
+	}, {
+		key: "getCafeQueue",
+		value: function getCafeQueue(cf_id) {
+			var _this2 = this;
+
+			if (!cf_id) {
+				return null;
+			}
+			var q = $queue[cf_id] + 1;
+			$queue[cf_id] += 1;
+
+			this.db.init();
+			this.db.select("cafe");
+			this.db.where("cf_id", cf_id);
+			this.db.execute(true).then(function (cafe) {
+				if (q > cafe.cf_queue) {
+					var u = {
+						cf_queue: q
+					};
+					_this2.db.init();
+					_this2.db.update("cafe", u);
+					_this2.db.where("cf_id", cf_id);
+
+					_this2.db.execute().catch(function (err) {
+						console.log(err);
+					});
+				}
+			}).catch(function (err) {
+				console.log(err);
+			});
+
+			return q;
+		}
 	}]);
 
 	return CafeModel;

@@ -371,6 +371,8 @@ var CafeController = exports.CafeController = function (_Controller) {
 					findMenu.push(param.menu[i].id);
 				}
 
+				var cafe = null;
+
 				memberModel.getMemberById(param.member).then(function (member) {
 					var balance = member.m_balance;
 					var total = 0;
@@ -382,6 +384,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 									if (balance - total < 0) {
 										return reject(31);
 									}
+									cafe = menu[_i].cf_id;
 
 									param.menu[j].price = menu[_i].mn_price;
 								}
@@ -390,7 +393,8 @@ var CafeController = exports.CafeController = function (_Controller) {
 
 						var transParam = {
 							m_id: member.m_id,
-							tc_total: total
+							tc_total: total,
+							tc_queue: cafeModel.getCafeQueue(cafe)
 						};
 						cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
 							cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {

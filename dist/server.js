@@ -16,6 +16,8 @@ var _auth = require("./middleware/auth");
 
 var _apiRoutes = require("./routes/apiRoutes");
 
+var _model = require("./models/model");
+
 var _config = require("../config.json");
 
 var _config2 = _interopRequireDefault(_config);
@@ -59,5 +61,16 @@ app.use(apiRouter.routes());
 app.server = _http2.default.createServer(app);
 
 app.server.listen(_config2.default.server.port, function () {
+	var model = new _model.Model();
+	model.getQueue().then(function (queue) {
+		var q = {};
+		for (var i = 0; i < queue.length; i++) {
+			q[queue[i].cf_id] = parseInt(queue[i].cf_queue);
+		}
+
+		global.$queue = q;
+	}).catch(function (err) {
+		console.log(err);
+	});
 	console.log('Started on port ' + _config2.default.server.port);
 });
