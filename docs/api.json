@@ -662,6 +662,17 @@
 			"description" : "Topup balance"
 		}]
 	},
+	"/member/topup/print" :{
+		"method" : "get",
+		"description" : "Get Topup data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Topup transaction ID"
+		}]
+	},
 	"/member/refund" :{
 		"method" : "post",
 		"description" : "Refund member card",

@@ -276,16 +276,26 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var cardModel = new _card.CardModel();
 
 				param.balance = parseFloat(param.balance);
-				cardModel.getCardTypeById(param.type).then(function (card) {
-					if (param.balance < card.ct_min) {
-						return reject(32);
-					}
-					var bonus = parseInt(param.balance / parseFloat(card.ct_min));
-					param.balance += parseFloat(card.ct_bonus * bonus);
-					memberModel.increaseBalance(param.id, param.balance).then(function (topup) {
-						memberModel.getMemberById(param.id).then(function (member) {
-							member = _this9.build.member(member);
-							return resolve(member);
+				memberModel.getMemberById(param.id).then(function (member) {
+					cardModel.getCardTypeById(param.type).then(function (card) {
+						if (param.balance < card.ct_min) {
+							return reject(32);
+						}
+						var bonus = parseInt(param.balance / parseFloat(card.ct_min));
+						param.balance += parseFloat(card.ct_bonus * bonus);
+						var tpParam = {
+							m_id: param.id,
+							tp_value: param.balance,
+							tp_before: member.m_balance
+						};
+						memberModel.insertTopup(tpParam).then(function (topup) {
+							memberModel.increaseBalance(param.id, param.balance).then(function () {
+								member = _this9.build.member(member);
+								member.transaction = topup.tp_id;
+								return resolve(member);
+							}).catch(function (err) {
+								return reject(err);
+							});
 						}).catch(function (err) {
 							return reject(err);
 						});
@@ -366,6 +376,31 @@ var MemberController = exports.MemberController = function (_Controller) {
 					}).catch(function (err) {
 						return reject(err);
 					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
+  ** Get topup data
+  ** GET :: /member/topup/print
+  */
+
+	}, {
+		key: "topupData",
+		value: function topupData(param) {
+			var _this11 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getTopup(param.id).then(function (topup) {
+					var member = _this11.build.member(topup);
+					member.before = topup.tp_before;
+					member.topup = topup.tp_value;
+
+					return resolve(member);
 				}).catch(function (err) {
 					return reject(err);
 				});

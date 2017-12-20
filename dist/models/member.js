@@ -129,6 +129,30 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Insert topup data ***/
+
+	}, {
+		key: "insertTopup",
+		value: function insertTopup(param) {
+			this.db.init();
+			this.db.insert("topup", param, "tp_id");
+
+			return this.db.execute(true);
+		}
+
+		/*** Get topup data ***/
+
+	}, {
+		key: "getTopup",
+		value: function getTopup(tp_id) {
+			this.db.init();
+			this.db.select("topup");
+			this.db.join("member", "member.m_id = topup.m_id");
+			this.db.where("tp_id", tp_id);
+
+			return this.db.execute(true);
+		}
 	}]);
 
 	return MemberModel;

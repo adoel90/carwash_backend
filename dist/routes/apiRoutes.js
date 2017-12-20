@@ -457,6 +457,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.get("/member/topup/print", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.topupData(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.post("/member/refund", _auth.verifyToken, function (req, res) {
 				var param = {
 					/* id : res.locals.member.id,
