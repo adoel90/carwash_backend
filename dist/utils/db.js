@@ -207,7 +207,7 @@ var Db = function () {
 	}, {
 		key: "limit",
 		value: function limit(_limit, offset) {
-			if (_limit !== null && offset !== null) {
+			if (_limit && offset) {
 				this.q_limit = (0, _util.stringFormat)(_templateObject18, _limit, offset);
 			} else {
 				this.q_limit = (0, _util.stringFormat)(_templateObject19, _limit);
@@ -274,9 +274,9 @@ var Db = function () {
 			if (!this.execQuery) {
 				if (this.q_insert) {
 					this.query = this.q_insert;
-				} else if (this.q_update && this.q_where) {
+				} else if (this.q_update) {
 					this.query = (0, _util.stringFormat)(_templateObject25, this.q_update, this.q_where);
-				} else if (this.q_delete && this.q_where) {
+				} else if (this.q_delete) {
 					this.query = (0, _util.stringFormat)(_templateObject25, this.q_delete, this.q_where);
 				} else {
 					this.query = (0, _util.stringFormat)(_templateObject26, this.q_select, this.q_join, this.q_where, this.q_group, this.q_order, this.q_limit);

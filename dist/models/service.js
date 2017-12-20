@@ -59,16 +59,16 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 			return new Promise(function (resolve, reject) {
 				_this2.db.init();
 				_this2.db.select("service_type");
-				_this2.db.order("srvt_id");
-				_this2.db.limit(1);
+				_this2.db.limit(1, 0);
 				_this2.db.execute(true).then(function (service) {
+					service.srvt_queue = service.srvt_queue ? service.srvt_queue : 0;
 					var q = parseInt(service.srvt_queue) + 1;
-					var param = {
+					var u = {
 						srvt_queue: q
 					};
-
 					_this2.db.init();
-					_this2.db.update("service_type", param);
+					_this2.db.update("service_type", u);
+
 					_this2.db.execute().then(function () {
 						return resolve(q);
 					}).catch(function (err) {
