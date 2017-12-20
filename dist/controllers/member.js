@@ -291,6 +291,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						memberModel.insertTopup(tpParam).then(function (topup) {
 							memberModel.increaseBalance(param.id, param.balance).then(function () {
 								member = _this9.build.member(member);
+								member.balance = parseFloat(member.balance) + parseFloat(param.balance);
 								member.transaction = topup.tp_id;
 								return resolve(member);
 							}).catch(function (err) {
