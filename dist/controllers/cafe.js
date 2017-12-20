@@ -391,19 +391,23 @@ var CafeController = exports.CafeController = function (_Controller) {
 							}
 						}
 
-						var transParam = {
-							m_id: member.m_id,
-							tc_total: total,
-							tc_queue: cafeModel.getCafeQueue(cafe)
-						};
-						cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
-							cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
-								memberModel.decreaseBalance(transParam.m_id, total).then(function () {
-									var result = _this13.build.member(member);
-									result.transaction = transaction.tc_id;
-									result.balance -= total;
+						cafeModel.getCafeQueue(cafe).then(function (queue) {
+							var transParam = {
+								m_id: member.m_id,
+								tc_total: total,
+								tc_queue: queue
+							};
+							cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
+								cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
+									memberModel.decreaseBalance(transParam.m_id, total).then(function () {
+										var result = _this13.build.member(member);
+										result.transaction = transaction.tc_id;
+										result.balance -= total;
 
-									return resolve(result);
+										return resolve(result);
+									}).catch(function (err) {
+										return reject(err);
+									});
 								}).catch(function (err) {
 									return reject(err);
 								});

@@ -51,6 +51,34 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 
 			return this.db.executeMany();
 		}
+	}, {
+		key: "getServiceQueue",
+		value: function getServiceQueue(srvt_id) {
+			var _this2 = this;
+
+			return new Promise(function (resolve, reject) {
+				_this2.db.init();
+				_this2.db.select("service_type");
+				_this2.db.order("srvt_id");
+				_this2.db.limit(1);
+				_this2.db.execute(true).then(function (service) {
+					var q = parseInt(service.srvt_queue) + 1;
+					var param = {
+						srvt_queue: q
+					};
+
+					_this2.db.init();
+					_this2.db.update("service_type", param);
+					_this2.db.execute().then(function () {
+						return resolve(q);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 
 		/*** Get service transaction report data ***/
 

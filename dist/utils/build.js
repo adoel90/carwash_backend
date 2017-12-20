@@ -211,6 +211,7 @@ var Build = exports.Build = function () {
 			var transaction = {
 				id: data.tsrv_id,
 				date: data.tsrv_date,
+				queue: data.tsrv_queue,
 				member: this.member(data)
 			};
 

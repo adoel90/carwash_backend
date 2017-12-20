@@ -368,18 +368,23 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 							return reject(31);
 						}
 
-						var transParam = {
-							m_id: param.member,
-							srv_id: service.srv_id,
-							tsrv_date: _this13.moment(new Date()).format(),
-							tsrv_price: service.srv_price
-						};
-						serviceModel.insertServiceTransaction(transParam).then(function (transaction) {
-							memberModel.decreaseBalance(transParam.m_id, transParam.tsrv_price).then(function (balance) {
-								var result = _this13.build.member(member);
-								result.transaction = transaction.tsrv_id;
-								result.balance -= service.srv_price;
-								return resolve(result);
+						serviceModel.getServiceQueue(null).then(function (queue) {
+							var transParam = {
+								m_id: param.member,
+								srv_id: service.srv_id,
+								tsrv_date: _this13.moment(new Date()).format(),
+								tsrv_price: service.srv_price,
+								tsrv_queue: queue
+							};
+							serviceModel.insertServiceTransaction(transParam).then(function (transaction) {
+								memberModel.decreaseBalance(transParam.m_id, transParam.tsrv_price).then(function (balance) {
+									var result = _this13.build.member(member);
+									result.transaction = transaction.tsrv_id;
+									result.balance -= service.srv_price;
+									return resolve(result);
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
