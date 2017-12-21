@@ -364,7 +364,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					phone: req.body.phone ? req.body.phone : null,
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
-					card: req.body.card
+					card: req.body.card,
+					payment: req.body.payment
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -450,7 +451,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: res.locals.member.id,
 					type: res.locals.member.type,
-					balance: req.body.balance
+					balance: req.body.balance,
+					payment: req.body.payment
 				};
 
 				if (!_this2.checkParameters(param)) {

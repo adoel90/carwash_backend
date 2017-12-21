@@ -93,6 +93,7 @@ var Build = exports.Build = function () {
 				email: data.m_email,
 				address: data.m_address,
 				balance: data.m_balance,
+				payment: data.m_payment,
 				card: {
 					id: data.c_id
 				},

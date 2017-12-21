@@ -172,6 +172,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							m_email: param.email,
 							m_address: param.address,
 							m_balance: parseFloat(card_type.ct_min) + parseFloat(card_type.ct_bonus),
+							m_payment: param.payment,
 							c_id: card.c_id
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
@@ -343,7 +344,8 @@ var MemberController = exports.MemberController = function (_Controller) {
 						var tpParam = {
 							m_id: param.id,
 							tp_value: param.balance,
-							tp_before: member.m_balance
+							tp_before: member.m_balance,
+							tp_payment: param.payment
 						};
 						memberModel.insertTopup(tpParam).then(function (topup) {
 							memberModel.increaseBalance(param.id, param.balance).then(function () {
@@ -457,6 +459,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					var member = _this12.build.member(topup);
 					member.before = topup.tp_before;
 					member.topup = topup.tp_value;
+					member.payment = topup.tp_payment;
 
 					return resolve(member);
 				}).catch(function (err) {

@@ -587,6 +587,11 @@
 			"required" : false,
 			"description" : "Member address"
 		},{
+			"name" : "payment",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Payment type (1: Cash | 2: Debit | 3: Credit Card)"
+		},{
 			"name" : "card",
 			"type" : "integer",
 			"required" : true,
@@ -671,6 +676,11 @@
 			"type" : "numeric",
 			"required" : true,
 			"description" : "Topup balance"
+		},{
+			"name" : "payment",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Payment type (1: Cash | 2: Debit | 3: Credit Card)"
 		}]
 	},
 	"/member/topup/print" :{
