@@ -419,14 +419,25 @@ var MemberController = exports.MemberController = function (_Controller) {
 					}
 					memberModel.getMemberById(card.m_id).then(function (member) {
 						var memberParam = {
-							c_id: null
+							c_id: null,
+							m_balance: 0
+						};
+						var tpParam = {
+							m_id: member.m_id,
+							tp_value: parseFloat(member.m_balance) * -1,
+							tp_before: member.m_balance,
+							tp_payment: -1
 						};
 						memberModel.updateMember(card.m_id, memberParam).then(function () {
 							var cardParam = {
 								deleted_at: _this11.moment(new Date()).format()
 							};
-							cardModel.updateCard(param.card, cardParam).then(function () {
-								return resolve(true);
+							memberModel.insertTopup(tpParam).then(function (topup) {
+								cardModel.updateCard(param.card, cardParam).then(function () {
+									return resolve(topup.tp_id);
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
