@@ -341,15 +341,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			/* this.app.get("/member/detail", verifyToken, (req, res) => {
-   	let param = {
-   		id : req.query.id
-   	}
-   		if(!this.checkParameters(param)){
-   		return this.error(res, 1);
-   	}
-   		memberController.member
-   }); */
+			this.app.get("/member/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id,
+					transaction: req.query.transaction == "true" ? true : false
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.memberDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 
 			this.app.post("/member/create", _auth.verifyToken, function (req, res) {
 				var param = {

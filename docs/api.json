@@ -529,6 +529,17 @@
 			"description" : "Filter data by member name"
 		}]
 	},
+	"/member/detail" :{
+		"method" : "get",
+		"description" : "Get member detail data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Member ID"
+		}]
+	},
 	"/member/list" :{
 		"method" : "get",
 		"description" : "Get members list",

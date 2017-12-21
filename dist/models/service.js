@@ -137,6 +137,19 @@ var ServiceModel = exports.ServiceModel = function (_Model) {
 			return this.db.execute();
 		}
 
+		/*** Get service transaction data ***/
+
+	}, {
+		key: "getServiceTransaction",
+		value: function getServiceTransaction(m_id) {
+			this.db.init();
+			this.db.select("transaction_service");
+			if (m_id) {
+				this.db.where("m_id", m_id);
+			}
+			return this.db.execute();
+		}
+
 		/*** Get service data list ***/
 
 	}, {

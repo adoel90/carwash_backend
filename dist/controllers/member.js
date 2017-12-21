@@ -15,6 +15,10 @@ var _member = require("../models/member");
 
 var _card = require("../models/card");
 
+var _cafe = require("../models/cafe");
+
+var _service = require("../models/service");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -88,6 +92,59 @@ var MemberController = exports.MemberController = function (_Controller) {
 			});
 		}
 
+		/* 
+  ** Get member detail data
+  ** GET :: /member/detail
+  */
+
+	}, {
+		key: "memberDetail",
+		value: function memberDetail(param) {
+			var _this4 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+				var cafeModel = new _cafe.CafeModel();
+				var serviceModel = new _service.ServiceModel();
+
+				memberModel.getMemberById(param.id).then(function (member) {
+					var result = _this4.build.member(member);
+					if (!param.transaction) {
+						return resolve(result);
+					}
+
+					result.transaction = [];
+					serviceModel.getServiceTransaction(param.id).then(function (service) {
+						cafeModel.getCafeTransaction(param.id).then(function (cafe) {
+							for (var i = 0; i < service.length; i++) {
+								var a = _this4.build.transactionService(service[i]);
+								a.timestamp = _this4.moment(a.date).format("x");
+								a.type = "service";
+								result.transaction.push(a);
+							}
+							for (var _i = 0; _i < cafe.length; _i++) {
+								var _a = _this4.build.transactionCafe(cafe[_i]);
+								_a.timestamp = _this4.moment(_a.date).format("x");
+								_a.type = "cafe";
+								result.transaction.push(_a);
+							}
+
+							result.transaction.sort(function (a, b) {
+								return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
+							});
+							return resolve(result);
+						}).catch(function (err) {
+							return reject(err);
+						});
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
 		/*
   ** Create new member
   ** POST :: /member/create
@@ -96,7 +153,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "createMember",
 		value: function createMember(param) {
-			var _this4 = this;
+			var _this5 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -119,7 +176,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
 							memberModel.getMemberById(member.m_id).then(function (m) {
-								member = _this4.build.member(m);
+								member = _this5.build.member(m);
 								return resolve(member);
 							}).catch(function (err) {
 								return reject(err);
@@ -147,7 +204,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "updateMember",
 		value: function updateMember(param) {
-			var _this5 = this;
+			var _this6 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -157,7 +214,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					m_phone: param.phone,
 					m_email: param.email,
 					m_address: param.address,
-					updated_at: _this5.moment(new Date()).format()
+					updated_at: _this6.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -176,13 +233,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "deleteMember",
 		value: function deleteMember(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
 				var memberParam = {
-					deleted_at: _this6.moment(new Date()).format()
+					deleted_at: _this7.moment(new Date()).format()
 				};
 
 				memberModel.updateMember(param.id, memberParam).then(function (member) {
@@ -201,14 +258,14 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "changeMemberStatus",
 		value: function changeMemberStatus(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
 				memberModel.getMemberById(param.id).then(function (member) {
 					var memberParam = {
-						deleted_at: member.deleted ? null : _this7.moment(new Date()).format()
+						deleted_at: member.deleted ? null : _this8.moment(new Date()).format()
 					};
 					memberModel.updateMember(param.id, memberParam).then(function () {
 						return resolve(true);
@@ -229,7 +286,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "memberAuthenticate",
 		value: function memberAuthenticate(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -243,12 +300,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 						id: member.m_id,
 						card: member.c_id,
 						type: member.ct_id,
-						expired: _this8.moment(new Date()).add("10", "minutes")
+						expired: _this9.moment(new Date()).add("10", "minutes")
 					};
 
 					var result = {
 						accessToken: token.encode(memberToken),
-						member: _this8.build.member(member)
+						member: _this9.build.member(member)
 					};
 
 					return resolve(result);
@@ -269,7 +326,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "topupMember",
 		value: function topupMember(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -290,7 +347,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						};
 						memberModel.insertTopup(tpParam).then(function (topup) {
 							memberModel.increaseBalance(param.id, param.balance).then(function () {
-								member = _this9.build.member(member);
+								member = _this10.build.member(member);
 								member.balance = parseFloat(member.balance) + parseFloat(param.balance);
 								member.transaction = topup.tp_id;
 								return resolve(member);
@@ -348,7 +405,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "refundMember",
 		value: function refundMember(param) {
-			var _this10 = this;
+			var _this11 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
@@ -364,7 +421,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						};
 						memberModel.updateMember(card.m_id, memberParam).then(function () {
 							var cardParam = {
-								deleted_at: _this10.moment(new Date()).format()
+								deleted_at: _this11.moment(new Date()).format()
 							};
 							cardModel.updateCard(param.card, cardParam).then(function () {
 								return resolve(true);
@@ -391,13 +448,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 	}, {
 		key: "topupData",
 		value: function topupData(param) {
-			var _this11 = this;
+			var _this12 = this;
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 
 				memberModel.getTopup(param.id).then(function (topup) {
-					var member = _this11.build.member(topup);
+					var member = _this12.build.member(topup);
 					member.before = topup.tp_before;
 					member.topup = topup.tp_value;
 

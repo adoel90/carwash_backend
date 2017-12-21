@@ -198,6 +198,20 @@ var CafeModel = exports.CafeModel = function (_Model) {
 			return this.db.execute();
 		}
 
+		/*** Get cafe transaction data ***/
+
+	}, {
+		key: "getCafeTransaction",
+		value: function getCafeTransaction(m_id) {
+			this.db.init();
+			this.db.select("transaction_cafe");
+			if (m_id) {
+				this.db.where("m_id", m_id);
+			}
+
+			return this.db.execute();
+		}
+
 		/* getCafeQueue(cf_id) {
   	if(!cf_id) {
   		return null ;
