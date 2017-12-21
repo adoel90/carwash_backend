@@ -294,7 +294,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var token = new _token.Token();
 
 				memberModel.getMemberByCardId(param.c_id).then(function (member) {
-					if (member.card_delete) {
+					if (member.card_delete || member.member_delete) {
 						return reject(21);
 					}
 					var memberToken = {

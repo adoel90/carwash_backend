@@ -47,7 +47,7 @@ var Response = function () {
 				case 10:
 					{
 						error.set("status", 403);
-						error.set("message", "User doesn't exit or not active");
+						error.set("message", "User doesn't exist or not active");
 						break;
 					}
 				case 11:
@@ -94,6 +94,12 @@ var Response = function () {
 					{
 						error.set("status", 400);
 						error.set("message", "Topup balance below topup minimum");
+						break;
+					}
+				case 33:
+					{
+						error.set("status", 400);
+						error.set("message", "Member is blocked or deleted");
 						break;
 					}
 
