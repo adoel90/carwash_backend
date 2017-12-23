@@ -201,6 +201,7 @@ var Build = exports.Build = function () {
 				id: data.tc_id,
 				date: data.tc_date,
 				queue: data.tc_queue,
+				total: data.tc_total,
 				member: this.member(data)
 			};
 
@@ -213,6 +214,7 @@ var Build = exports.Build = function () {
 				id: data.tsrv_id,
 				date: data.tsrv_date,
 				queue: data.tsrv_queue,
+				total: data.tsrv_price,
 				member: this.member(data)
 			};
 
@@ -241,6 +243,18 @@ var Build = exports.Build = function () {
 			}
 
 			return result;
+		}
+	}, {
+		key: "topup",
+		value: function topup(data) {
+			var topup = {
+				id: data.tp_id,
+				date: data.tp_date,
+				total: data.tp_value,
+				payment: data.tp_payment
+			};
+
+			return topup;
 		}
 	}]);
 

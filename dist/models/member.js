@@ -153,6 +153,18 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+
+		/*** Get topup transactio ***/
+
+	}, {
+		key: "getTopupTransaction",
+		value: function getTopupTransaction(m_id) {
+			this.db.init();
+			this.db.select("topup");
+			this.db.where("m_id", m_id);
+
+			return this.db.execute();
+		}
 	}]);
 
 	return MemberModel;

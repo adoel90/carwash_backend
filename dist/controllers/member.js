@@ -116,23 +116,33 @@ var MemberController = exports.MemberController = function (_Controller) {
 					result.transaction = [];
 					serviceModel.getServiceTransaction(param.id).then(function (service) {
 						cafeModel.getCafeTransaction(param.id).then(function (cafe) {
-							for (var i = 0; i < service.length; i++) {
-								var a = _this4.build.transactionService(service[i]);
-								a.timestamp = _this4.moment(a.date).format("x");
-								a.type = "service";
-								result.transaction.push(a);
-							}
-							for (var _i = 0; _i < cafe.length; _i++) {
-								var _a = _this4.build.transactionCafe(cafe[_i]);
-								_a.timestamp = _this4.moment(_a.date).format("x");
-								_a.type = "cafe";
-								result.transaction.push(_a);
-							}
+							memberModel.getTopupTransaction(param.id).then(function (topup) {
+								for (var i = 0; i < service.length; i++) {
+									var a = _this4.build.transactionService(service[i]);
+									a.timestamp = _this4.moment(a.date).format("x");
+									a.type = "service";
+									result.transaction.push(a);
+								}
+								for (var _i = 0; _i < cafe.length; _i++) {
+									var _a = _this4.build.transactionCafe(cafe[_i]);
+									_a.timestamp = _this4.moment(_a.date).format("x");
+									_a.type = "cafe";
+									result.transaction.push(_a);
+								}
+								for (var _i2 = 0; _i2 < topup.length; _i2++) {
+									var _a2 = _this4.build.topup(topup[_i2]);
+									_a2.timestamp = _this4.moment(_a2.date).format("x");
+									_a2.type = "topup";
+									result.transaction.push(_a2);
+								}
 
-							result.transaction.sort(function (a, b) {
-								return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
+								result.transaction.sort(function (a, b) {
+									return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
+								});
+								return resolve(result);
+							}).catch(function (err) {
+								return reject(err);
 							});
-							return resolve(result);
 						}).catch(function (err) {
 							return reject(err);
 						});
@@ -178,6 +188,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						memberModel.insertMember(memberParam).then(function (member) {
 							memberModel.getMemberById(member.m_id).then(function (m) {
 								member = _this5.build.member(m);
+								member.payment = param.payment;
 								return resolve(member);
 							}).catch(function (err) {
 								return reject(err);
