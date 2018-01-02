@@ -770,12 +770,13 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/service/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/service/update", _auth.verifyToken, this.upload.single("imaeg"), function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
 					price: req.body.price,
-					desc: req.body.description ? req.body.description : null
+					desc: req.body.description ? req.body.description : null,
+					img: req.file ? req.file : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1003,12 +1004,13 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/menu/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/cafe/menu/update", _auth.verifyToken, this.upload.single("image"), function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
 					price: req.body.price,
-					desc: req.body.description ? req.body.description : null
+					desc: req.body.description ? req.body.description : null,
+					image: req.file ? req.file : null
 				};
 
 				if (!_this2.checkParameters(param)) {

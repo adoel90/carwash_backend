@@ -291,6 +291,11 @@ var CafeController = exports.CafeController = function (_Controller) {
 					mn_desc: param.desc,
 					updated_at: _this10.moment(new Date()).format()
 				};
+
+				if (param.image) {
+					menuParam.mn_img = _this10.rewriteImage(param.image);
+				}
+
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
 				}).catch(function (err) {

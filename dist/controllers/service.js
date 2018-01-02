@@ -288,6 +288,10 @@ var ServiceController = exports.ServiceController = function (_Controller) {
 					srv_desc: param.desc,
 					updated_at: _this10.moment(new Date()).format()
 				};
+
+				if (param.img) {
+					serviceParam.srv_img = _this10.rewriteImage(param.img);
+				}
 				serviceModel.updateService(param.id, serviceParam).then(function (service) {
 					return resolve(true);
 				}).catch(function (err) {
