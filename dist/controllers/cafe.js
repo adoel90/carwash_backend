@@ -445,7 +445,7 @@ var CafeController = exports.CafeController = function (_Controller) {
     			memberModel.decreaseBalance(transParam.m_id, total).then(() => {
     				let result = this.build.member(member);
     				result.balance -= total;
-    					return resolve(result);
+    						return resolve(result);
     			}).catch((err) => {
     				return reject(err);
     			});

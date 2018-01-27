@@ -1,10 +1,10 @@
 {
 	"server" : {
-		"host" : "http://128.199.227.10:3307/",
+		"host" : "http://128.199.234.141:3307/",
 		"port" : 3307
 	},
 	"postgres" : {
-		"host" : "128.199.227.10",
+		"host" : "128.199.234.141",
 		"port" : 5432,
 		"database" : "carwashDB",
 		"user" : "postgres",

@@ -47,16 +47,16 @@ var ReportController = exports.ReportController = function (_Controller) {
                         row : transaction[0][0].count,
                         transaction : []
                     }
-                     for(let i=0; i<transaction[1].length; i++){
+                      for(let i=0; i<transaction[1].length; i++){
                         let trans = this.build.transactionCafe(transaction[1][i]);
                         trans.menu = this.build.menu(transaction[1][i]);
                         delete trans.menu.price;
-                         trans.quantity = transaction[1][i].tcm_quantity;
+                          trans.quantity = transaction[1][i].tcm_quantity;
                         trans.price = transaction[1][i].tcm_price;
                         trans.cafe = this.build.cafeType(transaction[1][i]);
                         result.transaction.push(trans);
                     }
-                     return resolve(result);
+                      return resolve(result);
                 }).catch((err) => {
                     return reject(err);
                 }); */
