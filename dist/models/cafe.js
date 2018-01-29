@@ -230,8 +230,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
   			this.db.init();
   			this.db.update("cafe", u);
   			this.db.where("cf_id", cf_id);
-  
-  			this.db.execute().catch((err) => {
+  				this.db.execute().catch((err) => {
   				console.log(err);
   			});
   		}
