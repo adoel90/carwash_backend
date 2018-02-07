@@ -1,14 +1,14 @@
 {
 	"server" : {
-		"host" : "http://128.199.177.16:3307/",
+		"host" : "http://159.89.197.57:3307/",
 		"port" : 3307
 	},
 	"postgres" : {
-		"host" : "128.199.234.141",
+		"host" : "159.89.197.57",
 		"port" : 5432,
 		"database" : "carwashDB",
 		"user" : "postgres",
-		"password" : "mvp.buzzbuddies.2017"
+		"password" : "Andre320."
 	},
 	"mongodb" : {
 		"url" : "mongodb://127.0.0.1:27017/komudigi"
