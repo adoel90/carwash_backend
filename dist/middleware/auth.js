@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.initialize = initialize;
 exports.verifyToken = verifyToken;
 exports.verifyMemberToken = verifyMemberToken;
+exports.verifyCafeToken = verifyCafeToken;
 
 var _passport = require("passport");
 
@@ -100,6 +101,27 @@ function verifyMemberToken(req, res, next) {
 				return res.status(_response2.get("status")).send({ status: _response2.get("status"), message: _response2.get("message") });
 			}
 			res.locals.member = decode;
+			// console.log("here");
+			return next();
+		}
+	})(req, res, next);
+}
+
+function verifyCafeToken(req, res, next) {
+	var JWTConfig = _config2.default.jwt;
+	_passport2.default.authenticate("jwt", { session: false }, function (err, user, info) {
+		if (err) {
+			console.log(err);
+			return next(err);
+		}
+
+		if (!user) {
+			var response = _response3.Response.code(0);
+			return res.status(response.get("status")).send({ status: response.get("status"), message: response.get("message") });
+		} else {
+			var decode = _jwtSimple2.default.decode(req.query.accessToken, JWTConfig.jwtSecret, "HS512");
+
+			res.locals.user = decode;
 			// console.log("here");
 			return next();
 		}

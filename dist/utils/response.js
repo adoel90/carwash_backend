@@ -103,6 +103,14 @@ var Response = function () {
 						break;
 					}
 
+				// Response cafe error
+				case 40:
+					{
+						error.set("status", 403);
+						error.set("message", "You do not have permission to access this page");
+						break;
+					}
+
 				// Response server error
 				default:
 					{

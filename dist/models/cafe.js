@@ -30,6 +30,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
 	_createClass(CafeModel, [{
 		key: "getCafeType",
 		value: function getCafeType() {
+			this.db.init();
 			this.db.select("cafe");
 			// this.db.whereIsNull("deleted_at");
 
@@ -69,9 +70,10 @@ var CafeModel = exports.CafeModel = function (_Model) {
 	}, {
 		key: "insertCafe",
 		value: function insertCafe(param) {
-			this.db.insert("cafe", param);
+			this.db.init();
+			this.db.insert("cafe", param, "cf_id");
 
-			return this.db.execute();
+			return this.db.execute(true);
 		}
 
 		/*** Update cafe data ***/

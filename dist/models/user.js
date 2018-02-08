@@ -24,7 +24,20 @@ var UserModel = exports.UserModel = function (_Model) {
 		return _possibleConstructorReturn(this, (UserModel.__proto__ || Object.getPrototypeOf(UserModel)).call(this));
 	}
 
+	/* Get user by user_id and level_access */
+
+
 	_createClass(UserModel, [{
+		key: "getUserByAccessId",
+		value: function getUserByAccessId(data) {
+			this.db.init();
+			this.db.select("users");
+			this.db.whereAny("users.u_id", data.u_id);
+			this.db.where("ul_id", data.ul_id);
+
+			return this.db.execute(true);
+		}
+	}, {
 		key: "getUserById",
 		value: function getUserById(u_id) {
 			this.db.init();
