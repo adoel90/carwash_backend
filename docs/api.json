@@ -283,6 +283,132 @@
 			"description" : "User's password"
 		}]
 	},
+	"/cafe/employee/list" :{
+		"method" : "get",
+		"description" : "Get cafe employee list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		}]
+	},
+	"/cafe/employee/detail" :{
+		"method" : "get",
+		"description" : "Get cafe employee detail",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "id",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Employee ID"
+			}
+		]
+	},
+	"/cafe/employee/create" :{
+		"method" : "post",
+		"description" : "Create new cafe employee",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee email"
+		},
+		{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee username"
+		},
+		{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee password"
+		},
+		{
+			"name" : "access",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee level access"
+		}]
+	},
+	"/cafe/employee/update" :{
+		"method" : "put",
+		"description" : "Update cafe employee",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee email"
+		},
+		{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee username"
+		},
+		{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee password"
+		},
+		{
+			"name" : "access",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee level access"
+		}]
+	},
+	"/cafe/employee/create" :{
+		"method" : "put",
+		"description" : "Delete cafe employee",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Cafe ID"
+		}]
+	},
 	"/cafe/menu" :{
 		"method" : "get",
 		"description" : "Get cafe menu",

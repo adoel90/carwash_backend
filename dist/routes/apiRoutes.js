@@ -35,9 +35,13 @@ var _report = require("../controllers/report");
 
 var _access = require("../controllers/access");
 
+var _employee = require("../controllers/employee");
+
 var _url = require("url");
 
 var _util = require("util");
+
+var _constants = require("constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72,6 +76,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var cafeController = new _cafe.CafeController();
 			var reportController = new _report.ReportController();
 			var accessController = new _access.AccessController();
+			var employeeController = new _employee.EmployeeController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -376,6 +381,84 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				};
 
 				cafeController.authenticate(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			// Cafe Employee routes
+			this.app.get("/cafe/employee/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0,
+					cafe: req.query.cafe
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				employeeController.employeeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/cafe/employee/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				employeeController.employeeDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/cafe/employee/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name,
+					email: req.body.email,
+					username: req.body.username,
+					password: req.body.password,
+					access: req.body.access ? req.body.access : 1,
+					cafe: req.body.cafe
+				};
+
+				employeeController.createEmployee(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/cafe/employee/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name,
+					email: req.body.email,
+					username: req.body.username,
+					password: req.body.password,
+					access: req.body.access
+				};
+
+				employeeController.updateEmployee(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/cafe/employee/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					cafe: req.body.cafe
+				};
+
+				employeeController.deleteEmployee(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

@@ -32,6 +32,7 @@ var EmployeeModel = exports.EmployeeModel = function (_Model) {
         value: function listEmployee(param) {
             this.db.init();
             this.db.select("employee", "count(*)");
+            this.db.where("cf_id", param.cafe);
             this.db.push();
 
             this.db.select("employee");
@@ -45,12 +46,12 @@ var EmployeeModel = exports.EmployeeModel = function (_Model) {
 
     }, {
         key: "getEmployeeById",
-        value: function getEmployeeById(id) {
+        value: function getEmployeeById(param) {
             this.db.init();
             this.db.select("employee");
-            this.db.where("emp_id", id);
+            this.db.where("emp_id", param.id);
 
-            return this.db.execute();
+            return this.db.execute(true);
         }
 
         /* Get employee by username */
