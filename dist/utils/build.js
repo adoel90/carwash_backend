@@ -256,6 +256,46 @@ var Build = exports.Build = function () {
 
 			return topup;
 		}
+
+		/*** Employee access ***/
+
+	}, {
+		key: "employeeAccess",
+		value: function employeeAccess(code) {
+			code += 1;
+			var name = ["Deactive", "Admin", "Kasir"];
+
+			return name[code];
+		}
+
+		/*** Employee list ***/
+
+	}, {
+		key: "employee",
+		value: function employee(data) {
+			var user = {
+				id: data.emp_id,
+				name: data.emp_name,
+				username: data.emp_username,
+				email: data.emp_email,
+				cafe: data.cf_id,
+				access: {
+					code: parseInt(data.emp_access),
+					name: this.employeeAccess(data.emp_access)
+				},
+				status: true
+			};
+
+			if (data.deleted_at) {
+				user.status = false;
+			}
+
+			// if(data.ul_name){
+			// 	user.level = this.accessLevel(data);
+			// }
+
+			return user;
+		}
 	}]);
 
 	return Build;

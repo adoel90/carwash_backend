@@ -1,11 +1,11 @@
 {
-	"/admin/access/list" :{
+	"/access" :{
 		"method" : "get",
 		"description" : "Get all access level",
 		"token" : true,
 		"parameter" : []
 	},
-	"/admin/access/detail" :{
+	"/access/detail" :{
 		"method" : "get",
 		"description" : "Get access detail",
 		"token" : true,
@@ -16,7 +16,7 @@
 			"description" : "Access level ID"
 		}]
 	},
-	"/admin/access/create" :{
+	"/access/create" :{
 		"method" : "post",
 		"content_type" : "application/json",
 		"description" : "Create new access level",
@@ -33,7 +33,7 @@
 			"description" : "Access level modules"
 		}]
 	},
-	"/admin/access/update" :{
+	"/access/update" :{
 		"method" : "put",
 		"content_type" : "application/json",
 		"description" : "Update access level data",
@@ -55,7 +55,7 @@
 			"description" : "Access level modules"
 		}]
 	},
-	"/admin/access/status" :{
+	"/access/status" :{
 		"method" : "put",
 		"description" : "Change access level status",
 		"token" : true,
@@ -66,166 +66,31 @@
 			"description" : "Access level ID"
 		}]
 	},
-	"/admin/module" :{
-		"method" : "get",
-		"description" : "Get all module",
-		"token" : true,
-		"parameter" : []
-	},
-	"/admin/authenticate" :{
-		"method" : "post",
-		"description" : "Authenticate user to get access token",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : false,
-		"parameter" : [{
-			"name" : "username",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's username"
-		},{
-			"name" : "password",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's password"
-		}]
-	},
-	"/admin/user/create" :{
-		"method" : "post",
-		"description" : "Create new users",
-		"token" : true,
-		"parameter" : [{
-			"name" : "username",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's username"
-		},{
-			"name" : "password",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's password"
-		},{
-			"name" : "name",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's name"
-		},{
-			"name" : "email",
-			"type" : "string",
-			"required" : false,
-			"description" : "User's email"
-		},{
-			"name" : "level",
-			"type" : "integer",
-			"required" : true,
-			"description" : "User's access level ID"
-		},{
-			"name" : "cafe",
-			"type" : "integer",
-			"required" : false,
-			"description" : "User's cafe type ID"
-		}]
-	},
-	"/admin/user/update" :{
-		"method" : "put",
-		"description" : "Update users data",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "User's ID"
-		},{
-			"name" : "username",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's username"
-		},{
-			"name" : "password",
-			"type" : "string",
-			"required" : false,
-			"description" : "User's password, Send if want to change password"
-		},{
-			"name" : "name",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's name"
-		},{
-			"name" : "email",
-			"type" : "string",
-			"required" : false,
-			"description" : "User's email"
-		},{
-			"name" : "level",
-			"type" : "integer",
-			"required" : true,
-			"description" : "User's access level ID"
-		},{
-			"name" : "cafe",
-			"type" : "integer",
-			"required" : false,
-			"description" : "User's cafe type ID"
-		}]
-	},
-	"/admin/user/status" :{
-		"method" : "put",
-		"description" : "Change users status",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "User's ID"
-		}]
-	},
-	"/admin/user/list" :{
-		"method" : "get",
-		"description" : "Get all users",
-		"token" : true,
-		"parameter" : [{
-			"name" : "name",
-			"type" : "String",
-			"required" : false,
-			"description" : "Filter data by user's name"
-		}]
-	},
-	"/admin/user/detail" :{
-		"method" : "get",
-		"description" : "Get user by user id",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "String",
-			"required" : true,
-			"description" : "Get user by user id"
-		}]
-	},
-	"/admin/cafe/list" :{
+	"/cafe/type" :{
 		"method" : "get",
 		"description" : "Get cafe type",
 		"token" : true,
 		"parameter" : []
 	},
-	"/admin/cafe/create" :{
+	"/cafe/type/list" :{
+		"method" : "get",
+		"description" : "Get list of cafe type",
+		"token" : true,
+		"parameter" : []
+	},
+	"/cafe/type/create" :{
 		"method" : "post",
 		"description" : "Create new cafe type",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
-		"parameter" : [
-			{
-				"name" : "name",
-				"type" : "string",
-				"required" : true,
-				"description" : "Cafe name"
-			},
-			{
-				"name" : "user",
-				"type" : "string",
-				"required" : true,
-				"description" : "Employee id"
-			}
-		]
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Cafe name"
+		}]
 	},
-	"/admin/cafe/update" :{
+	"/cafe/type/update" :{
 		"method" : "put",
 		"description" : "Update new cafe type data",
 		"content_type" : "x-www-form-urlencoded",
@@ -242,7 +107,7 @@
 			"description" : "Cafe name"
 		}]
 	},
-	"/admin/cafe/delete" :{
+	"/cafe/type/delete" :{
 		"method" : "put",
 		"description" : "Delete cafe type data",
 		"content_type" : "x-www-form-urlencoded",
@@ -254,7 +119,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/admin/cafe/status" :{
+	"/cafe/type/status" :{
 		"method" : "put",
 		"description" : "Change cafe type status",
 		"content_type" : "x-www-form-urlencoded",
@@ -264,23 +129,6 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Cafe ID"
-		}]
-	},
-	"/cafe/authenticate" :{
-		"method" : "post",
-		"description" : "Authenticate employee to get access token",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : false,
-		"parameter" : [{
-			"name" : "username",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's username"
-		},{
-			"name" : "password",
-			"type" : "string",
-			"required" : true,
-			"description" : "User's password"
 		}]
 	},
 	"/cafe/menu" :{
@@ -432,6 +280,138 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Cafe transaction ID"
+		}]
+	},
+	"/user/authenticate" :{
+		"method" : "post",
+		"description" : "Authenticate user to get access token",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : false,
+		"parameter" : [{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's password"
+		}]
+	},
+	"/user/create" :{
+		"method" : "post",
+		"description" : "Create new users",
+		"token" : true,
+		"parameter" : [{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's password"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's email"
+		},{
+			"name" : "level",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's access level ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User's cafe type ID"
+		}]
+	},
+	"/user/update" :{
+		"method" : "put",
+		"description" : "Update users data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's ID"
+		},{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
+		},{
+			"name" : "password",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's password, Send if want to change password"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's name"
+		},{
+			"name" : "email",
+			"type" : "string",
+			"required" : false,
+			"description" : "User's email"
+		},{
+			"name" : "level",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's access level ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User's cafe type ID"
+		}]
+	},
+	"/user/status" :{
+		"method" : "put",
+		"description" : "Change users status",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User's ID"
+		}]
+	},
+	"/user" :{
+		"method" : "get",
+		"description" : "Get all users",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "String",
+			"required" : false,
+			"description" : "Filter data by user's name"
+		}]
+	},
+	"/user/list" :{
+		"method" : "get",
+		"description" : "Get users list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
 		}]
 	},
 	"/card/type" :{
@@ -748,6 +728,12 @@
 			"required" : true,
 			"description" : "Card type ID"
 		}]
+	},
+	"/module" :{
+		"method" : "get",
+		"description" : "Get all module",
+		"token" : true,
+		"parameter" : []
 	},
 	"/report/transaction/cafe" :{
 		"method" : "get",
