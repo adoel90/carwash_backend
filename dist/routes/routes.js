@@ -51,7 +51,7 @@ var Routes = exports.Routes = function () {
 			var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 			var message = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-			return res.status(200).send({ status: 200, message: message, data: data });
+			return res.status(200).send({ status: 200, message: message, result: data });
 		}
 	}, {
 		key: "error",

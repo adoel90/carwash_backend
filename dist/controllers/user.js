@@ -57,11 +57,11 @@ var UserController = exports.UserController = function (_Controller) {
 
 						var result = {
 							accessToken: token.encode(user),
-							user: userData
+							data: userData
 						};
-						result.user.module = [];
+						result.data.module = [];
 						for (var i = 0; i < access.length; i++) {
-							result.user.module.push(_this2.build.module(access[i]));
+							result.data.module.push(_this2.build.module(access[i]));
 						}
 						return resolve(result);
 					}).catch(function (err) {
