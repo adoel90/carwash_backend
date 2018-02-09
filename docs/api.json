@@ -560,6 +560,37 @@
 			"description" : "Cafe transaction ID"
 		}]
 	},
+	"/cafe/report" :{
+		"method" : "get",
+		"description" : "Get report cafe owner",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "type",
+				"type" : "string",
+				"required" : true,
+				"description" : "Type report (day, month, year). Default report by month"
+			},
+			{
+				"name" : "start_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "Start date"
+			},
+			{
+				"name" : "end_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "End Date"
+			},
+			{
+				"name" : "cafe",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Cafe ID"
+			}
+		]
+	},
 	"/card/type" :{
 		"method" : "get",
 		"description" : "Get card type",
