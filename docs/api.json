@@ -542,12 +542,20 @@
 		"content_type" : "application/json",
 		"description" : "Create new cafe transaction",
 		"token" : true,
-		"parameter" : [{
-			"name" : "menu",
-			"type" : "Array",
-			"required" : true,
-			"description" : "Transaction menu, Array of object => {\"id\":<menu ID>, \"quantity\": <menu quantity>}"
-		}]
+		"parameter" : [
+			{
+				"name" : "cafe",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Cafe ID"
+			},
+			{
+				"name" : "menu",
+				"type" : "Array",
+				"required" : true,
+				"description" : "Transaction menu, Array of object => {\"id\":<menu ID>, \"quantity\": <menu quantity>}"
+			}
+		]
 	},
 	"/cafe/transaction/print" :{
 		"method" : "get",
