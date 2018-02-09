@@ -575,6 +575,42 @@ var CafeController = exports.CafeController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Get report transaction
+  ** GET :: /cafe/report
+  */
+
+	}, {
+		key: "cafeReport",
+		value: function cafeReport(param) {
+			var _this16 = this;
+
+			return new Promise(function (resolve, reject) {
+				var cafeModel = new _cafe.CafeModel();
+
+				var result = _this16.buildRange(param.type, param.start_date, param.end_date);
+				var format = "DD MMM YYYY";
+				if (param.type == "month") {
+					format = "MMM YYYY";
+				} else if (param.type == "year") {
+					format = "YYYY";
+				}
+
+				cafeModel.getGraphReportTransactionByType(param.type, param.start_date, param.end_date, param.cafe).then(function (reportCafe) {
+					for (var i = 0; i < reportCafe.length; i++) {
+						var date = _this16.moment(reportCafe[i].date).format(format);
+						if (result[date]) {
+							result[date].transaction += parseFloat(reportCafe[i].sum);
+						}
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return CafeController;

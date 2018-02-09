@@ -271,6 +271,23 @@ var CafeModel = exports.CafeModel = function (_Model) {
 				});
 			});
 		}
+
+		/*** Report owner cafe by Type ***/
+
+	}, {
+		key: "getGraphReportTransactionByType",
+		value: function getGraphReportTransactionByType(type, start, end, cafe) {
+			this.db.init();
+			this.db.select("transaction_cafe", "date(tc_date), sum(tc_total)");
+			this.db.group("date(tc_date)");
+			this.db.order("date(tc_date)");
+			this.db.whereBetween("date(tc_date)", start, end);
+			if (cafe) {
+				this.db.where("tc_id", cafe);
+			}
+
+			return this.db.execute();
+		}
 	}]);
 
 	return CafeModel;

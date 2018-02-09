@@ -387,7 +387,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			// Cafe Employee routes
 			this.app.get("/cafe/employee/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					limit: req.query.limit ? req.query.limit : 10,
@@ -465,7 +464,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			// 
 			this.app.get("/cafe/menu", _auth.verifyToken, function (req, res) {
 				var param = {
 					cf_id: req.query.cafe
@@ -600,6 +598,25 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cafeController.cafeTransactionDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/cafe/report", _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.query.type ? req.query.type : "month",
+					start_date: req.query.start_date,
+					end_date: req.query.end_date,
+					cafe: req.query.cafe ? req.query.cafe : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				cafeController.cafeReport(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

@@ -32,6 +32,7 @@ var Controller = exports.Controller = function () {
 		this.build = new _build.Build();
 		this.moment = _moment2.default;
 		this.rewriteImage = _util.rewriteImage;
+		this.buildRange = _util.buildRange;
 	}
 
 	_createClass(Controller, [{
