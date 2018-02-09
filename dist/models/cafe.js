@@ -283,7 +283,7 @@ var CafeModel = exports.CafeModel = function (_Model) {
 			this.db.order("date(tc_date)");
 			this.db.whereBetween("date(tc_date)", start, end);
 			if (cafe) {
-				this.db.where("tc_id", cafe);
+				this.db.where("cf_id", cafe);
 			}
 
 			return this.db.execute();

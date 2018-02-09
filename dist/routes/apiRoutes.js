@@ -573,8 +573,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.post("/cafe/transaction/create", _auth.verifyMemberToken, function (req, res) {
 				var param = {
-					member: res.locals.member.id,
-					menu: req.body.menu
+					member: req.body.member, //res.locals.member.id,
+					menu: req.body.menu,
+					cafe: req.body.cafe
 				};
 
 				if (!_this2.checkParameters(param)) {

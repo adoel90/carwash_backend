@@ -483,7 +483,8 @@ var CafeController = exports.CafeController = function (_Controller) {
 							var transParam = {
 								m_id: member.m_id,
 								tc_total: total,
-								tc_queue: queue
+								tc_queue: queue,
+								cf_id: param.cafe
 							};
 							cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
 								cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
