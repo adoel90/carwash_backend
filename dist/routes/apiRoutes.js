@@ -87,7 +87,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 
 			/* Start Admin user routes */
-			this.app.post("/admin/authenticate", function (req, res) {
+			this.app.post("/user/authenticate", function (req, res) {
 				var param = {
 					username: req.body.username,
 					password: req.body.password
@@ -104,7 +104,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/admin/user/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/user/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					name: req.query.name ? req.query.name : null
 				};
@@ -120,7 +120,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/admin/user/detail", _auth.verifyToken, function (req, res) {
+			this.app.get("/user/detail", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -136,7 +136,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/admin/user/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/user/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					username: req.body.username,
 					password: req.body.password,
@@ -157,7 +157,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/user/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/user/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					username: req.body.username,
@@ -179,7 +179,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/user/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/user/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -197,7 +197,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/* End Admin user routes */
 
 			/*--- Start Admin Access routes ---*/
-			this.app.get("/admin/access/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/access/list", _auth.verifyToken, function (req, res) {
 				var param = {};
 
 				if (!_this2.checkParameters(param)) {
@@ -211,7 +211,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/admin/access/detail", _auth.verifyToken, function (req, res) {
+			this.app.get("/access/detail", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -227,7 +227,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/admin/access/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/access/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					name: req.body.name,
 					module: req.body.module
@@ -247,7 +247,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/access/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/access/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
@@ -268,7 +268,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/access/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/access/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -284,7 +284,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/admin/module", _auth.verifyToken, function (req, res) {
+			this.app.get("/module", _auth.verifyToken, function (req, res) {
 				var param = {};
 
 				accessController.allModule(param).then(function (data) {

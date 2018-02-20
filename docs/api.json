@@ -1,11 +1,11 @@
 {
-	"/admin/access/list" :{
+	"/access/list" :{
 		"method" : "get",
 		"description" : "Get all access level",
 		"token" : true,
 		"parameter" : []
 	},
-	"/admin/access/detail" :{
+	"/access/detail" :{
 		"method" : "get",
 		"description" : "Get access detail",
 		"token" : true,
@@ -16,7 +16,7 @@
 			"description" : "Access level ID"
 		}]
 	},
-	"/admin/access/create" :{
+	"/access/create" :{
 		"method" : "post",
 		"content_type" : "application/json",
 		"description" : "Create new access level",
@@ -33,7 +33,7 @@
 			"description" : "Access level modules"
 		}]
 	},
-	"/admin/access/update" :{
+	"/access/update" :{
 		"method" : "put",
 		"content_type" : "application/json",
 		"description" : "Update access level data",
@@ -55,7 +55,7 @@
 			"description" : "Access level modules"
 		}]
 	},
-	"/admin/access/status" :{
+	"/access/status" :{
 		"method" : "put",
 		"description" : "Change access level status",
 		"token" : true,
@@ -66,13 +66,13 @@
 			"description" : "Access level ID"
 		}]
 	},
-	"/admin/module" :{
+	"/module" :{
 		"method" : "get",
 		"description" : "Get all module",
 		"token" : true,
 		"parameter" : []
 	},
-	"/admin/authenticate" :{
+	"/user/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate user to get access token",
 		"content_type" : "x-www-form-urlencoded",
@@ -89,7 +89,7 @@
 			"description" : "User's password"
 		}]
 	},
-	"/admin/user/create" :{
+	"/user/create" :{
 		"method" : "post",
 		"description" : "Create new users",
 		"token" : true,
@@ -125,7 +125,7 @@
 			"description" : "User's cafe type ID"
 		}]
 	},
-	"/admin/user/update" :{
+	"/user/update" :{
 		"method" : "put",
 		"description" : "Update users data",
 		"token" : true,
@@ -166,7 +166,7 @@
 			"description" : "User's cafe type ID"
 		}]
 	},
-	"/admin/user/status" :{
+	"/user/status" :{
 		"method" : "put",
 		"description" : "Change users status",
 		"token" : true,
@@ -177,7 +177,7 @@
 			"description" : "User's ID"
 		}]
 	},
-	"/admin/user/list" :{
+	"/user/list" :{
 		"method" : "get",
 		"description" : "Get all users",
 		"token" : true,
@@ -188,7 +188,7 @@
 			"description" : "Filter data by user's name"
 		}]
 	},
-	"/admin/user/detail" :{
+	"/user/detail" :{
 		"method" : "get",
 		"description" : "Get user by user id",
 		"token" : true,
