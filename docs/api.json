@@ -199,13 +199,13 @@
 			"description" : "Get user by user id"
 		}]
 	},
-	"/admin/cafe/list" :{
+	"/vendor/list" :{
 		"method" : "get",
 		"description" : "Get cafe type",
 		"token" : true,
 		"parameter" : []
 	},
-	"/admin/cafe/create" :{
+	"/vendor/create" :{
 		"method" : "post",
 		"description" : "Create new cafe type",
 		"content_type" : "x-www-form-urlencoded",
@@ -225,7 +225,7 @@
 			}
 		]
 	},
-	"/admin/cafe/update" :{
+	"/vendor/update" :{
 		"method" : "put",
 		"description" : "Update new cafe type data",
 		"content_type" : "x-www-form-urlencoded",
@@ -242,7 +242,7 @@
 			"description" : "Cafe name"
 		}]
 	},
-	"/admin/cafe/delete" :{
+	"/vendor/delete" :{
 		"method" : "put",
 		"description" : "Delete cafe type data",
 		"content_type" : "x-www-form-urlencoded",
@@ -254,7 +254,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/admin/cafe/status" :{
+	"/vendor/status" :{
 		"method" : "put",
 		"description" : "Change cafe type status",
 		"content_type" : "x-www-form-urlencoded",
@@ -266,7 +266,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/cafe/authenticate" :{
+	"/vendor/authenticate" :{
 		"method" : "post",
 		"description" : "Authenticate employee to get access token",
 		"content_type" : "x-www-form-urlencoded",
@@ -283,7 +283,7 @@
 			"description" : "User's password"
 		}]
 	},
-	"/cafe/employee/list" :{
+	"/vendor/employee/list" :{
 		"method" : "get",
 		"description" : "Get cafe employee list",
 		"token" : true,
@@ -294,7 +294,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/cafe/employee/detail" :{
+	"/vendor/employee/detail" :{
 		"method" : "get",
 		"description" : "Get cafe employee detail",
 		"token" : true,
@@ -307,7 +307,7 @@
 			}
 		]
 	},
-	"/cafe/employee/create" :{
+	"/vendor/employee/create" :{
 		"method" : "post",
 		"description" : "Create new cafe employee",
 		"content_type" : "x-www-form-urlencoded",
@@ -347,7 +347,7 @@
 			"description" : "Employee level access"
 		}]
 	},
-	"/cafe/employee/update" :{
+	"/vendor/employee/update" :{
 		"method" : "put",
 		"description" : "Update cafe employee",
 		"content_type" : "x-www-form-urlencoded",
@@ -392,7 +392,7 @@
 			"description" : "Employee level access"
 		}]
 	},
-	"/cafe/employee/create" :{
+	"/vendor/employee/create" :{
 		"method" : "put",
 		"description" : "Delete cafe employee",
 		"content_type" : "x-www-form-urlencoded",
@@ -409,7 +409,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/cafe/menu" :{
+	"/vendor/menu" :{
 		"method" : "get",
 		"description" : "Get cafe menu",
 		"token" : true,
@@ -420,7 +420,7 @@
 			"description" : "Cafe ID"
 		}]
 	},
-	"/cafe/menu/list" :{
+	"/vendor/menu/list" :{
 		"method" : "get",
 		"description" : "Get cafe menu list",
 		"token" : true,
@@ -446,7 +446,7 @@
 			"description" : "Filter data by menu name"
 		}]
 	},
-	"/cafe/menu/create" :{
+	"/vendor/menu/create" :{
 		"method" : "post",
 		"description" : "Create new cafe menu",
 		"content_type" : "form-data",
@@ -478,7 +478,7 @@
 			"description" : "Menu image"
 		}]
 	},
-	"/cafe/menu/update" :{
+	"/vendor/menu/update" :{
 		"method" : "put",
 		"description" : "Update cafe menu data",
 		"content_type" : "form-data",
@@ -515,7 +515,7 @@
 			"description" : "Menu image"
 		}]
 	},
-	"/cafe/menu/delete" :{
+	"/vendor/menu/delete" :{
 		"method" : "put",
 		"description" : "Delete cafe menu data",
 		"token" : true,
@@ -526,7 +526,7 @@
 			"description" : "Menu ID"
 		}]
 	},
-	"/cafe/menu/status" :{
+	"/vendor/menu/status" :{
 		"method" : "put",
 		"description" : "Change cafe menu status",
 		"token" : true,
@@ -537,7 +537,7 @@
 			"description" : "Menu ID"
 		}]
 	},
-	"/cafe/transaction/create" :{
+	"/vendor/transaction/create" :{
 		"method" : "post",
 		"content_type" : "application/json",
 		"description" : "Create new cafe transaction",
@@ -557,7 +557,7 @@
 			}
 		]
 	},
-	"/cafe/transaction/print" :{
+	"/vendor/transaction/print" :{
 		"method" : "get",
 		"description" : "Get cafe transaction print data",
 		"token" : true,
@@ -568,7 +568,7 @@
 			"description" : "Cafe transaction ID"
 		}]
 	},
-	"/cafe/report" :{
+	"/vendor/report" :{
 		"method" : "get",
 		"description" : "Get report cafe owner",
 		"token" : true,

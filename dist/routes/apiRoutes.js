@@ -296,7 +296,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Admin Access routes ---*/
 
 			/* Start Admin Cafe routes */
-			this.app.get("/admin/cafe/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/list", _auth.verifyToken, function (req, res) {
 				var param = {};
 
 				cafeController.cafeType(param).then(function (data) {
@@ -306,7 +306,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/admin/cafe/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/vendor/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					name: req.body.name,
 					user: req.body.user
@@ -323,7 +323,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/cafe/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name
@@ -340,7 +340,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/cafe/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/delete", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -356,7 +356,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/admin/cafe/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -374,7 +374,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/* End Admin Cafe routes */
 
 			/* Start Cafe routes */
-			this.app.post("/cafe/authenticate", function (req, res) {
+			this.app.post("/vendor/authenticate", function (req, res) {
 				var param = {
 					username: req.body.username,
 					password: req.body.password
@@ -387,7 +387,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/employee/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/employee/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					limit: req.query.limit ? req.query.limit : 10,
 					offset: req.query.offset ? req.query.offset : 0,
@@ -405,7 +405,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/employee/detail", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/employee/detail", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -417,7 +417,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/cafe/employee/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/vendor/employee/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					name: req.body.name,
 					email: req.body.email,
@@ -434,7 +434,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/employee/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/employee/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
@@ -451,7 +451,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/employee/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/employee/delete", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					cafe: req.body.cafe
@@ -464,7 +464,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/menu", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/menu", _auth.verifyToken, function (req, res) {
 				var param = {
 					cf_id: req.query.cafe
 				};
@@ -480,7 +480,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/menu/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/menu/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					cf_id: req.query.cafe,
 					limit: req.query.limit ? req.query.limit : 10,
@@ -499,7 +499,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/cafe/menu/create", _auth.verifyToken, this.upload.single('image'), function (req, res) {
+			this.app.post("/vendor/menu/create", _auth.verifyToken, this.upload.single('image'), function (req, res) {
 				var param = {
 					cf_id: req.body.cafe,
 					name: req.body.name,
@@ -519,7 +519,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/menu/update", _auth.verifyToken, this.upload.single("image"), function (req, res) {
+			this.app.put("/vendor/menu/update", _auth.verifyToken, this.upload.single("image"), function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
@@ -539,7 +539,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/menu/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/menu/delete", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -555,7 +555,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/cafe/menu/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/menu/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -571,7 +571,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/cafe/transaction/create", _auth.verifyMemberToken, function (req, res) {
+			this.app.post("/vendor/transaction/create", _auth.verifyMemberToken, function (req, res) {
 				var param = {
 					member: res.locals.member.id,
 					menu: req.body.menu,
@@ -589,7 +589,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/transaction/print", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/transaction/print", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -605,7 +605,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/cafe/report", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/report", _auth.verifyToken, function (req, res) {
 				var param = {
 					type: req.query.type ? req.query.type : "month",
 					start_date: req.query.start_date,

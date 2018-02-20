@@ -45,7 +45,7 @@ var Build = exports.Build = function () {
 				name: data.u_name,
 				username: data.u_username,
 				email: data.u_email,
-				cafe: data.cf_id,
+				vendor: data.cf_id,
 				status: true
 			};
 
@@ -278,7 +278,7 @@ var Build = exports.Build = function () {
 				name: data.emp_name,
 				username: data.emp_username,
 				email: data.emp_email,
-				cafe: data.cf_id,
+				vendor: data.cf_id,
 				access: {
 					code: parseInt(data.emp_access),
 					name: this.employeeAccess(data.emp_access)
