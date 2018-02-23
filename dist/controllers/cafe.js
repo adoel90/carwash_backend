@@ -168,27 +168,42 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafe",
 		value: function createCafe(param) {
+			var _this5 = this;
+
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 				var employeeModel = new _employee.EmployeeModel();
 				var userModel = new _user.UserModel();
 
 				var cafeParam = {
-					cf_name: param.name
+					cf_name: param.cafe_name
 				};
-				cafeModel.insertCafe(cafeParam).then(function (cafe) {
-					userModel.getUserById(param.user).then(function (user) {
-						var paramUser = {
-							emp_name: user.u_name,
-							emp_username: user.u_username,
-							emp_email: user.u_email,
-							emp_password: user.u_password,
-							emp_access: 0,
-							cf_id: cafe.cf_id
-						};
 
-						employeeModel.createEmployee(paramUser).then(function () {
-							return resolve(true);
+				var userParam = {
+					u_name: param.fullname,
+					u_email: param.email,
+					u_username: param.username,
+					u_password: _this5.encrypt(param.password),
+					ul_id: 4
+				};
+
+				userModel.insertUserVendor(userParam).then(function (user) {
+					cafeModel.insertCafe(cafeParam).then(function (cafe) {
+						userModel.getUserById(user.u_id).then(function (userOwner) {
+							var empParam = {
+								emp_name: userOwner.u_name,
+								emp_email: userOwner.u_email,
+								emp_username: userOwner.u_username,
+								emp_password: userOwner.u_password,
+								emp_access: 0,
+								cf_id: cafe.cf_id
+							};
+
+							employeeModel.createEmployee(empParam).then(function () {
+								return resolve(true);
+							}).catch(function (err) {
+								return reject(err);
+							});
 						}).catch(function (err) {
 							return reject(err);
 						});
@@ -198,6 +213,29 @@ var CafeController = exports.CafeController = function (_Controller) {
 				}).catch(function (err) {
 					return reject(err);
 				});
+
+				// cafeModel.insertCafe(cafeParam).then((cafe) => {
+				// 	userModel.getUserById(param.user).then((user) => {
+				// 		let paramUser = {
+				// 			emp_name: user.u_name,
+				// 			emp_username: user.u_username,
+				// 			emp_email: user.u_email,
+				// 			emp_password: user.u_password,
+				// 			emp_access: 0,
+				// 			cf_id: cafe.cf_id
+				// 		}
+
+				// 		employeeModel.createEmployee(paramUser).then(() => {
+				// 			return resolve(true);
+				// 		}).catch((err) => {
+				// 			return reject(err);
+				// 		});
+				// 	}).catch((err) => {
+				// 		return reject(err);
+				// 	});
+				// }).catch((err) => {
+				// 	return reject(err);
+				// });
 			});
 		}
 
@@ -209,14 +247,14 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "updateCafe",
 		value: function updateCafe(param) {
-			var _this5 = this;
+			var _this6 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
 				var cafeParam = {
 					cf_name: param.name,
-					updated_at: _this5.moment(new Date()).format()
+					updated_at: _this6.moment(new Date()).format()
 				};
 				cafeModel.updateCafe(param.id, cafeParam).then(function (cafe) {
 					return resolve(true);
@@ -234,13 +272,13 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "deleteCafe",
 		value: function deleteCafe(param) {
-			var _this6 = this;
+			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
 				var cafeParam = {
-					deleted_at: _this6.moment(new Date()).format()
+					deleted_at: _this7.moment(new Date()).format()
 				};
 				cafeModel.updateCafe(param.id, cafeParam).then(function (cafe) {
 					return resolve(true);
@@ -258,14 +296,14 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "changeCafeStatus",
 		value: function changeCafeStatus(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
 				cafeModel.getCafeTypeById(param.id).then(function (cafe) {
 					var cafeParam = {
-						deleted_at: cafe.deleted_at ? null : _this7.moment(new Date()).format()
+						deleted_at: cafe.deleted_at ? null : _this8.moment(new Date()).format()
 					};
 					cafeModel.updateCafe(param.id, cafeParam).then(function () {
 						return resolve(true);
@@ -286,7 +324,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeMenu",
 		value: function cafeMenu(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -294,7 +332,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 				menuModel.getCafeMenu(param.cf_id).then(function (menu) {
 					var result = [];
 					for (var i = 0; i < menu.length; i++) {
-						result.push(_this8.build.menu(menu[i]));
+						result.push(_this9.build.menu(menu[i]));
 					}
 
 					return resolve(result);
@@ -312,7 +350,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeMenuList",
 		value: function cafeMenuList(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -324,7 +362,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 					};
 
 					for (var i = 0; i < menu[1].length; i++) {
-						result.menu.push(_this9.build.menu(menu[1][i]));
+						result.menu.push(_this10.build.menu(menu[1][i]));
 					}
 
 					return resolve(result);
@@ -342,12 +380,12 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafeMenu",
 		value: function createCafeMenu(param) {
-			var _this10 = this;
+			var _this11 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
-				var image = _this10.rewriteImage(param.image);
+				var image = _this11.rewriteImage(param.image);
 				var menuParam = {
 					cf_id: param.cf_id,
 					mn_name: param.name,
@@ -371,7 +409,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "updateCafeMenu",
 		value: function updateCafeMenu(param) {
-			var _this11 = this;
+			var _this12 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -380,11 +418,11 @@ var CafeController = exports.CafeController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
-					updated_at: _this11.moment(new Date()).format()
+					updated_at: _this12.moment(new Date()).format()
 				};
 
 				if (param.image) {
-					menuParam.mn_img = _this11.rewriteImage(param.image);
+					menuParam.mn_img = _this12.rewriteImage(param.image);
 				}
 
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
@@ -403,13 +441,13 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "deleteCafeMenu",
 		value: function deleteCafeMenu(param) {
-			var _this12 = this;
+			var _this13 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				var menuParam = {
-					deleted_at: _this12.moment(new Date()).format()
+					deleted_at: _this13.moment(new Date()).format()
 				};
 				menuModel.updateCafeMenu(param.id, menuParam).then(function (data) {
 					return resolve(true);
@@ -427,14 +465,14 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "changeCafeMenuStatus",
 		value: function changeCafeMenuStatus(param) {
-			var _this13 = this;
+			var _this14 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				menuModel.getCafeMenuById(param.id).then(function (menu) {
 					var menuParam = {
-						deleted_at: menu.deleted_at ? null : _this13.moment(new Date()).format()
+						deleted_at: menu.deleted_at ? null : _this14.moment(new Date()).format()
 					};
 					menuModel.updateCafeMenu(param.id, menuParam).then(function () {
 						return resolve(true);
@@ -455,7 +493,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "createCafeTransaction",
 		value: function createCafeTransaction(param) {
-			var _this14 = this;
+			var _this15 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
@@ -497,7 +535,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 							cafeModel.insertCafeTransaction(transParam).then(function (transaction) {
 								cafeModel.insertCafeTransactionMenu(transaction.tc_id, param.menu).then(function () {
 									memberModel.decreaseBalance(transParam.m_id, total).then(function () {
-										var result = _this14.build.member(member);
+										var result = _this15.build.member(member);
 										result.transaction = transaction.tc_id;
 										result.balance -= total;
 
@@ -561,18 +599,18 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeTransactionDetail",
 		value: function cafeTransactionDetail(param) {
-			var _this15 = this;
+			var _this16 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
 				cafeModel.getCafeTransactionById(param.id).then(function (transaction) {
-					var result = _this15.build.transactionCafe(transaction);
+					var result = _this16.build.transactionCafe(transaction);
 					cafeModel.getCafeTransactionMenuById(param.id).then(function (menu) {
 						result.menu = [];
 						for (var i = 0; i < menu.length; i++) {
-							var mn = _this15.build.menu(menu[i]);
-							mn.cafe = _this15.build.cafeType(menu[i]);
+							var mn = _this16.build.menu(menu[i]);
+							mn.cafe = _this16.build.cafeType(menu[i]);
 							result.menu.push(mn);
 						}
 						return resolve(result);
@@ -593,12 +631,12 @@ var CafeController = exports.CafeController = function (_Controller) {
 	}, {
 		key: "cafeReport",
 		value: function cafeReport(param) {
-			var _this16 = this;
+			var _this17 = this;
 
 			return new Promise(function (resolve, reject) {
 				var cafeModel = new _cafe.CafeModel();
 
-				var result = _this16.buildRange(param.type, param.start_date, param.end_date);
+				var result = _this17.buildRange(param.type, param.start_date, param.end_date);
 				var format = "DD MMM YYYY";
 				if (param.type == "month") {
 					format = "MMM YYYY";
@@ -608,7 +646,7 @@ var CafeController = exports.CafeController = function (_Controller) {
 
 				cafeModel.getGraphReportTransactionByType(param.type, param.start_date, param.end_date, param.cafe).then(function (reportCafe) {
 					for (var i = 0; i < reportCafe.length; i++) {
-						var date = _this16.moment(reportCafe[i].date).format(format);
+						var date = _this17.moment(reportCafe[i].date).format(format);
 						if (result[date]) {
 							result[date].transaction += parseFloat(reportCafe[i].sum);
 						}

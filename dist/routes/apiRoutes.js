@@ -306,8 +306,12 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.post("/vendor/create", _auth.verifyCafeToken, function (req, res) {
 				var param = {
-					name: req.body.name,
-					user: req.body.user
+					cafe_name: req.body.cafe_name,
+					fullname: req.body.fullname,
+					email: req.body.email,
+					username: req.body.username,
+					password: req.body.password
+					// user : req.body.user
 				};
 
 				if (!_this2.checkParameters(param)) {

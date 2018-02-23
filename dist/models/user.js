@@ -65,6 +65,7 @@ var UserModel = exports.UserModel = function (_Model) {
 			this.db.init();
 			this.db.select("users", "users.deleted_at as users_deleted, *");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
+			this.db.where("users.ul_id", "4", "AND", "!=");
 			if (name) {
 				this.db.whereLike("lower(u_name)", "%" + name.toLowerCase() + "%");
 			}
@@ -99,6 +100,17 @@ var UserModel = exports.UserModel = function (_Model) {
 			this.db.insert("users", param);
 
 			return this.db.execute();
+		}
+
+		/*** Insert user vendor data ***/
+
+	}, {
+		key: "insertUserVendor",
+		value: function insertUserVendor(param) {
+			this.db.init();
+			this.db.insert("users", param, "u_id");
+
+			return this.db.execute(true);
 		}
 
 		/*** Update user data ***/
