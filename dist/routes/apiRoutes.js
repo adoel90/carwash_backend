@@ -142,8 +142,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					password: req.body.password,
 					name: req.body.name,
 					email: req.body.email ? req.body.email : null,
-					level: req.body.level,
-					cafe: req.body.cafe ? req.body.cafe : null
+					level: req.body.level
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -164,8 +163,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					password: req.body.password ? req.body.password : null,
 					name: req.body.name,
 					email: req.body.email ? req.body.email : null,
-					level: req.body.level,
-					cafe: req.body.cafe ? req.body.cafe : null
+					level: req.body.level
 				};
 
 				if (!_this2.checkParameters(param)) {

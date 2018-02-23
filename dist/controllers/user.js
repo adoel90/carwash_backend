@@ -175,8 +175,7 @@ var UserController = exports.UserController = function (_Controller) {
 					u_username: param.username,
 					u_email: param.email,
 					u_password: _this6.encrypt(param.password),
-					ul_id: param.level,
-					cf_id: param.cafe
+					ul_id: param.level
 				};
 				userModel.insertUser(userParam).then(function () {
 					return resolve(true);
@@ -204,7 +203,6 @@ var UserController = exports.UserController = function (_Controller) {
 					u_username: param.username,
 					u_email: param.email,
 					ul_id: param.level,
-					cf_id: param.cafe,
 					updated_at: _this7.moment(new Date()).format()
 				};
 				if (param.password) {

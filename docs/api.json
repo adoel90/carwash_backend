@@ -118,11 +118,6 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "User's access level ID"
-		},{
-			"name" : "cafe",
-			"type" : "integer",
-			"required" : false,
-			"description" : "User's cafe type ID"
 		}]
 	},
 	"/user/update" :{
@@ -159,11 +154,6 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "User's access level ID"
-		},{
-			"name" : "cafe",
-			"type" : "integer",
-			"required" : false,
-			"description" : "User's cafe type ID"
 		}]
 	},
 	"/user/status" :{
@@ -201,13 +191,13 @@
 	},
 	"/vendor/list" :{
 		"method" : "get",
-		"description" : "Get cafe type",
+		"description" : "Get vendor",
 		"token" : true,
 		"parameter" : []
 	},
 	"/vendor/create" :{
 		"method" : "post",
-		"description" : "Create new cafe type",
+		"description" : "Create new vendor",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [
@@ -215,7 +205,7 @@
 				"name" : "name",
 				"type" : "string",
 				"required" : true,
-				"description" : "Cafe name"
+				"description" : "Vendor name"
 			},
 			{
 				"name" : "user",
@@ -227,43 +217,43 @@
 	},
 	"/vendor/update" :{
 		"method" : "put",
-		"description" : "Update new cafe type data",
+		"description" : "Update vendor data",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
 			"required" : true,
-			"description" : "Cafe name"
+			"description" : "Vendor name"
 		}]
 	},
 	"/vendor/delete" :{
 		"method" : "put",
-		"description" : "Delete cafe type data",
+		"description" : "Delete vendor data",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		}]
 	},
 	"/vendor/status" :{
 		"method" : "put",
-		"description" : "Change cafe type status",
+		"description" : "Change vendor status",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		}]
 	},
 	"/vendor/authenticate" :{
@@ -285,18 +275,18 @@
 	},
 	"/vendor/employee/list" :{
 		"method" : "get",
-		"description" : "Get cafe employee list",
+		"description" : "Get vendor employee list",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		}]
 	},
 	"/vendor/employee/detail" :{
 		"method" : "get",
-		"description" : "Get cafe employee detail",
+		"description" : "Get vendor employee detail",
 		"token" : true,
 		"parameter" : [
 			{
@@ -309,14 +299,14 @@
 	},
 	"/vendor/employee/create" :{
 		"method" : "post",
-		"description" : "Create new cafe employee",
+		"description" : "Create new vendor employee",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
@@ -349,7 +339,7 @@
 	},
 	"/vendor/employee/update" :{
 		"method" : "put",
-		"description" : "Update cafe employee",
+		"description" : "Update vendor employee",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
@@ -361,7 +351,7 @@
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
@@ -394,7 +384,7 @@
 	},
 	"/vendor/employee/create" :{
 		"method" : "put",
-		"description" : "Delete cafe employee",
+		"description" : "Delete vendor employee",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
@@ -406,29 +396,29 @@
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		}]
 	},
 	"/vendor/menu" :{
 		"method" : "get",
-		"description" : "Get cafe menu",
+		"description" : "Get vendor menu",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		}]
 	},
 	"/vendor/menu/list" :{
 		"method" : "get",
-		"description" : "Get cafe menu list",
+		"description" : "Get vendor menu list",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "limit",
 			"type" : "integer",
@@ -448,14 +438,14 @@
 	},
 	"/vendor/menu/create" :{
 		"method" : "post",
-		"description" : "Create new cafe menu",
+		"description" : "Create new vendor menu",
 		"content_type" : "form-data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
@@ -480,14 +470,14 @@
 	},
 	"/vendor/menu/update" :{
 		"method" : "put",
-		"description" : "Update cafe menu data",
+		"description" : "Update vendor menu data",
 		"content_type" : "form-data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "id",
 			"type" : "integer",
@@ -517,7 +507,7 @@
 	},
 	"/vendor/menu/delete" :{
 		"method" : "put",
-		"description" : "Delete cafe menu data",
+		"description" : "Delete vendor menu data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -528,7 +518,7 @@
 	},
 	"/vendor/menu/status" :{
 		"method" : "put",
-		"description" : "Change cafe menu status",
+		"description" : "Change vendor menu status",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -540,14 +530,14 @@
 	"/vendor/transaction/create" :{
 		"method" : "post",
 		"content_type" : "application/json",
-		"description" : "Create new cafe transaction",
+		"description" : "Create new vendor transaction",
 		"token" : true,
 		"parameter" : [
 			{
 				"name" : "cafe",
 				"type" : "integer",
 				"required" : true,
-				"description" : "Cafe ID"
+				"description" : "Vendor ID"
 			},
 			{
 				"name" : "menu",
@@ -559,18 +549,18 @@
 	},
 	"/vendor/transaction/print" :{
 		"method" : "get",
-		"description" : "Get cafe transaction print data",
+		"description" : "Get vendor transaction print data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Cafe transaction ID"
+			"description" : "Vendor transaction ID"
 		}]
 	},
 	"/vendor/report" :{
 		"method" : "get",
-		"description" : "Get report cafe owner",
+		"description" : "Get report vendor owner",
 		"token" : true,
 		"parameter" : [
 			{
@@ -595,7 +585,7 @@
 				"name" : "cafe",
 				"type" : "integer",
 				"required" : true,
-				"description" : "Cafe ID"
+				"description" : "Vendor ID"
 			}
 		]
 	},
