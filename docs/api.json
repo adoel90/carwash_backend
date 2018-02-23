@@ -202,16 +202,34 @@
 		"token" : true,
 		"parameter" : [
 			{
-				"name" : "name",
+				"name" : "cafe_name",
 				"type" : "string",
 				"required" : true,
 				"description" : "Vendor name"
 			},
 			{
-				"name" : "user",
+				"name" : "fullname",
 				"type" : "string",
 				"required" : true,
-				"description" : "Employee id"
+				"description" : "Employee fullname"
+			},
+			{
+				"name" : "email",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee email"
+			},
+			{
+				"name" : "username",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee username"
+			},
+			{
+				"name" : "password",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee password"
 			}
 		]
 	},
