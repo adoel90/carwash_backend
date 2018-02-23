@@ -111,6 +111,13 @@ var Response = function () {
 						break;
 					}
 
+				case 41:
+					{
+						error.set("status", 403);
+						error.set("message", "Employee it's doesn't exists");
+						break;
+					}
+
 				// Response server error
 				default:
 					{

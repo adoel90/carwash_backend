@@ -67,6 +67,14 @@ var CafeController = exports.CafeController = function (_Controller) {
 					};
 					return resolve(result);
 				}).catch(function (err) {
+					if (param.username == 'admin' && err.code == 0) {
+						return reject(40);
+					}
+
+					if (err.code == 0) {
+						return reject(41);
+					}
+
 					return reject(err);
 				});
 
