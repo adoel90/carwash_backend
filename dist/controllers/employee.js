@@ -67,11 +67,15 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
     }, {
         key: "employeeDetail",
         value: function employeeDetail(param) {
+            var _this3 = this;
+
             return new Promise(function (resolve, reject) {
                 var employeeModel = new _employee.EmployeeModel();
 
                 employeeModel.getEmployeeById(param).then(function (employee) {
-                    return resolve(true);
+                    var dataEmployee = _this3.build.employee(employee);
+
+                    return resolve(dataEmployee);
                 }).catch(function (err) {
                     return reject(err);
                 });
@@ -86,7 +90,7 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
     }, {
         key: "createEmployee",
         value: function createEmployee(param) {
-            var _this3 = this;
+            var _this4 = this;
 
             return new Promise(function (resolve, reject) {
                 var employeeModel = new _employee.EmployeeModel();
@@ -95,7 +99,7 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
                     emp_name: param.name,
                     emp_email: param.email,
                     emp_username: param.username,
-                    emp_password: _this3.encrypt(param.password),
+                    emp_password: _this4.encrypt(param.password),
                     emp_access: param.access,
                     cf_id: param.cafe
                 };
@@ -116,7 +120,7 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
     }, {
         key: "updateEmployee",
         value: function updateEmployee(param) {
-            var _this4 = this;
+            var _this5 = this;
 
             return new Promise(function (resolve, reject) {
                 var employeeModel = new _employee.EmployeeModel();
@@ -125,7 +129,7 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
                     emp_name: param.name,
                     emp_email: param.email,
                     emp_username: param.username,
-                    emp_password: _this4.encrypt(param.password),
+                    emp_password: _this5.encrypt(param.password),
                     emp_access: param.access,
                     cf_id: param.cafe
                 };
@@ -146,14 +150,14 @@ var EmployeeController = exports.EmployeeController = function (_Controller) {
     }, {
         key: "deleteEmployee",
         value: function deleteEmployee(param) {
-            var _this5 = this;
+            var _this6 = this;
 
             return new Promise(function (resolve, reject) {
                 var employeeModel = new _employee.EmployeeModel();
 
                 var paramEmployee = {
                     cf_id: param.cafe,
-                    deleted_at: _this5.moment(new Date()).format()
+                    deleted_at: _this6.moment(new Date()).format()
                 };
 
                 employeeModel.deleteEmployee(paramEmployee, param.id).then(function () {
