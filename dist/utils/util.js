@@ -48,7 +48,7 @@ function rewriteImage(data) {
 function buildRange(type, start, end) {
 	var build = {};
 	var inc = null;
-	// start = moment(start);
+	start = (0, _moment2.default)(start);
 	end = (0, _moment2.default)(end);
 
 	var diff = null;

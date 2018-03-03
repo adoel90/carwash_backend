@@ -652,7 +652,13 @@ var CafeController = exports.CafeController = function (_Controller) {
 						}
 					}
 
-					return resolve(result);
+					var data = [];
+					for (var _i2 in result) {
+						result[_i2].name = _i2;
+						data.push(result[_i2]);
+					}
+
+					return resolve(data);
 				}).catch(function (err) {
 					return reject(err);
 				});
