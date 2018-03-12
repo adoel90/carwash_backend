@@ -6,7 +6,7 @@
 	"postgres" : {
 		"host" : "128.199.177.16",
 		"port" : 5432,
-		"database" : "carwashDB",
+		"database" : "carwashDBnew",
 		"user" : "postgres",
 		"password" : "mvp.buzzbuddies.2017"
 	},

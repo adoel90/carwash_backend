@@ -37,10 +37,6 @@ var _access = require("../controllers/access");
 
 var _employee = require("../controllers/employee");
 
-var _store = require("../controllers/store");
-
-var _staff = require("../controllers/staff");
-
 var _url = require("url");
 
 var _util = require("util");
@@ -81,8 +77,6 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var reportController = new _report.ReportController();
 			var accessController = new _access.AccessController();
 			var employeeController = new _employee.EmployeeController();
-			var storeController = new _store.StoreController();
-			var staffController = new _staff.StaffController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -299,65 +293,56 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 			/*--- End Admin Access routes ---*/
 
-			/*--- Start Admin Store routes ---*/
-			this.app.get("/store/list", _auth.verifyToken, function (req, res) {
+			/* Start Admin Cafe routes */
+			this.app.get("/vendor/list", _auth.verifyCafeToken, function (req, res) {
 				var param = {};
 
-				storeController.getStoreList(param).then(function (data) {
+				cafeController.cafeType(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.get("/store/detail", _auth.verifyToken, function (req, res) {
+			this.app.post("/vendor/create", _auth.verifyCafeToken, function (req, res) {
 				var param = {
-					id: req.query.id ? req.query.id : null
-				};
-
-				storeController.getStoreDetail(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.post("/store/create", _auth.verifyToken, function (req, res) {
-				var param = {
-					name: req.body.name,
-					category: req.body.category
+					cafe_name: req.body.cafe_name,
+					fullname: req.body.fullname,
+					email: req.body.email,
+					username: req.body.username,
+					password: req.body.password
+					// user : req.body.user
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.createNewStore(param).then(function (data) {
+				cafeController.createCafe(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/update", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id,
-					name: req.body.name,
-					category: req.body.category
+					name: req.body.name
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.updateStore(param).then(function (data) {
+				cafeController.updateCafe(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/delete", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -366,14 +351,14 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.deleteStore(param).then(function (data) {
+				cafeController.deleteCafe(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/status", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -382,126 +367,126 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.changeStoreStatus(param).then(function (data) {
+				cafeController.changeCafeStatus(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
-			/*--- End Admin Store routes ---*/
+			/* End Admin Cafe routes */
 
-			/*--- Start Staff Store routes ---*/
-			this.app.get("/store/staff/list", _auth.verifyToken, function (req, res) {
+			/* Start Cafe routes */
+			this.app.post("/vendor/authenticate", function (req, res) {
+				var param = {
+					username: req.body.username,
+					password: req.body.password
+				};
+
+				cafeController.authenticate(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/vendor/employee/list", _auth.verifyCafeToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0,
+					cafe: req.query.cafe
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				employeeController.employeeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/vendor/employee/detail", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
 
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				staffController.getStaffList(param).then(function (data) {
+				employeeController.employeeDetail(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.get("/store/staff/detail", _auth.verifyToken, function (req, res) {
-				var param = {
-					id: req.query.id
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				staffController.getStaffDetail(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.post("/store/staff/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/vendor/employee/create", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					name: req.body.name,
+					email: req.body.email,
 					username: req.body.username,
 					password: req.body.password,
-					email: req.body.email ? req.body.email : null,
-					level: req.body.level,
-					store: req.body.store
+					access: req.body.access ? req.body.access : 1,
+					cafe: req.body.cafe
 				};
 
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				staffController.createNewStaff(param).then(function (data) {
+				employeeController.createEmployee(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/staff/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/employee/update", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
+					email: req.body.email,
 					username: req.body.username,
 					password: req.body.password,
-					email: req.body.email ? req.body.email : null,
-					level: req.body.level
+					access: req.body.access
 				};
 
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				staffController.updateStaff(param).then(function (data) {
+				employeeController.updateEmployee(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/staff/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/employee/delete", _auth.verifyCafeToken, function (req, res) {
 				var param = {
-					id: req.body.id
+					id: req.body.id,
+					cafe: req.body.cafe
 				};
 
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				staffController.deleteStaff(param).then(function (data) {
+				employeeController.deleteEmployee(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/staff/status", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/menu", _auth.verifyCafeToken, function (req, res) {
 				var param = {
-					id: req.body.id
+					cf_id: req.query.cafe
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				staffController.changeStaffStatus(param).then(function (data) {
+				cafeController.cafeMenu(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
-			/*--- End Staff Store routes ---*/
 
-			/*--- Start Menu Store routes ---*/
-			this.app.get("/store/menu/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/menu/list", _auth.verifyCafeToken, function (req, res) {
 				var param = {
-					store_id: req.query.store,
+					cf_id: req.query.cafe,
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0,
 					name: req.query.name ? req.query.name : null
 				};
 
@@ -509,16 +494,16 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.getStoreMenuList(param).then(function (data) {
+				cafeController.cafeMenuList(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.post("/store/menu/create", _auth.verifyToken, this.upload.single('image'), function (req, res) {
+			this.app.post("/vendor/menu/create", _auth.verifyCafeToken, this.upload.single('image'), function (req, res) {
 				var param = {
-					store_id: req.body.store,
+					cf_id: req.body.cafe,
 					name: req.body.name,
 					price: req.body.price,
 					desc: req.body.description ? req.body.description : null,
@@ -529,14 +514,14 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.createStoreMenu(param).then(function (data) {
+				cafeController.createCafeMenu(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/menu/update", _auth.verifyToken, this.upload.single("image"), function (req, res) {
+			this.app.put("/vendor/menu/update", _auth.verifyCafeToken, this.upload.single("image"), function (req, res) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
@@ -549,14 +534,14 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.updateStoreMenu(param).then(function (data) {
+				cafeController.updateCafeMenu(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/menu/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/menu/delete", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -565,14 +550,14 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.deleteStoreMenu(param).then(function (data) {
+				cafeController.deleteCafeMenu(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.put("/store/menu/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/vendor/menu/status", _auth.verifyCafeToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -581,34 +566,32 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.changeStoreMenuStatus(param).then(function (data) {
+				cafeController.changeCafeMenuStatus(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
-			/*--- End Menu Store routes ---*/
 
-			/*--- Start Owner Store routes ---*/
-			this.app.post("/store/transaction/create", _auth.verifyMemberToken, function (req, res) {
+			this.app.post("/vendor/transaction/create", _auth.verifyMemberToken, function (req, res) {
 				var param = {
 					member: res.locals.member.id,
 					menu: req.body.menu,
-					store: req.body.store
+					cafe: req.body.cafe
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.createStoreTransaction(param).then(function (data) {
+				cafeController.createCafeTransaction(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.get("/store/transaction/print", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/transaction/print", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -617,32 +600,32 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.storeTransactionDetail(param).then(function (data) {
+				cafeController.cafeTransactionDetail(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
 
-			this.app.get("/store/report", _auth.verifyToken, function (req, res) {
+			this.app.get("/vendor/report", _auth.verifyToken, function (req, res) {
 				var param = {
 					type: req.query.type ? req.query.type : "month",
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
-					store: req.query.store ? req.query.store : null
+					cafe: req.query.cafe ? req.query.cafe : null
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				storeController.storeReport(param).then(function (data) {
+				cafeController.cafeReport(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
 			});
-			/*--- End Owner Store routes ---*/
+			/* End Cafe routes */
 
 			/*--- Start Member routes ---*/
 			this.app.get("/member", _auth.verifyToken, function (req, res) {
@@ -956,6 +939,243 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End Card routes ---*/
+
+			/*--- Start Service routes ---*/
+			this.app.get("/service/type", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/service/type/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceTypeList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/service/type/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.createServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/type/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.updateServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/type/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.deleteServiceType(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/type/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.changeServiceTypeStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/service", _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.query.type
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.service(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/service/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.query.type,
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/service/create", _auth.verifyToken, this.upload.single("image"), function (req, res) {
+				var param = {
+					type: req.body.type,
+					name: req.body.name,
+					price: req.body.price,
+					desc: req.body.description ? req.body.description : null,
+					img: req.file ? req.file : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.createService(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/update", _auth.verifyToken, this.upload.single("imaeg"), function (req, res) {
+				var param = {
+					id: req.body.id,
+					name: req.body.name,
+					price: req.body.price,
+					desc: req.body.description ? req.body.description : null,
+					img: req.file ? req.file : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.updateService(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.deleteService(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/service/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.changeServiceStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/service/transaction/create", _auth.verifyMemberToken, function (req, res) {
+				var param = {
+					member: res.locals.member.id,
+					service: req.body.service
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.createServiceTransaction(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/service/transaction/print", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				serviceController.serviceTransactionDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Service routes ---*/
 
 			/*--- Start Report routes ---*/
 			this.app.get("/report/transaction/cafe", _auth.verifyToken, function (req, res) {

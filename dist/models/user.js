@@ -42,6 +42,7 @@ var UserModel = exports.UserModel = function (_Model) {
 		value: function getUserById(u_id) {
 			this.db.init();
 			this.db.select("users");
+			this.db.join("user_level", "user_level.ul_id = users.ul_id");
 			this.db.where("u_id", u_id);
 
 			return this.db.execute(true);

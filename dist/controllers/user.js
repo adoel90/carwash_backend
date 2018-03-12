@@ -124,7 +124,7 @@ var UserController = exports.UserController = function (_Controller) {
 				userModel.getUserById(param.id).then(function (user) {
 					var result = _this4.build.user(user);
 
-					return resolve(true);
+					return resolve(result);
 				}).catch(function (err) {
 					return reject(err);
 				});

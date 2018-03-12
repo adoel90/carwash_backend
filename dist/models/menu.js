@@ -24,24 +24,24 @@ var MenuModel = exports.MenuModel = function (_Model) {
 		return _possibleConstructorReturn(this, (MenuModel.__proto__ || Object.getPrototypeOf(MenuModel)).call(this));
 	}
 
-	/*** Get cafe menu ***/
+	/*** Get store menu ***/
 
 
 	_createClass(MenuModel, [{
-		key: "getCafeMenu",
-		value: function getCafeMenu(cf_id) {
+		key: "getStoreMenu",
+		value: function getStoreMenu(store_id) {
 			this.db.select("menu");
-			this.db.where("cf_id", cf_id);
+			this.db.where("store_id", store_id);
 			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();
 		}
 
-		/*** Get cafe menu by mn_id ***/
+		/*** Get store menu by mn_id ***/
 
 	}, {
-		key: "getCafeMenuById",
-		value: function getCafeMenuById(mn_id) {
+		key: "getStoreMenuById",
+		value: function getStoreMenuById(mn_id) {
 			this.db.init();
 			this.db.select("menu");
 			this.db.where("mn_id", mn_id);
@@ -49,13 +49,13 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			return this.db.execute(true);
 		}
 
-		/*** Get cafe menu list ***/
+		/*** Get store menu list ***/
 
 	}, {
-		key: "getCafeMenuList",
-		value: function getCafeMenuList(cf_id, limit, offset, mn_name) {
+		key: "getStoreMenuList",
+		value: function getStoreMenuList(store_id, mn_name) {
 			this.db.select("menu", "count(*)");
-			this.db.where("cf_id", cf_id);
+			this.db.where("store_id", store_id);
 			// this.db.whereIsNull("deleted_at");
 			if (mn_name) {
 				this.db.whereLike("mn_name", "%" + mn_name + "%");
@@ -63,27 +63,27 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("menu");
-			this.db.limit(limit, offset);
 			this.db.push();
 
 			return this.db.executeMany();
 		}
 
-		/*** Insert cafe menu data ***/
+		/*** Insert store menu data ***/
 
 	}, {
-		key: "insertCafeMenu",
-		value: function insertCafeMenu(param) {
+		key: "insertStoreMenu",
+		value: function insertStoreMenu(param) {
+			this.db.init();
 			this.db.insert("menu", param);
 
 			return this.db.execute();
 		}
 
-		/*** Update cafe menu data ***/
+		/*** Update store menu data ***/
 
 	}, {
-		key: "updateCafeMenu",
-		value: function updateCafeMenu(mn_id, param) {
+		key: "updateStoreMenu",
+		value: function updateStoreMenu(mn_id, param) {
 			this.db.update("menu", param);
 			this.db.where("mn_id", mn_id);
 

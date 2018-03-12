@@ -189,169 +189,154 @@
 			"description" : "Get user by user id"
 		}]
 	},
-	"/store/list" :{
+	"/vendor/list" :{
 		"method" : "get",
-		"description" : "Get store list",
+		"description" : "Get vendor",
 		"token" : true,
 		"parameter" : []
 	},
-	"/store/detail" :{
-		"method" : "get",
-		"description" : "Get store by store_id",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "String",
-			"required" : true,
-			"description" : "store_id"
-		}]
-	},
-	"/store/create" :{
+	"/vendor/create" :{
 		"method" : "post",
-		"description" : "Create new store",
+		"description" : "Create new vendor",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [
 			{
-				"name" : "store_name",
+				"name" : "cafe_name",
 				"type" : "string",
 				"required" : true,
-				"description" : "Store name"
+				"description" : "Vendor name"
 			},
 			{
-				"name" : "category",
-				"type" : "integer",
+				"name" : "fullname",
+				"type" : "string",
 				"required" : true,
-				"description" : "category store (service, cafe, kantin)"
+				"description" : "Employee fullname"
+			},
+			{
+				"name" : "email",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee email"
+			},
+			{
+				"name" : "username",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee username"
+			},
+			{
+				"name" : "password",
+				"type" : "string",
+				"required" : true,
+				"description" : "Employee password"
 			}
 		]
 	},
-	"/store/update" :{
+	"/vendor/update" :{
 		"method" : "put",
-		"description" : "Update store data",
+		"description" : "Update vendor data",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Store ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
 			"required" : true,
-			"description" : "Store name"
+			"description" : "Vendor name"
+		}]
+	},
+	"/vendor/delete" :{
+		"method" : "put",
+		"description" : "Delete vendor data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		}]
+	},
+	"/vendor/status" :{
+		"method" : "put",
+		"description" : "Change vendor status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		}]
+	},
+	"/vendor/authenticate" :{
+		"method" : "post",
+		"description" : "Authenticate employee to get access token",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : false,
+		"parameter" : [{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "User's username"
 		},{
-			"name" : "category",
-			"type" : "integer",
+			"name" : "password",
+			"type" : "string",
 			"required" : true,
-			"description" : "category store (service, cafe, kantin)"
+			"description" : "User's password"
 		}]
 	},
-	"/store/delete" :{
-		"method" : "put",
-		"description" : "Delete store data",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Store ID"
-		}]
-	},
-	"/store/status" :{
-		"method" : "put",
-		"description" : "Change store status",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Store ID"
-		}]
-	},
-	"/store/staff/list" :{
+	"/vendor/employee/list" :{
 		"method" : "get",
-		"description" : "Get store staff list",
+		"description" : "Get vendor employee list",
 		"token" : true,
 		"parameter" : [{
 			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Store ID"
+			"description" : "Vendor ID"
 		}]
 	},
-	"/store/staff/detail" :{
+	"/vendor/employee/detail" :{
 		"method" : "get",
-		"description" : "Get store staff detail",
+		"description" : "Get vendor employee detail",
 		"token" : true,
 		"parameter" : [
 			{
 				"name" : "id",
 				"type" : "integer",
 				"required" : true,
-				"description" : "staff / user ID"
+				"description" : "Employee ID"
 			}
 		]
 	},
-	"/store/staff/create" :{
+	"/vendor/employee/create" :{
 		"method" : "post",
-		"description" : "Create new store staff",
+		"description" : "Create new vendor employee",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		},{
 			"name" : "name",
 			"type" : "string",
 			"required" : true,
-			"description" : "Staff name"
-		},
-		{
-			"name" : "username",
-			"type" : "string",
-			"required" : true,
-			"description" : "Staff username"
-		},
-		{
-			"name" : "password",
-			"type" : "string",
-			"required" : true,
-			"description" : "Staff password"
-		},
-		{
+			"description" : "Employee name"
+		},{
 			"name" : "email",
 			"type" : "string",
-			"required" : false,
-			"description" : "Staff email"
-		},{
-			"name" : "level",
-			"type" : "integer",
 			"required" : true,
-			"description" : "Staff level access"
-		},{
-			"name" : "store",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Store ID"
-		}]
-	},
-	"/store/staff/update" :{
-		"method" : "put",
-		"description" : "Update staff",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Staff ID"
-		},{
-			"name" : "name",
-			"type" : "string",
-			"required" : true,
-			"description" : "Staff name"
-		},{
+			"description" : "Employee email"
+		},
+		{
 			"name" : "username",
 			"type" : "string",
 			"required" : true,
@@ -362,51 +347,106 @@
 			"type" : "string",
 			"required" : true,
 			"description" : "Employee password"
+		},
+		{
+			"name" : "access",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee level access"
+		}]
+	},
+	"/vendor/employee/update" :{
+		"method" : "put",
+		"description" : "Update vendor employee",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee ID"
+		},{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee name"
 		},{
 			"name" : "email",
 			"type" : "string",
-			"required" : false,
-			"description" : "Staff email"
+			"required" : true,
+			"description" : "Employee email"
+		},
+		{
+			"name" : "username",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee username"
+		},
+		{
+			"name" : "password",
+			"type" : "string",
+			"required" : true,
+			"description" : "Employee password"
+		},
+		{
+			"name" : "access",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee level access"
+		}]
+	},
+	"/vendor/employee/create" :{
+		"method" : "put",
+		"description" : "Delete vendor employee",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Employee ID"
 		},{
-			"name" : "level",
+			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Staff level access"
+			"description" : "Vendor ID"
 		}]
 	},
-	"/store/staff/delete" :{
-		"method" : "put",
-		"description" : "Delete staff",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Staff ID"
-		}]
-	},
-	"/store/staff/status" :{
-		"method" : "put",
-		"description" : "Change status staff",
-		"content_type" : "x-www-form-urlencoded",
-		"token" : true,
-		"parameter" : [{
-			"name" : "id",
-			"type" : "integer",
-			"required" : true,
-			"description" : "Staff ID"
-		}]
-	},
-	"/store/menu/list" :{
+	"/vendor/menu" :{
 		"method" : "get",
-		"description" : "Get store menu list",
+		"description" : "Get vendor menu",
 		"token" : true,
 		"parameter" : [{
-			"name" : "store",
+			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Store ID"
+			"description" : "Vendor ID"
+		}]
+	},
+	"/vendor/menu/list" :{
+		"method" : "get",
+		"description" : "Get vendor menu list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		},{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
 		},{
 			"name" : "name",
 			"type" : "string",
@@ -414,16 +454,16 @@
 			"description" : "Filter data by menu name"
 		}]
 	},
-	"/store/menu/create" :{
+	"/vendor/menu/create" :{
 		"method" : "post",
-		"description" : "Create new store menu",
+		"description" : "Create new vendor menu",
 		"content_type" : "form-data",
 		"token" : true,
 		"parameter" : [{
-			"name" : "store",
+			"name" : "cafe",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Store ID"
+			"description" : "Vendor ID"
 		},{
 			"name" : "name",
 			"type" : "string",
@@ -446,12 +486,17 @@
 			"description" : "Menu image"
 		}]
 	},
-	"/store/menu/update" :{
+	"/vendor/menu/update" :{
 		"method" : "put",
-		"description" : "Update store menu data",
+		"description" : "Update vendor menu data",
 		"content_type" : "form-data",
 		"token" : true,
 		"parameter" : [{
+			"name" : "cafe",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Vendor ID"
+		},{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
@@ -478,9 +523,9 @@
 			"description" : "Menu image"
 		}]
 	},
-	"/store/menu/delete" :{
+	"/vendor/menu/delete" :{
 		"method" : "put",
-		"description" : "Delete store menu data",
+		"description" : "Delete vendor menu data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -489,9 +534,9 @@
 			"description" : "Menu ID"
 		}]
 	},
-	"/store/menu/status" :{
+	"/vendor/menu/status" :{
 		"method" : "put",
-		"description" : "Change store menu status",
+		"description" : "Change vendor menu status",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
@@ -500,39 +545,40 @@
 			"description" : "Menu ID"
 		}]
 	},
-	"/store/transaction/create" :{
+	"/vendor/transaction/create" :{
 		"method" : "post",
 		"content_type" : "application/json",
-		"description" : "Create new store transaction",
+		"description" : "Create new vendor transaction",
 		"token" : true,
 		"parameter" : [
+			{
+				"name" : "cafe",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Vendor ID"
+			},
 			{
 				"name" : "menu",
 				"type" : "Array",
 				"required" : true,
 				"description" : "Transaction menu, Array of object => {\"id\":<menu ID>, \"quantity\": <menu quantity>}"
-			},{
-				"name" : "store",
-				"type" : "integer",
-				"required" : true,
-				"description" : "Store ID"
 			}
 		]
 	},
-	"/store/transaction/print" :{
+	"/vendor/transaction/print" :{
 		"method" : "get",
-		"description" : "Get store transaction print data",
+		"description" : "Get vendor transaction print data",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Store transaction ID"
+			"description" : "Vendor transaction ID"
 		}]
 	},
-	"/store/report" :{
+	"/vendor/report" :{
 		"method" : "get",
-		"description" : "Get report store owner",
+		"description" : "Get report vendor owner",
 		"token" : true,
 		"parameter" : [
 			{
@@ -554,10 +600,10 @@
 				"description" : "End Date"
 			},
 			{
-				"name" : "store",
+				"name" : "cafe",
 				"type" : "integer",
 				"required" : true,
-				"description" : "Store ID"
+				"description" : "Vendor ID"
 			}
 		]
 	},
@@ -968,6 +1014,224 @@
 			"type" : "date",
 			"required" : true,
 			"description" : "End date"
+		}]
+	},
+	"/service" :{
+		"method" : "get",
+		"description" : "Get service data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "type",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		}]
+	},
+	"/service/list" :{
+		"method" : "get",
+		"description" : "Get list of service data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "type",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		},{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		}]
+	},
+	"/service/create" :{
+		"method" : "post",
+		"description" : "Create new service data",
+		"content_type" : "form-data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "type",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service name"
+		},{
+			"name" : "price",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Service price"
+		},{
+			"name" : "description",
+			"type" : "string",
+			"required" : false,
+			"description" : "Service description"
+		},{
+			"name" : "image",
+			"type" : "file",
+			"required" : false,
+			"description" : "Service image"
+		}]
+	},
+	"/service/update" :{
+		"method" : "put",
+		"description" : "Update service data",
+		"content_type" : "form-data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service name"
+		},{
+			"name" : "price",
+			"type" : "numeric",
+			"required" : true,
+			"description" : "Service price"
+		},{
+			"name" : "description",
+			"type" : "string",
+			"required" : false,
+			"description" : "Service description"
+		},{
+			"name" : "image",
+			"type" : "file",
+			"required" : false,
+			"description" : "Service image"
+		}]
+	},
+	"/service/delete" :{
+		"method" : "put",
+		"description" : "Delete service data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
+		}]
+	},
+	"/service/status" :{
+		"method" : "put",
+		"description" : "Change service status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
+		}]
+	},
+	"/service/type" :{
+		"method" : "get",
+		"description" : "Get service type",
+		"token" : true,
+		"parameter" : []
+	},
+	"/service/type/list" :{
+		"method" : "get",
+		"description" : "Get service type list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 10"
+		},{
+			"name" : "offset",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Start of data, default 0"
+		}]
+	},
+	"/service/type/create" :{
+		"method" : "post",
+		"description" : "Create new service type",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service type name"
+		}]
+	},
+	"/service/type/update" :{
+		"method" : "put",
+		"description" : "Update service type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		},{
+			"name" : "name",
+			"type" : "string",
+			"required" : true,
+			"description" : "Service type name"
+		}]
+	},
+	"/service/type/delete" :{
+		"method" : "put",
+		"description" : "Delete service type data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		}]
+	},
+	"/service/type/status" :{
+		"method" : "put",
+		"description" : "Change service type status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service type ID"
+		}]
+	},
+	"/service/transaction/create" :{
+		"method" : "post",
+		"description" : "Create service transaction",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "service",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service ID"
+		}]
+	},
+	"/service/transaction/print" :{
+		"method" : "get",
+		"description" : "Get service transaction print data",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Service Transaction ID"
 		}]
 	}
 }

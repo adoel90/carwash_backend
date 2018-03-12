@@ -45,7 +45,7 @@ var Build = exports.Build = function () {
 				name: data.u_name,
 				username: data.u_username,
 				email: data.u_email,
-				vendor: data.cf_id,
+				store: data.store_id,
 				status: true
 			};
 
@@ -144,8 +144,8 @@ var Build = exports.Build = function () {
 			return type;
 		}
 	}, {
-		key: "cafeType",
-		value: function cafeType(data) {
+		key: "storeType",
+		value: function storeType(data) {
 			var type = {
 				id: data.cf_id,
 				name: data.cf_name,
@@ -195,8 +195,8 @@ var Build = exports.Build = function () {
 			return service;
 		}
 	}, {
-		key: "transactionCafe",
-		value: function transactionCafe(data) {
+		key: "transactionStore",
+		value: function transactionStore(data) {
 			var transaction = {
 				id: data.tc_id,
 				date: data.tc_date,
@@ -293,6 +293,44 @@ var Build = exports.Build = function () {
 			// if(data.ul_name){
 			// 	user.level = this.accessLevel(data);
 			// }
+
+			return user;
+		}
+	}, {
+		key: "store",
+		value: function store(data) {
+			var type = {
+				id: data.store_id,
+				name: data.store_name,
+				status: true
+			};
+
+			if (data.deleted_at) {
+				type.status = false;
+			}
+
+			return type;
+		}
+	}, {
+		key: "staff",
+		value: function staff(data) {
+			var user = {
+				id: data.u_id,
+				name: data.u_name,
+				username: data.u_username,
+				email: data.u_email,
+				store: data.store_id,
+				level: data.level,
+				status: true
+			};
+
+			if (data.deleted_at || data.users_deleted) {
+				user.status = false;
+			}
+
+			if (data.ul_name) {
+				user.level = this.accessLevel(data);
+			}
 
 			return user;
 		}
