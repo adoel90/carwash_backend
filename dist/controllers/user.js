@@ -229,11 +229,11 @@ var UserController = exports.UserController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
 
-				userModel.getUserById(param.id).then(function (user) {
-					console.log(user);
+				userModel.getUserStatusById(param.id).then(function (user) {
 					var userParam = {
 						deleted_at: user.deleted_at ? null : _this8.moment(new Date()).format()
 					};
+
 					userModel.updateUser(param.id, userParam).then(function () {
 						return resolve(true);
 					}).catch(function (err) {

@@ -47,6 +47,15 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+	}, {
+		key: "getUserStatusById",
+		value: function getUserStatusById(u_id) {
+			this.db.init();
+			this.db.select("users");
+			this.db.where("u_id", u_id);
+
+			return this.db.execute(true);
+		}
 
 		/*** Get user by username ***/
 
