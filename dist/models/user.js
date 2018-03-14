@@ -70,6 +70,7 @@ var UserModel = exports.UserModel = function (_Model) {
 			if (name) {
 				this.db.whereLike("lower(u_name)", "%" + name.toLowerCase() + "%");
 			}
+			this.db.order("u_id");
 
 			return this.db.execute();
 		}
