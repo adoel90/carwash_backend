@@ -41,6 +41,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			this.db.join("card", "card.c_id = member.c_id");
 			this.db.join("card_type", "card.ct_id = card_type.ct_id");
 			this.db.limit(limit, offset);
+			this.db.order("m_id");
 			this.db.push();
 
 			return this.db.executeMany();
@@ -55,6 +56,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 				this.db.whereLike("lower(m_name)", "%" + name.toLowerCase() + "%");
 			}
 			// this.db.whereIsNull("member.deleted_at");
+			this.db.order("m_id");
 			this.db.push();
 
 			return this.db.execute();
