@@ -515,6 +515,33 @@ var StoreController = exports.StoreController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Get store category list
+  ** GET :: /store/category
+  */
+
+	}, {
+		key: 'getStoreCategoryList',
+		value: function getStoreCategoryList(param) {
+			var _this15 = this;
+
+			return new Promise(function (resolve, reject) {
+				var storeModel = new _store.StoreModel();
+
+				storeModel.getStoreCategoryList().then(function (category) {
+					var result = [];
+
+					for (var i = 0; i < category.length; i++) {
+						result.push(_this15.build.categoryStore(category[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return StoreController;

@@ -391,6 +391,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 			/*--- End Admin Store routes ---*/
 
+			/*--- Start Admin Category Store routes ---*/
+			this.app.get("/store/category", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				storeController.getStoreCategoryList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Admin Category Store routes ---*/
+
 			/*--- Start Staff Store routes ---*/
 			this.app.get("/store/staff/list", _auth.verifyToken, function (req, res) {
 				var param = {

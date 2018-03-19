@@ -212,6 +212,17 @@ var StoreModel = exports.StoreModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Get Store Category List ***/
+
+	}, {
+		key: "getStoreCategoryList",
+		value: function getStoreCategoryList() {
+			this.db.init();
+			this.db.select("store_category");
+
+			return this.db.execute();
+		}
 	}]);
 
 	return StoreModel;
