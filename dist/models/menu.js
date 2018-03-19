@@ -63,9 +63,24 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("menu");
+			this.db.order("mn_id");
 			this.db.push();
 
 			return this.db.executeMany();
+		}
+
+		/*** Get store menu detail ***/
+
+	}, {
+		key: "getStoreMenuDetail",
+		value: function getStoreMenuDetail(id) {
+			this.db.init();
+			this.db.select("menu");
+			this.db.where("mn_id", id);
+			this.db.order("mn_id");
+			this.db.push();
+
+			return this.db.execute(true);
 		}
 
 		/*** Insert store menu data ***/

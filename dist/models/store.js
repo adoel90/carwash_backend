@@ -32,10 +32,13 @@ var StoreModel = exports.StoreModel = function (_Model) {
 		value: function getStoreList() {
 			this.db.init();
 			this.db.select("store", "count(*)");
-			// this.db.join("users", "store.store_id = users.store_id");
+			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
+			this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
+			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
 			this.db.push();
 
-			this.db.select("store");
+			this.db.select("store", "store.*, owner.*, store_category.*, users.u_id, users.u_name, store.deleted_at");
+			this.db.order("store.store_id");
 			this.db.push();
 
 			return this.db.executeMany();
@@ -47,8 +50,26 @@ var StoreModel = exports.StoreModel = function (_Model) {
 		key: "getDetailStoreById",
 		value: function getDetailStoreById(id) {
 			this.db.init();
-			this.db.select("store");
-			this.db.where("store_id", id);
+			this.db.select("store", "store.*, owner.*, store_category.*, users.u_id, users.u_name, store.deleted_at");
+			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
+			this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
+			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
+			this.db.where("store.store_id", id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Get Detail Store for Delete ***/
+
+	}, {
+		key: "getDetailStoreByIdDelete",
+		value: function getDetailStoreByIdDelete(id) {
+			this.db.init();
+			this.db.select("store", "store.deleted_at");
+			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
+			this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
+			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
+			this.db.where("store.store_id", id);
 
 			return this.db.execute(true);
 		}
@@ -62,6 +83,17 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			this.db.insert("store", data, "store_id");
 
 			return this.db.execute(true);
+		}
+
+		/*** Create multiple store ***/
+
+	}, {
+		key: "createOwnerStore",
+		value: function createOwnerStore(data) {
+			this.db.init();
+			this.db.insert("owner", data);
+
+			return this.db.execute();
 		}
 
 		/*** Update Store Data ***/

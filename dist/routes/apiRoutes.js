@@ -325,7 +325,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.post("/store/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					name: req.body.name,
-					category: req.body.category
+					category: req.body.category,
+					user: req.body.user
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -510,6 +511,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				storeController.getStoreMenuList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/store/menu/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				storeController.getStoreMenuDetail(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

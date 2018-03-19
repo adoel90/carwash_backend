@@ -213,7 +213,7 @@
 		"token" : true,
 		"parameter" : [
 			{
-				"name" : "store_name",
+				"name" : "name",
 				"type" : "string",
 				"required" : true,
 				"description" : "Store name"
@@ -223,6 +223,12 @@
 				"type" : "integer",
 				"required" : true,
 				"description" : "category store (service, cafe, kantin)"
+			},
+			{
+				"name" : "user",
+				"type" : "integer",
+				"required" : true,
+				"description" : "user id"
 			}
 		]
 	},

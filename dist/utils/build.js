@@ -45,7 +45,6 @@ var Build = exports.Build = function () {
 				name: data.u_name,
 				username: data.u_username,
 				email: data.u_email,
-				store: data.store_id,
 				status: true
 			};
 
@@ -299,17 +298,45 @@ var Build = exports.Build = function () {
 	}, {
 		key: "store",
 		value: function store(data) {
-			var type = {
+			var store = {
 				id: data.store_id,
-				name: data.store_name,
+				store: data.store_name,
 				status: true
 			};
 
-			if (data.deleted_at) {
-				type.status = false;
+			if (data.cstore_id && data.cstore_name) {
+				var category = {
+					cstore_id: data.cstore_id,
+					cstore_name: data.cstore_name
+				};
+
+				store.type = this.categoryStore(category);
 			}
 
-			return type;
+			if (data.u_id && data.u_name) {
+				var user = {
+					u_id: data.u_id,
+					u_name: data.u_name
+				};
+
+				store.user = this.user(user);
+			}
+
+			if (data.deleted_at) {
+				store.status = false;
+			}
+
+			return store;
+		}
+	}, {
+		key: "categoryStore",
+		value: function categoryStore(data) {
+			var cstore = {
+				id: data.cstore_id,
+				name: data.cstore_name
+			};
+
+			return cstore;
 		}
 	}, {
 		key: "staff",

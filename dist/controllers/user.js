@@ -177,8 +177,9 @@ var UserController = exports.UserController = function (_Controller) {
 					u_password: _this6.encrypt(param.password),
 					ul_id: param.level
 				};
-				userModel.insertUser(userParam).then(function () {
-					return resolve(true);
+
+				userModel.insertUser(userParam).then(function (user) {
+					return resolve(user);
 				}).catch(function (err) {
 					return reject(err);
 				});

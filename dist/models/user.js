@@ -108,9 +108,9 @@ var UserModel = exports.UserModel = function (_Model) {
 		key: "insertUser",
 		value: function insertUser(param) {
 			this.db.init();
-			this.db.insert("users", param);
+			this.db.insert("users", param, "u_id");
 
-			return this.db.execute();
+			return this.db.execute(true);
 		}
 
 		/*** Insert user vendor data ***/

@@ -101,7 +101,16 @@ var StoreController = exports.StoreController = function (_Controller) {
 				};
 
 				storeModel.createStore(paramStore).then(function (store) {
-					return resolve(store);
+					var ownerStore = {
+						u_id: param.user,
+						store_id: store.store_id
+					};
+
+					storeModel.createOwnerStore(ownerStore).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
@@ -217,6 +226,29 @@ var StoreController = exports.StoreController = function (_Controller) {
 		}
 
 		/*
+       ** Get store menu
+       ** GET :: /store/menu/detail
+       */
+
+	}, {
+		key: 'getStoreMenuDetail',
+		value: function getStoreMenuDetail(param) {
+			var _this7 = this;
+
+			return new Promise(function (resolve, reject) {
+				var menuModel = new _menu.MenuModel();
+
+				menuModel.getStoreMenuDetail(param.id).then(function (menu) {
+					var result = _this7.build.menu(menu);
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Create new store menu
   ** POST :: /store/menu/create
   */
@@ -224,12 +256,12 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'createStoreMenu',
 		value: function createStoreMenu(param) {
-			var _this7 = this;
+			var _this8 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
-				var image = _this7.rewriteImage(param.image);
+				var image = _this8.rewriteImage(param.image);
 				var menuParam = {
 					store_id: param.store_id,
 					mn_name: param.name,
@@ -254,7 +286,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'updateStoreMenu',
 		value: function updateStoreMenu(param) {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
@@ -263,11 +295,11 @@ var StoreController = exports.StoreController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
-					updated_at: _this8.moment(new Date()).format()
+					updated_at: _this9.moment(new Date()).format()
 				};
 
 				if (param.image) {
-					menuParam.mn_img = _this8.rewriteImage(param.image);
+					menuParam.mn_img = _this9.rewriteImage(param.image);
 				}
 
 				menuModel.updateStoreMenu(param.id, menuParam).then(function (data) {
@@ -286,13 +318,13 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'deleteStoreMenu',
 		value: function deleteStoreMenu(param) {
-			var _this9 = this;
+			var _this10 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				var menuParam = {
-					deleted_at: _this9.moment(new Date()).format()
+					deleted_at: _this10.moment(new Date()).format()
 				};
 
 				menuModel.updateStoreMenu(param.id, menuParam).then(function (data) {
@@ -311,14 +343,14 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'changeStoreMenuStatus',
 		value: function changeStoreMenuStatus(param) {
-			var _this10 = this;
+			var _this11 = this;
 
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
 				menuModel.getStoreMenuById(param.id).then(function (menu) {
 					var menuParam = {
-						deleted_at: menu.deleted_at ? null : _this10.moment(new Date()).format()
+						deleted_at: menu.deleted_at ? null : _this11.moment(new Date()).format()
 					};
 
 					menuModel.updateStoreMenu(param.id, menuParam).then(function () {
@@ -340,7 +372,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'createStoreTransaction',
 		value: function createStoreTransaction(param) {
-			var _this11 = this;
+			var _this12 = this;
 
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
@@ -384,7 +416,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 							storeModel.insertStoreTransaction(transParam).then(function (transaction) {
 								storeModel.insertStoreTransactionMenu(transaction.ts_id, param.menu).then(function () {
 									memberModel.decreaseBalance(transParam.m_id, total).then(function () {
-										var result = _this11.build.member(member);
+										var result = _this12.build.member(member);
 										result.transaction = transaction.tc_id;
 										result.balance -= total;
 
@@ -418,18 +450,18 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'storeTransactionDetail',
 		value: function storeTransactionDetail(param) {
-			var _this12 = this;
+			var _this13 = this;
 
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
 
 				storeModel.getStoreTransactionById(param.id).then(function (transaction) {
-					var result = _this12.build.transactionStore(transaction);
+					var result = _this13.build.transactionStore(transaction);
 					storeModel.getStoreTransactionMenuById(param.id).then(function (menu) {
 						result.menu = [];
 						for (var i = 0; i < menu.length; i++) {
-							var mn = _this12.build.menu(menu[i]);
-							mn.store = _this12.build.storeType(menu[i]);
+							var mn = _this13.build.menu(menu[i]);
+							mn.store = _this13.build.storeType(menu[i]);
 							result.menu.push(mn);
 						}
 						return resolve(result);
@@ -450,12 +482,12 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'storeReport',
 		value: function storeReport(param) {
-			var _this13 = this;
+			var _this14 = this;
 
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
 
-				var result = _this13.buildRange(param.type, param.start_date, param.end_date);
+				var result = _this14.buildRange(param.type, param.start_date, param.end_date);
 				var format = "DD MMM YYYY";
 				if (param.type == "month") {
 					format = "MMM YYYY";
@@ -465,7 +497,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 				storeModel.getGraphReportTransactionByType(param.type, param.start_date, param.end_date, param.store).then(function (reportStore) {
 					for (var i = 0; i < reportStore.length; i++) {
-						var date = _this13.moment(reportStore[i].date).format(format);
+						var date = _this14.moment(reportStore[i].date).format(format);
 						if (result[date]) {
 							result[date].transaction += parseFloat(reportStore[i].sum);
 						}
