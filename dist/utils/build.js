@@ -300,7 +300,7 @@ var Build = exports.Build = function () {
 		value: function store(data) {
 			var store = {
 				id: data.store_id,
-				store: data.store_name,
+				name: data.store_name,
 				status: true
 			};
 
