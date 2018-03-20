@@ -193,7 +193,12 @@
 		"method" : "get",
 		"description" : "Get store list",
 		"token" : true,
-		"parameter" : []
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "User ID"
+		}]
 	},
 	"/store/detail" :{
 		"method" : "get",
@@ -201,7 +206,7 @@
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
-			"type" : "String",
+			"type" : "integer",
 			"required" : true,
 			"description" : "store_id"
 		}]
