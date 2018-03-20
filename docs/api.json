@@ -288,7 +288,7 @@
 		"description" : "Get store staff list",
 		"token" : true,
 		"parameter" : [{
-			"name" : "cafe",
+			"name" : "id",
 			"type" : "integer",
 			"required" : true,
 			"description" : "Store ID"
