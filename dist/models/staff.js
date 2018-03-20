@@ -33,7 +33,8 @@ var StaffModel = exports.StaffModel = function (_Model) {
             this.db.init();
             this.db.select("users", "count(*)");
             this.db.join("user_level", "user_level.ul_id = users.ul_id");
-            this.db.where("store_id", id);
+            this.db.join("owner", "users.u_id = owner.u_id");
+            this.db.where("owner.store_id", id);
             this.db.push();
 
             this.db.select("users");
