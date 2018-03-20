@@ -301,7 +301,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			/*--- Start Admin Store routes ---*/
 			this.app.get("/store/list", _auth.verifyToken, function (req, res) {
-				var param = {};
+				var param = {
+					id: req.query.id ? req.query.id : null
+				};
 
 				storeController.getStoreList(param).then(function (data) {
 					return _this2.success(res, data);

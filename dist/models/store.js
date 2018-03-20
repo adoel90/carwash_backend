@@ -29,12 +29,15 @@ var StoreModel = exports.StoreModel = function (_Model) {
 
 	_createClass(StoreModel, [{
 		key: "getStoreList",
-		value: function getStoreList() {
+		value: function getStoreList(id) {
 			this.db.init();
 			this.db.select("store", "count(*)");
 			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
 			this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
 			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
+			if (id) {
+				this.db.where("owner.u_id", id);
+			}
 			this.db.push();
 
 			this.db.select("store", "store.*, owner.*, store_category.*, users.u_id, users.u_name, store.deleted_at");

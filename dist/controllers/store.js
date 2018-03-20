@@ -44,7 +44,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
 
-				storeModel.getStoreList().then(function (store) {
+				storeModel.getStoreList(param.id).then(function (store) {
 					var result = {
 						row: store[0][0].count,
 						store: []
