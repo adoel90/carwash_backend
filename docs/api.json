@@ -425,6 +425,17 @@
 			"description" : "Filter data by menu name"
 		}]
 	},
+	"/store/menu/detail" :{
+		"method" : "get",
+		"description" : "Get detail store menu",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Menu ID"
+		}]
+	},
 	"/store/menu/create" :{
 		"method" : "post",
 		"description" : "Create new store menu",
@@ -509,6 +520,91 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Menu ID"
+		}]
+	},
+	"/store/promo/list" :{
+		"method" : "get",
+		"description" : "Get store promo list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Promo ID"
+		}]
+	},
+	"/store/promo/detail" :{
+		"method" : "get",
+		"description" : "Get detail store promo",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Promo ID"
+		}]
+	},
+	"/store/promo/create" :{
+		"method" : "post",
+		"description" : "Create new store promo",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "store",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Store ID"
+		},{
+			"name" : "price",
+			"type" : "string",
+			"required" : true,
+			"description" : "Promo price"
+		},{
+			"name" : "date",
+			"type" : "numeric",
+			"required" : false,
+			"description" : "End date promo"
+		}]
+	},
+	"/store/promo/update" :{
+		"method" : "put",
+		"description" : "Update store promo data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "promo ID"
+		},{
+			"name" : "price",
+			"type" : "string",
+			"required" : true,
+			"description" : "Promo price"
+		}]
+	},
+	"/store/promo/delete" :{
+		"method" : "put",
+		"description" : "Delete store promo data",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "promo ID"
+		}]
+	},
+	"/store/promo/status" :{
+		"method" : "put",
+		"description" : "Change store promo status",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "promo ID"
 		}]
 	},
 	"/store/transaction/create" :{

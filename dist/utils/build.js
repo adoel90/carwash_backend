@@ -361,6 +361,17 @@ var Build = exports.Build = function () {
 
 			return user;
 		}
+	}, {
+		key: "promo",
+		value: function promo(data) {
+			var promo = {
+				id: data.p_id,
+				price: data.p_price,
+				date: data.p_date
+			};
+
+			return promo;
+		}
 	}]);
 
 	return Build;

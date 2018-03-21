@@ -41,11 +41,7 @@ var _store = require("../controllers/store");
 
 var _staff = require("../controllers/staff");
 
-var _url = require("url");
-
-var _util = require("util");
-
-var _constants = require("constants");
+var _promo = require("../controllers/promo");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -83,6 +79,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var employeeController = new _employee.EmployeeController();
 			var storeController = new _store.StoreController();
 			var staffController = new _staff.StaffController();
+			var promoController = new _promo.PromoController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -408,6 +405,107 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End Admin Category Store routes ---*/
+
+			/*--- Start Promo Store routes */
+			this.app.get("/store/promo/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.getPromoList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/store/promo/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.getPromoDetail(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/store/promo/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					store: req.body.store,
+					price: req.body.price,
+					date: req.body.date ? req.body.date : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.createNewPromo(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/store/promo/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					price: req.body.price
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.updatePromo(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/store/promo/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.deletePromo(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/store/promo/status", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.changeStatusPromo(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Promo Store routes */
 
 			/*--- Start Staff Store routes ---*/
 			this.app.get("/store/staff/list", _auth.verifyToken, function (req, res) {
