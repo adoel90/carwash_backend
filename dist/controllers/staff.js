@@ -42,7 +42,7 @@ var StaffController = exports.StaffController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
 
-                staffModel.listStaff(param.id).then(function (staff) {
+                staffModel.listStaff(param.id, param.active).then(function (staff) {
                     var result = {
                         row: staff[0][0].count,
                         staff: []

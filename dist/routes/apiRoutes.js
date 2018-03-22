@@ -109,7 +109,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.get("/user/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					name: req.query.name ? req.query.name : null
+					name: req.query.name ? req.query.name : null,
+					access: req.query.access ? req.query.access : null,
+					active: req.query.active ? req.query.active : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -199,7 +201,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			/*--- Start Admin Access routes ---*/
 			this.app.get("/access/list", _auth.verifyToken, function (req, res) {
-				var param = {};
+				var param = {
+					active: req.query.active ? req.query.active : null
+				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
@@ -299,7 +303,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- Start Admin Store routes ---*/
 			this.app.get("/store/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					id: req.query.id ? req.query.id : null
+					id: req.query.id ? req.query.id : null,
+					active: req.query.active ? req.query.active : null
 				};
 
 				storeController.getStoreList(param).then(function (data) {
@@ -510,7 +515,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- Start Staff Store routes ---*/
 			this.app.get("/store/staff/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					id: req.query.id
+					id: req.query.id,
+					active: req.query.active ? req.query.active : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -619,7 +625,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.get("/store/menu/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					store_id: req.query.store,
-					name: req.query.name ? req.query.name : null
+					name: req.query.name ? req.query.name : null,
+					active: req.query.active ? req.query.active : null
 				};
 
 				if (!_this2.checkParameters(param)) {

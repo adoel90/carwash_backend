@@ -31,9 +31,12 @@ var AccessModel = exports.AccessModel = function (_Model) {
 
     _createClass(AccessModel, [{
         key: "getAccessLevel",
-        value: function getAccessLevel() {
+        value: function getAccessLevel(active) {
             this.db.init();
             this.db.select("user_level");
+            if (active) {
+                this.db.whereIsNull("deleted_at");
+            }
 
             return this.db.execute();
         }

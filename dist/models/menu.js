@@ -53,12 +53,15 @@ var MenuModel = exports.MenuModel = function (_Model) {
 
 	}, {
 		key: "getStoreMenuList",
-		value: function getStoreMenuList(store_id, mn_name) {
+		value: function getStoreMenuList(store_id, mn_name, active) {
 			this.db.select("menu", "count(*)");
 			this.db.where("store_id", store_id);
 			// this.db.whereIsNull("deleted_at");
 			if (mn_name) {
 				this.db.whereLike("mn_name", "%" + mn_name + "%");
+			}
+			if (active) {
+				this.db.whereIsNull("deleted_at");
 			}
 			this.db.push();
 

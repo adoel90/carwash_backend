@@ -40,7 +40,7 @@ var AccessController = exports.AccessController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var accessModel = new _access.AccessModel();
 
-                accessModel.getAccessLevel().then(function (access) {
+                accessModel.getAccessLevel(param.active).then(function (access) {
                     var result = [];
                     for (var i = 0; i < access.length; i++) {
                         result.push(_this2.build.accessLevel(access[i]));

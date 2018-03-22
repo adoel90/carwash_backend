@@ -29,12 +29,15 @@ var StaffModel = exports.StaffModel = function (_Model) {
 
     _createClass(StaffModel, [{
         key: "listStaff",
-        value: function listStaff(id) {
+        value: function listStaff(id, active) {
             this.db.init();
             this.db.select("users", "count(*)");
             this.db.join("user_level", "user_level.ul_id = users.ul_id");
             this.db.join("owner", "users.u_id = owner.u_id");
             this.db.where("owner.store_id", id);
+            if (active) {
+                this.db.whereIsNull("users.deleted_at");
+            }
             this.db.push();
 
             this.db.select("users");

@@ -44,7 +44,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
 
-				storeModel.getStoreList(param.id).then(function (store) {
+				storeModel.getStoreList(param.id, param.active).then(function (store) {
 					var result = {
 						row: store[0][0].count,
 						store: []
@@ -208,7 +208,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var menuModel = new _menu.MenuModel();
 
-				menuModel.getStoreMenuList(param.store_id, param.name).then(function (menu) {
+				menuModel.getStoreMenuList(param.store_id, param.name, param.active).then(function (menu) {
 					var result = {
 						row: menu[0][0].count,
 						menu: []

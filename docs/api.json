@@ -3,7 +3,12 @@
 		"method" : "get",
 		"description" : "Get all access level",
 		"token" : true,
-		"parameter" : []
+		"parameter" : [{
+			"name" : "access",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Access for filtering access list"
+		}]
 	},
 	"/access/detail" :{
 		"method" : "get",
@@ -176,6 +181,16 @@
 			"type" : "String",
 			"required" : false,
 			"description" : "Filter data by user's name"
+		},{
+			"name" : "access",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Filter data by level access"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filter data with user's is active"
 		}]
 	},
 	"/user/detail" :{
@@ -198,6 +213,11 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "User ID"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filter store list by active store"
 		}]
 	},
 	"/store/detail" :{
@@ -292,6 +312,11 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Store ID"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filter store staff list by active staff"
 		}]
 	},
 	"/store/staff/detail" :{
@@ -423,6 +448,11 @@
 			"type" : "string",
 			"required" : false,
 			"description" : "Filter data by menu name"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filter menu list by status menu active"
 		}]
 	},
 	"/store/menu/detail" :{

@@ -29,7 +29,7 @@ var StoreModel = exports.StoreModel = function (_Model) {
 
 	_createClass(StoreModel, [{
 		key: "getStoreList",
-		value: function getStoreList(id) {
+		value: function getStoreList(id, active) {
 			this.db.init();
 			this.db.select("store", "count(*)");
 			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
@@ -37,6 +37,9 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
 			if (id) {
 				this.db.where("owner.u_id", id);
+			}
+			if (active) {
+				this.db.whereIsNull("store.deleted_at");
 			}
 			this.db.push();
 
