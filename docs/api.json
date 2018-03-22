@@ -4,10 +4,10 @@
 		"description" : "Get all access level",
 		"token" : true,
 		"parameter" : [{
-			"name" : "access",
+			"name" : "active",
 			"type" : "boolean",
 			"required" : false,
-			"description" : "Access for filtering access list"
+			"description" : "Filtering access list by active access"
 		}]
 	},
 	"/access/detail" :{
