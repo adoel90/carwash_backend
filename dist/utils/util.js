@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.stringFormat = stringFormat;
 exports.rewriteImage = rewriteImage;
 exports.buildRange = buildRange;
+exports.buildRangeMember = buildRangeMember;
 
 var _moment = require("moment");
 
@@ -72,6 +73,39 @@ function buildRange(type, start, end) {
 		start = (0, _moment2.default)(start).add(1, inc);
 		build[(0, _moment2.default)(start).format(type)] = {
 			transaction: 0
+		};
+	}
+
+	return build;
+}
+
+function buildRangeMember(type, start, end) {
+	var build = {};
+	var inc = null;
+	start = (0, _moment2.default)(start);
+	end = (0, _moment2.default)(end);
+
+	var diff = null;
+	if (type == "day") {
+		inc = "days";
+		type = "DD MMM YYYY";
+	} else if (type == "month") {
+		inc = "month";
+		type = "MMM YYYY";
+	} else if (type == "year") {
+		inc = "year";
+		type = "YYYY";
+	}
+	start = (0, _moment2.default)(end).add(-11, inc);
+	diff = end.diff(start, inc);
+
+	build[(0, _moment2.default)(start).format(type)] = {
+		member: 0
+	};
+	for (var i = 0; i < diff; i++) {
+		start = (0, _moment2.default)(start).add(1, inc);
+		build[(0, _moment2.default)(start).format(type)] = {
+			member: 0
 		};
 	}
 

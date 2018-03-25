@@ -372,6 +372,19 @@ var Build = exports.Build = function () {
 
 			return promo;
 		}
+	}, {
+		key: "reportMember",
+		value: function reportMember(data) {
+			var reportMember = {
+				id: data.m_id,
+				name: data.m_name,
+				phone: data.m_phone,
+				email: data.m_email,
+				type: data.ct_name
+			};
+
+			return reportMember;
+		}
 	}]);
 
 	return Build;

@@ -1098,6 +1098,41 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Card routes ---*/
 
 			/*--- Start Report routes ---*/
+			this.app.get("/report/member/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					start_date: req.query.start_date,
+					end_date: req.query.end_date
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.getReportMember(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/report/member/graph", _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.query.type ? req.query.type : "month",
+					start_date: req.query.start_date,
+					end_date: req.query.end_date
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.getReportMemberGraph(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/report/transaction/cafe", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,

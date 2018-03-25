@@ -1106,5 +1106,42 @@
 			"required" : true,
 			"description" : "End date"
 		}]
+	},
+	"/report/member/list" :{
+		"method" : "get",
+		"description" : "Get report member list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		}]
+	},
+	"/report/member/graph" :{
+		"method" : "get",
+		"description" : "Get report member graph",
+		"token" : true,
+		"parameter" : [{
+			"name" : "type",
+			"type" : "string",
+			"required" : true,
+			"description" : "Type (day, month, year)"
+		},{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		}]
 	}
 }
