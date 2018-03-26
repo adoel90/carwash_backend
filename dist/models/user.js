@@ -65,7 +65,7 @@ var UserModel = exports.UserModel = function (_Model) {
 			this.db.select("users");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
 			this.db.where("u_username", username);
-			// this.db.whereIsNull("deleted_at");
+			this.db.whereIsNull("users.deleted_at");
 
 			return this.db.execute(true);
 		}
