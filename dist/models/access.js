@@ -115,6 +115,7 @@ var AccessModel = exports.AccessModel = function (_Model) {
             this.db.select("mod_access");
             this.db.join("module", "module.mod_id = mod_access.mod_id");
             this.db.where("ul_id", ul_id);
+            this.db.order("mod_access.mod_id");
 
             return this.db.execute();
         }
