@@ -38,7 +38,7 @@ var ReportModel = exports.ReportModel = function (_Model) {
             this.db.push();
 
             this.db.select("member");
-            this.db.order("m_id");
+            this.db.order("m_id", true);
             this.db.push();
 
             return this.db.executeMany();
