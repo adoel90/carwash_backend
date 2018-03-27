@@ -166,7 +166,8 @@ var StoreModel = exports.StoreModel = function (_Model) {
 					ts_id: ts_id,
 					mn_id: menu[i].id,
 					ti_quantity: menu[i].quantity,
-					ti_price: menu[i].price
+					ti_price: menu[i].price,
+					ti_item: menu[i].name
 				};
 				this.db.insert("transaction_item", param);
 				this.db.push(true);
