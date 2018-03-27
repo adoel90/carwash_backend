@@ -77,7 +77,9 @@ var Build = exports.Build = function () {
 		value: function module(data) {
 			var module = {
 				id: data.mod_id,
-				name: data.mod_name
+				name: data.mod_name,
+				group: data.mod_group,
+				path: data.mod_path
 			};
 
 			return module;
