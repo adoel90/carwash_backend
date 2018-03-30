@@ -417,7 +417,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 								storeModel.insertStoreTransactionMenu(transaction.ts_id, param.menu).then(function () {
 									memberModel.decreaseBalance(transParam.m_id, total).then(function () {
 										var result = _this12.build.member(member);
-										result.transaction = transaction.tc_id;
+										result.transaction = transaction.ts_id;
 										result.balance -= total;
 
 										return resolve(result);
