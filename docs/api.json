@@ -552,31 +552,31 @@
 			"description" : "Menu ID"
 		}]
 	},
-	"/store/promo/list" :{
+	"/store/discount/list" :{
 		"method" : "get",
-		"description" : "Get store promo list",
+		"description" : "Get store discount list",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Promo ID"
+			"description" : "Discount ID"
 		}]
 	},
-	"/store/promo/detail" :{
+	"/store/discount/detail" :{
 		"method" : "get",
-		"description" : "Get detail store promo",
+		"description" : "Get detail store discount",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Promo ID"
+			"description" : "Discount ID"
 		}]
 	},
-	"/store/promo/create" :{
+	"/store/discount/create" :{
 		"method" : "post",
-		"description" : "Create new store promo",
+		"description" : "Create new store discount",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
@@ -588,53 +588,53 @@
 			"name" : "price",
 			"type" : "string",
 			"required" : true,
-			"description" : "Promo price"
+			"description" : "Discount price"
 		},{
 			"name" : "date",
 			"type" : "numeric",
 			"required" : false,
-			"description" : "End date promo"
+			"description" : "End date discount"
 		}]
 	},
-	"/store/promo/update" :{
+	"/store/discount/update" :{
 		"method" : "put",
-		"description" : "Update store promo data",
+		"description" : "Update store discount data",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "promo ID"
+			"description" : "Discount ID"
 		},{
 			"name" : "price",
 			"type" : "string",
 			"required" : true,
-			"description" : "Promo price"
+			"description" : "Discount price (convert to %)"
 		}]
 	},
-	"/store/promo/delete" :{
+	"/store/discount/delete" :{
 		"method" : "put",
-		"description" : "Delete store promo data",
+		"description" : "Delete store discount data",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "promo ID"
+			"description" : "Discount ID"
 		}]
 	},
-	"/store/promo/status" :{
+	"/store/discount/status" :{
 		"method" : "put",
-		"description" : "Change store promo status",
+		"description" : "Change store discount status",
 		"content_type" : "x-www-form-urlencoded",
 		"token" : true,
 		"parameter" : [{
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "promo ID"
+			"description" : "Discount ID"
 		}]
 	},
 	"/store/transaction/create" :{

@@ -411,8 +411,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 			/*--- End Admin Category Store routes ---*/
 
-			/*--- Start Promo Store routes */
-			this.app.get("/store/promo/list", _auth.verifyToken, function (req, res) {
+			/*--- Start Discount Store routes */
+			this.app.get("/store/discount/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -428,7 +428,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/store/promo/detail", _auth.verifyToken, function (req, res) {
+			this.app.get("/store/discount/detail", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id
 				};
@@ -444,7 +444,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/store/promo/create", _auth.verifyToken, function (req, res) {
+			this.app.post("/store/discount/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					store: req.body.store,
 					price: req.body.price,
@@ -462,7 +462,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/store/promo/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/store/discount/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					price: req.body.price
@@ -479,7 +479,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/store/promo/delete", _auth.verifyToken, function (req, res) {
+			this.app.put("/store/discount/delete", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -495,7 +495,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.put("/store/promo/status", _auth.verifyToken, function (req, res) {
+			this.app.put("/store/discount/status", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id
 				};
@@ -510,7 +510,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
-			/*--- End Promo Store routes */
+			/*--- End Discount Store routes */
 
 			/*--- Start Staff Store routes ---*/
 			this.app.get("/store/staff/list", _auth.verifyToken, function (req, res) {
