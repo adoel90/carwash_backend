@@ -1143,5 +1143,11 @@
 			"required" : true,
 			"description" : "End date"
 		}]
+	},
+	"/tier/list" :{
+		"method" : "get",
+		"description" : "Get tier list",
+		"token" : true,
+		"parameter" : []
 	}
 }
