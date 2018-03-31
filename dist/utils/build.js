@@ -387,6 +387,16 @@ var Build = exports.Build = function () {
 
 			return reportMember;
 		}
+	}, {
+		key: "tierPrice",
+		value: function tierPrice(data) {
+			var tierData = {
+				price: data.tier_price,
+				bonus: data.tier_bonus
+			};
+
+			return tierData;
+		}
 	}]);
 
 	return Build;

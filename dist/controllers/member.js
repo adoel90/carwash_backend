@@ -489,6 +489,35 @@ var MemberController = exports.MemberController = function (_Controller) {
 				});
 			});
 		}
+
+		/*
+  ** Get tier data
+  ** GET :: /tier/list
+  */
+
+	}, {
+		key: "getTierList",
+		value: function getTierList(param) {
+			var _this13 = this;
+
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.getTier().then(function (tier) {
+					var result = {
+						tier: []
+					};
+
+					for (var i = 0; i < tier.length; i++) {
+						result.tier.push(_this13.build.tierPrice(tier[i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return MemberController;

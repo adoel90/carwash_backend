@@ -156,7 +156,7 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			return this.db.execute(true);
 		}
 
-		/*** Get topup transactio ***/
+		/*** Get topup transaction ***/
 
 	}, {
 		key: "getTopupTransaction",
@@ -164,6 +164,17 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			this.db.init();
 			this.db.select("topup");
 			this.db.where("m_id", m_id);
+
+			return this.db.execute();
+		}
+
+		/*** Get Tier List ***/
+
+	}, {
+		key: "getTier",
+		value: function getTier() {
+			this.db.init();
+			this.db.select("tier");
 
 			return this.db.execute();
 		}

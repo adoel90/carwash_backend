@@ -1204,6 +1204,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 			/*--- End Report routes ---*/
 
+			/*--- Start Tier routes ---*/
+			this.app.get("/tier/list", _auth.verifyToken, function (req, res) {
+				var param = {};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				memberController.getTierList(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/*--- End Tier routes ---*/
+
 			return this.app;
 		}
 	}]);
