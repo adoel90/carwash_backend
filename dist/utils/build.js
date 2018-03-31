@@ -369,7 +369,7 @@ var Build = exports.Build = function () {
 			var promo = {
 				id: data.p_id,
 				price: data.p_price,
-				date: data.p_date
+				date: (0, _moment2.default)(data.p_date).format("DD MMM YYYY")
 			};
 
 			return promo;

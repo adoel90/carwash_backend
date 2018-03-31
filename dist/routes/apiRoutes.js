@@ -414,7 +414,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- Start Discount Store routes */
 			this.app.get("/store/discount/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					id: req.query.id
+					id: req.query.id,
+					start_date: req.query.start_date ? req.query.start_date : null,
+					end_date: req.query.end_date ? req.query.end_date : null
 				};
 
 				if (!_this2.checkParameters(param)) {

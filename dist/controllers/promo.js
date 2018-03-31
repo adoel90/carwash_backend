@@ -40,7 +40,7 @@ var PromoController = exports.PromoController = function (_Controller) {
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
-                        promoModel.getPromoList(param.id).then(function (promo) {
+                        promoModel.getPromoList(param.id, param.start_date, param.end_date).then(function (promo) {
                               var result = {
                                     row: promo[0][0].count,
                                     promo: []

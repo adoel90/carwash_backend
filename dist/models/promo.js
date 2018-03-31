@@ -29,10 +29,13 @@ var PromoModel = exports.PromoModel = function (_Model) {
 
       _createClass(PromoModel, [{
             key: "getPromoList",
-            value: function getPromoList(id) {
+            value: function getPromoList(id, start, end) {
                   this.db.init();
                   this.db.select("promo", "count(*)");
                   this.db.where("store_id", id);
+                  if (start && end) {
+                        this.db.whereBetween("date(p_date)", start, end);
+                  }
                   this.db.push();
 
                   this.db.select("promo");
