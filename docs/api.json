@@ -561,6 +561,16 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Discount ID"
+		},{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "Start Date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : false,
+			"description" : "End Date"
 		}]
 	},
 	"/store/discount/detail" :{
