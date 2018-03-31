@@ -348,7 +348,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
-					category: req.body.category
+					category: req.body.category,
+					charge: req.body.charge ? req.body.charge : null
 				};
 
 				if (!_this2.checkParameters(param)) {

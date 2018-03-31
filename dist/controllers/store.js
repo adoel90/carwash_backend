@@ -130,7 +130,8 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 				var paramStore = {
 					store_name: param.name,
-					cstore_id: param.category
+					cstore_id: param.category,
+					store_charge: param.charge
 				};
 
 				storeModel.updateStore(paramStore, param.id).then(function (store) {

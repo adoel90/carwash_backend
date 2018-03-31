@@ -277,6 +277,11 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "category store (service, cafe, kantin)"
+		},{
+			"name" : "charge",
+			"type" : "numeric",
+			"required" : false,
+			"description" : "Charge value for Taxi Online (Gojek, Grab, BlueBird .dll)"
 		}]
 	},
 	"/store/delete" :{
