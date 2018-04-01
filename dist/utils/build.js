@@ -328,7 +328,7 @@ var Build = exports.Build = function () {
 				store.status = false;
 			}
 
-			if (data.charge) {
+			if (data.store_charge) {
 				store.charge = data.store_charge;
 			}
 
