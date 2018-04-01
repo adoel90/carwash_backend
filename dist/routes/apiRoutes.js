@@ -417,7 +417,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.query.id,
 					start_date: req.query.start_date ? req.query.start_date : null,
-					end_date: req.query.end_date ? req.query.end_date : null
+					end_date: req.query.end_date ? req.query.end_date : null,
+					active: req.query.active ? req.query.active : false
 				};
 
 				if (!_this2.checkParameters(param)) {

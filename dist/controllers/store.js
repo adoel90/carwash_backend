@@ -460,11 +460,20 @@ var StoreController = exports.StoreController = function (_Controller) {
 					var result = _this13.build.transactionStore(transaction);
 					storeModel.getStoreTransactionMenuById(param.id).then(function (menu) {
 						result.menu = [];
+						var storeQueue = void 0;
+						var dateTime = void 0;
+
 						for (var i = 0; i < menu.length; i++) {
 							var mn = _this13.build.menu(menu[i]);
 							mn.store = _this13.build.storeType(menu[i]);
+							storeQueue = menu[i].store_queue;
+							dateTime = menu[i].created_at;
 							result.menu.push(mn);
 						}
+
+						result.queue = storeQueue;
+						result.date = dateTime;
+
 						return resolve(result);
 					}).catch(function (err) {
 						return reject(err);
