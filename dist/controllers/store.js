@@ -395,13 +395,13 @@ var StoreController = exports.StoreController = function (_Controller) {
 						for (var _i = 0; _i < menu.length; _i++) {
 							for (var j = 0; j < param.menu.length; j++) {
 								if (param.menu[j].id == menu[_i].mn_id) {
-									total += menu[_i].mn_price * param.menu[j].quantity;
+									total += param.menu[j].price * param.menu[j].quantity;
 									if (balance - total < 0) {
 										return reject(31);
 									}
 									store = menu[_i].store_id;
 
-									param.menu[j].price = menu[_i].mn_price;
+									param.menu[j].price = param.menu[j].price;
 								}
 							}
 						}
