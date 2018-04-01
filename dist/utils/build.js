@@ -328,6 +328,10 @@ var Build = exports.Build = function () {
 				store.status = false;
 			}
 
+			if (data.charge) {
+				store.charge = data.store_charge;
+			}
+
 			return store;
 		}
 	}, {
