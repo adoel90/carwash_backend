@@ -758,8 +758,13 @@
 		},{
 			"name" : "refund",
 			"type" : "boolean",
-			"required" : true,
+			"required" : false,
 			"description" : "Card topup refund"
+		},{
+			"name" : "charge",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Charge for customer with type card Taxi Online"
 		}]
 	},
 	"/card/type/update" :{
@@ -790,8 +795,13 @@
 		},{
 			"name" : "refund",
 			"type" : "boolean",
-			"required" : true,
+			"required" : false,
 			"description" : "Card topup refund"
+		},{
+			"name" : "charge",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Charge for customer with type card Taxi Online"
 		}]
 	},
 	"/card/type/delete" :{

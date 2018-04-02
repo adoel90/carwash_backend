@@ -268,7 +268,8 @@ var StoreController = exports.StoreController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
-					mn_img: image
+					mn_img: image,
+					mn_category: param.category
 				};
 
 				menuModel.insertStoreMenu(menuParam).then(function (data) {
@@ -296,6 +297,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 					mn_name: param.name,
 					mn_price: param.price,
 					mn_desc: param.desc,
+					mn_category: param.category,
 					updated_at: _this9.moment(new Date()).format()
 				};
 

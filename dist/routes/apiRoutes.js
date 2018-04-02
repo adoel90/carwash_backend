@@ -666,7 +666,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					name: req.body.name,
 					price: req.body.price,
 					desc: req.body.description ? req.body.description : null,
-					image: req.file ? req.file : null
+					image: req.file ? req.file : null,
+					category: req.body.category ? req.body.category : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -686,7 +687,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					name: req.body.name,
 					price: req.body.price,
 					desc: req.body.description ? req.body.description : null,
-					image: req.file ? req.file : null
+					image: req.file ? req.file : null,
+					category: req.body.category ? req.body.category : false
 				};
 
 				if (!_this2.checkParameters(param)) {
