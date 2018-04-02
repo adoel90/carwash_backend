@@ -169,7 +169,8 @@ var Build = exports.Build = function () {
 				price: data.mn_price,
 				description: data.mn_desc,
 				image: this.checkImage(data.mn_img),
-				status: true
+				status: true,
+				category: data.mn_category
 			};
 
 			if (data.deleted_at) {
