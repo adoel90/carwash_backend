@@ -565,7 +565,7 @@
 			"name" : "id",
 			"type" : "integer",
 			"required" : true,
-			"description" : "Discount ID"
+			"description" : "Store ID"
 		},{
 			"name" : "start_date",
 			"type" : "date",
@@ -601,12 +601,12 @@
 			"description" : "Store ID"
 		},{
 			"name" : "price",
-			"type" : "string",
+			"type" : "numeric",
 			"required" : true,
 			"description" : "Discount price"
 		},{
 			"name" : "date",
-			"type" : "numeric",
+			"type" : "date",
 			"required" : false,
 			"description" : "End date discount"
 		}]
