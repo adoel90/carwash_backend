@@ -1034,7 +1034,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					name: req.body.name,
 					min: req.body.minimum,
 					bonus: req.body.bonus,
-					refund: req.body.refund ? req.body.refund : false
+					refund: req.body.refund ? req.body.refund : false,
+					charge: req.body.charge ? req.body.charge : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1054,7 +1055,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					name: req.body.name,
 					min: req.body.minimum,
 					bonus: req.body.bonus,
-					refund: req.body.refund ? req.body.refund : false
+					refund: req.body.refund ? req.body.refund : false,
+					charge: req.body.charge ? req.body.charge : false
 				};
 
 				if (!_this2.checkParameters(param)) {

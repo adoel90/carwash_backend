@@ -99,7 +99,8 @@ var CardController = exports.CardController = function (_Controller) {
 					ct_name: param.name,
 					ct_min: param.min,
 					ct_bonus: param.bonus,
-					ct_refund: param.refund
+					ct_refund: param.refund,
+					ct_charge: param.charge
 				};
 
 				cardModel.insertCardType(cardParam).then(function (data) {
@@ -128,6 +129,7 @@ var CardController = exports.CardController = function (_Controller) {
 					ct_min: param.min,
 					ct_bonus: param.bonus,
 					ct_refund: param.refund,
+					ct_charge: param.charge,
 					updated_at: _this4.moment(new Date()).format()
 				};
 				cardModel.updateCardType(param.id, cardParam).then(function (data) {

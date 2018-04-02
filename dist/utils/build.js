@@ -120,6 +120,7 @@ var Build = exports.Build = function () {
 				min: data.ct_min,
 				bonus: data.ct_bonus,
 				refund: data.ct_refund,
+				charge: data.ct_charge,
 				status: true
 			};
 
