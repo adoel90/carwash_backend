@@ -56,8 +56,8 @@ var Build = exports.Build = function () {
 				user.level = this.accessLevel(data);
 			}
 
-			if (data.o_id) {
-				user.owner = data.o_id;
+			if (data.o_status) {
+				user.owner = data.o_status;
 			}
 
 			return user;
@@ -310,7 +310,7 @@ var Build = exports.Build = function () {
 				id: data.store_id,
 				name: data.store_name,
 				status: true,
-				owner: data.o_id
+				owner: data.o_status
 			};
 
 			if (data.cstore_id && data.cstore_name) {
