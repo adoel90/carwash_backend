@@ -103,7 +103,8 @@ var StoreController = exports.StoreController = function (_Controller) {
 				storeModel.createStore(paramStore).then(function (store) {
 					var ownerStore = {
 						u_id: param.user,
-						store_id: store.store_id
+						store_id: store.store_id,
+						o_id: true
 					};
 
 					storeModel.createOwnerStore(ownerStore).then(function () {
