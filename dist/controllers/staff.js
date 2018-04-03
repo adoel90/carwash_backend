@@ -11,7 +11,7 @@ var _controller = require("./controller");
 
 var _staff = require("../models/staff");
 
-var _url = require("url");
+var _store = require("../models/store");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -92,18 +92,27 @@ var StaffController = exports.StaffController = function (_Controller) {
         value: function createNewStaff(param) {
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
+                var storeModel = new _store.StoreModel();
 
                 var paramStaff = {
                     u_name: param.name,
                     u_username: param.username,
                     u_password: param.password,
                     u_email: param.email,
-                    ul_id: param.level,
-                    store_id: param.store
+                    ul_id: param.level
                 };
 
-                staffModel.createStaff(paramStaff).then(function () {
-                    return resolve(true);
+                staffModel.createStaff(paramStaff).then(function (staff) {
+                    var staffStore = {
+                        u_id: staff.u_id,
+                        store_id: param.store
+                    };
+
+                    storeModel.createOwnerStore(staffStore).then(function () {
+                        return resolve(true);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
                 }).catch(function (err) {
                     return reject(err);
                 });

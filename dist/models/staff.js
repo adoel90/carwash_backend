@@ -78,9 +78,9 @@ var StaffModel = exports.StaffModel = function (_Model) {
         key: "createStaff",
         value: function createStaff(param) {
             this.db.init();
-            this.db.insert("users", param);
+            this.db.insert("users", param, "u_id");
 
-            return this.db.execute();
+            return this.db.execute(true);
         }
 
         /*--- Update staff ---*/
