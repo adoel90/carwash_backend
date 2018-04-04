@@ -105,8 +105,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                 staffModel.createStaff(paramStaff).then(function (staff) {
                     var staffStore = {
                         u_id: staff.u_id,
-                        store_id: param.store,
-                        o_id: false
+                        store_id: param.store
                     };
 
                     storeModel.createOwnerStore(staffStore).then(function () {
