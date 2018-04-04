@@ -69,6 +69,18 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+
+		/*** Get user by username All ***/
+
+	}, {
+		key: "getUserByUsernameAll",
+		value: function getUserByUsernameAll(username) {
+			this.db.select("users");
+			this.db.join("user_level", "user_level.ul_id = users.ul_id");
+			this.db.where("u_username", username);
+
+			return this.db.execute(true);
+		}
 	}, {
 		key: "getUser",
 		value: function getUser(name, access, active) {

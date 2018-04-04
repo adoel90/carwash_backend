@@ -219,6 +219,8 @@ var ReportController = exports.ReportController = function (_Controller) {
                         report: []
                     };
 
+                    console.log(report);
+
                     for (var i = 0; i < report[1].length; i++) {
                         result.report.push(_this4.build.reportMember(report[1][i]));
                     }
@@ -255,7 +257,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                     for (var i = 0; i < reportMember.length; i++) {
                         var date = _this5.moment(reportMember[i].date).format(format);
                         if (result[date]) {
-                            result[date].member += parseFloat(reportMember[i].count);
+                            result[date].saldo += parseFloat(reportMember[i].sum);
                         }
                     }
 

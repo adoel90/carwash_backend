@@ -31,14 +31,15 @@ var ReportModel = exports.ReportModel = function (_Model) {
         key: "getReportMemberList",
         value: function getReportMemberList(start, end) {
             this.db.init();
-            this.db.select("member", "count(*)");
+            this.db.select("topup", "count(*)");
+            this.db.join("member", "topup.m_id = member.m_id", "LEFT");
             this.db.join("card", "card.c_id = member.c_id", "LEFT");
             this.db.join("card_type", "card_type.ct_id = card.ct_id", "LEFT");
-            this.db.whereBetween("date(member.created_at)", start, end);
+            this.db.whereBetween("date(tp_date)", start, end);
             this.db.push();
 
-            this.db.select("member");
-            this.db.order("m_id", true);
+            this.db.select("topup");
+            this.db.order("tp_id", true);
             this.db.push();
 
             return this.db.executeMany();
@@ -50,10 +51,10 @@ var ReportModel = exports.ReportModel = function (_Model) {
         key: "getGraphReportMember",
         value: function getGraphReportMember(type, start, end) {
             this.db.init();
-            this.db.select("member", "date(created_at), count(*)");
-            this.db.group("date(created_at)");
-            this.db.order("date(created_at)");
-            this.db.whereBetween("date(created_at)", start, end);
+            this.db.select("topup", "date(tp_date), sum(tp_value)");
+            this.db.group("date(tp_date)");
+            this.db.order("date(tp_date)");
+            this.db.whereBetween("date(tp_date)", start, end);
 
             return this.db.execute();
         }

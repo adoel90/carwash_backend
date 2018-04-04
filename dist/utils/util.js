@@ -100,12 +100,12 @@ function buildRangeMember(type, start, end) {
 	diff = end.diff(start, inc);
 
 	build[(0, _moment2.default)(start).format(type)] = {
-		member: 0
+		saldo: 0
 	};
 	for (var i = 0; i < diff; i++) {
 		start = (0, _moment2.default)(start).add(1, inc);
 		build[(0, _moment2.default)(start).format(type)] = {
-			member: 0
+			saldo: 0
 		};
 	}
 

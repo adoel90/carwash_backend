@@ -56,6 +56,12 @@ var Response = function () {
 						error.set("message", "Your current password is incorrect");
 						break;
 					}
+				case 12:
+					{
+						error.set("status", 400);
+						error.set("message", "Your username is duplicated");
+						break;
+					}
 
 				// Response card error
 				case 20:

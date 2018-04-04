@@ -13,6 +13,8 @@ var _staff = require("../models/staff");
 
 var _store = require("../models/store");
 
+var _user = require("../models/user");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -93,6 +95,7 @@ var StaffController = exports.StaffController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
                 var storeModel = new _store.StoreModel();
+                var userModel = new _user.UserModel();
 
                 var paramStaff = {
                     u_name: param.name,
@@ -102,17 +105,25 @@ var StaffController = exports.StaffController = function (_Controller) {
                     ul_id: param.level
                 };
 
-                staffModel.createStaff(paramStaff).then(function (staff) {
-                    var staffStore = {
-                        u_id: staff.u_id,
-                        store_id: param.store
-                    };
+                userModel.getUserByUsername(param.username).then(function (user) {
+                    if (user.u_username != param.username) {
+                        staffModel.createStaff(paramStaff).then(function (staff) {
+                            var staffStore = {
+                                u_id: staff.u_id,
+                                store_id: param.store
+                            };
 
-                    storeModel.createOwnerStore(staffStore).then(function () {
-                        return resolve(true);
-                    }).catch(function (err) {
-                        return reject(err);
-                    });
+                            storeModel.createOwnerStore(staffStore).then(function () {
+                                return resolve(true);
+                            }).catch(function (err) {
+                                return reject(err);
+                            });
+                        }).catch(function (err) {
+                            return reject(err);
+                        });
+                    } else {
+                        return reject(12);
+                    }
                 }).catch(function (err) {
                     return reject(err);
                 });

@@ -393,7 +393,8 @@ var Build = exports.Build = function () {
 				name: data.m_name,
 				phone: data.m_phone,
 				email: data.m_email,
-				type: data.ct_name
+				type: data.ct_name,
+				price: data.tp_value
 			};
 
 			return reportMember;
