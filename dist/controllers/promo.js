@@ -33,14 +33,14 @@ var PromoController = exports.PromoController = function (_Controller) {
 
 
       _createClass(PromoController, [{
-            key: 'getPromoList',
-            value: function getPromoList(param) {
+            key: 'getPromo',
+            value: function getPromo(param) {
                   var _this2 = this;
 
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
-                        promoModel.getPromoList(param.id, param.active).then(function (promo) {
+                        promoModel.getPromo(param.id, param.active).then(function (promo) {
                               var result = {
                                     row: promo[0][0].count,
                                     promo: []

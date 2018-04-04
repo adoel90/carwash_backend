@@ -28,8 +28,8 @@ var PromoModel = exports.PromoModel = function (_Model) {
 
 
       _createClass(PromoModel, [{
-            key: "getPromoList",
-            value: function getPromoList(id, active) {
+            key: "getPromo",
+            value: function getPromo(id, active) {
                   this.db.init();
                   this.db.select("promo", "count(*)");
                   this.db.where("store_id", id);
