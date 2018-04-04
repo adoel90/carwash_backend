@@ -29,6 +29,26 @@ var PromoModel = exports.PromoModel = function (_Model) {
 
       _createClass(PromoModel, [{
             key: "getPromoList",
+            value: function getPromoList(id, active) {
+                  this.db.init();
+                  this.db.select("promo", "count(*)");
+                  this.db.where("store_id", id);
+                  if (active) {
+                        this.db.whereIsNull("deleted_at");
+                  }
+                  this.db.push();
+
+                  this.db.select("promo");
+                  this.db.order("p_id");
+                  this.db.push();
+
+                  return this.db.executeMany();
+            }
+
+            /*** Get Promo Store List ***/
+
+      }, {
+            key: "getPromoList",
             value: function getPromoList(id, start, end, active) {
                   this.db.init();
                   this.db.select("promo", "count(*)");

@@ -557,6 +557,22 @@
 			"description" : "Menu ID"
 		}]
 	},
+	"/store/discount" :{
+		"method" : "get",
+		"description" : "Get all store discount list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Store ID"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filtering active / not active discount"
+		}]
+	},
 	"/store/discount/list" :{
 		"method" : "get",
 		"description" : "Get store discount list",
@@ -576,6 +592,11 @@
 			"type" : "date",
 			"required" : false,
 			"description" : "End Date"
+		},{
+			"name" : "active",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Filtering active / not active discount"
 		}]
 	},
 	"/store/discount/detail" :{

@@ -413,6 +413,23 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Admin Category Store routes ---*/
 
 			/*--- Start Discount Store routes */
+			this.app.get("/store/discount", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id,
+					active: req.query.active ? req.query.active : false
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				promoController.getPromo(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.get("/store/discount/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id,

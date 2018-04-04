@@ -40,7 +40,7 @@ var PromoController = exports.PromoController = function (_Controller) {
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
-                        promoModel.getPromoList(param.id, param.start_date, param.end_date, param.active).then(function (promo) {
+                        promoModel.getPromoList(param.id, param.active).then(function (promo) {
                               var result = {
                                     row: promo[0][0].count,
                                     promo: []
@@ -58,6 +58,36 @@ var PromoController = exports.PromoController = function (_Controller) {
             }
 
             /*
+            ** Get list promo
+            ** GET :: /store/promo/list
+            */
+
+      }, {
+            key: 'getPromoList',
+            value: function getPromoList(param) {
+                  var _this3 = this;
+
+                  return new Promise(function (resolve, reject) {
+                        var promoModel = new _promo.PromoModel();
+
+                        promoModel.getPromoList(param.id, param.start_date, param.end_date, param.active).then(function (promo) {
+                              var result = {
+                                    row: promo[0][0].count,
+                                    promo: []
+                              };
+
+                              for (var i = 0; i < promo[1].length; i++) {
+                                    result.promo.push(_this3.build.promo(promo[1][i]));
+                              }
+
+                              return resolve(result);
+                        }).catch(function (err) {
+                              return reject(err);
+                        });
+                  });
+            }
+
+            /*
             ** Get promo detail
             ** GET :: /store/promo/detail
             */
@@ -65,13 +95,13 @@ var PromoController = exports.PromoController = function (_Controller) {
       }, {
             key: 'getPromoDetail',
             value: function getPromoDetail(param) {
-                  var _this3 = this;
+                  var _this4 = this;
 
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
                         promoModel.getPromoDetail(param.id).then(function (promo) {
-                              var result = _this3.build.promo(promo);
+                              var result = _this4.build.promo(promo);
 
                               return resolve(result);
                         }).catch(function (err) {
@@ -88,7 +118,7 @@ var PromoController = exports.PromoController = function (_Controller) {
       }, {
             key: 'createNewPromo',
             value: function createNewPromo(param) {
-                  var _this4 = this;
+                  var _this5 = this;
 
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
@@ -96,7 +126,7 @@ var PromoController = exports.PromoController = function (_Controller) {
                         var paramPromo = {
                               store_id: param.store,
                               p_price: param.price,
-                              p_date: param.date ? param.date : _this4.moment(new Date()).format()
+                              p_date: param.date ? param.date : _this5.moment(new Date()).format()
                         };
 
                         promoModel.createPromo(paramPromo).then(function () {
@@ -138,13 +168,13 @@ var PromoController = exports.PromoController = function (_Controller) {
       }, {
             key: 'deletePromo',
             value: function deletePromo(param) {
-                  var _this5 = this;
+                  var _this6 = this;
 
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
                         var paramPromo = {
-                              deleted_at: _this5.moment(new Date()).format()
+                              deleted_at: _this6.moment(new Date()).format()
                         };
 
                         promoModel.updatePromo(paramPromo, param.id).then(function () {
@@ -163,14 +193,14 @@ var PromoController = exports.PromoController = function (_Controller) {
       }, {
             key: 'changeStatusPromo',
             value: function changeStatusPromo(param) {
-                  var _this6 = this;
+                  var _this7 = this;
 
                   return new Promise(function (resolve, reject) {
                         var promoModel = new _promo.PromoModel();
 
                         promoModel.getPromoDetail(param.id).then(function (promo) {
                               var paramPromo = {
-                                    deleted_at: promo.deleted_at ? null : _this6.moment(new Date()).format()
+                                    deleted_at: promo.deleted_at ? null : _this7.moment(new Date()).format()
                               };
 
                               promoModel.updatePromo(paramPromo, param.id).then(function () {
