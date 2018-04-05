@@ -689,6 +689,16 @@
 				"type" : "integer",
 				"required" : true,
 				"description" : "Store ID"
+			},{
+				"name" : "discount",
+				"type" : "integer",
+				"required" : false,
+				"description" : "Discount"
+			},{
+				"name" : "increase",
+				"type" : "boolean",
+				"required" : false,
+				"description" : "Increase/Decrease Price"
 			}
 		]
 	},
