@@ -757,7 +757,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					member: res.locals.member.id,
 					menu: req.body.menu,
-					store: req.body.store
+					store: req.body.store,
+					discount: req.body.discount ? req.body.discount : 0
 				};
 
 				if (!_this2.checkParameters(param)) {
