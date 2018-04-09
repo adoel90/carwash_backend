@@ -105,26 +105,21 @@ var StaffController = exports.StaffController = function (_Controller) {
                     ul_id: param.level
                 };
 
-                userModel.getUserByUsername(param.username).then(function (user) {
-                    if (user.u_username != param.username) {
-                        staffModel.createStaff(paramStaff).then(function (staff) {
-                            var staffStore = {
-                                u_id: staff.u_id,
-                                store_id: param.store
-                            };
+                staffModel.createStaff(paramStaff).then(function (staff) {
+                    var staffStore = {
+                        u_id: staff.u_id,
+                        store_id: param.store
+                    };
 
-                            storeModel.createOwnerStore(staffStore).then(function () {
-                                return resolve(true);
-                            }).catch(function (err) {
-                                return reject(err);
-                            });
-                        }).catch(function (err) {
-                            return reject(err);
-                        });
-                    } else {
+                    storeModel.createOwnerStore(staffStore).then(function () {
+                        return resolve(true);
+                    }).catch(function (err) {
+                        return reject(err);
+                    });
+                }).catch(function (err) {
+                    if (err.code == 23505) {
                         return reject(12);
                     }
-                }).catch(function (err) {
                     return reject(err);
                 });
             });
