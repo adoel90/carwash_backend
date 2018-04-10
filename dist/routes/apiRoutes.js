@@ -640,6 +640,57 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.post("/store/staff/job/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					staff: req.body.staff,
+					store: req.body.store
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				staffController.addJob(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/store/staff/job/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					staff: req.body.staff,
+					store: req.body.store
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				staffController.changeJob(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.delete("/store/staff/job/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				staffController.deleteJob(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Staff Store routes ---*/
 
 			/*--- Start Menu Store routes ---*/

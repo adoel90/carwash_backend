@@ -1205,5 +1205,56 @@
 		"description" : "Get tier list",
 		"token" : true,
 		"parameter" : []
+	},
+	"/store/staff/job/create" :{
+		"method" : "post",
+		"description" : "Create new access store",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "staff",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Staff ID"
+		},{
+			"name" : "store",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Store ID"
+		}]
+	},
+	"/store/staff/job/update" :{
+		"method" : "put",
+		"description" : "Update access store",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Owner ID"
+		},{
+			"name" : "staff",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Staff ID"
+		},{
+			"name" : "store",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Store ID"
+		}]
+	},
+	"/store/staff/job/delete" :{
+		"method" : "put",
+		"description" : "Delete access store",
+		"content_type" : "x-www-form-urlencoded",
+		"token" : true,
+		"parameter" : [{
+			"name" : "id",
+			"type" : "integer",
+			"required" : true,
+			"description" : "Owner ID"
+		}]
 	}
 }

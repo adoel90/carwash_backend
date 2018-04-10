@@ -60,6 +60,10 @@ var Build = exports.Build = function () {
 				user.owner = data.o_status;
 			}
 
+			if (data.o_id) {
+				user.owner_id = data.o_id;
+			}
+
 			return user;
 		}
 	}, {

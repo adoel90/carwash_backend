@@ -210,6 +210,73 @@ var StaffController = exports.StaffController = function (_Controller) {
                 });
             });
         }
+
+        /*
+        ** Add Job Position
+        ** POST :: /store/staff/job
+        */
+
+    }, {
+        key: "addJob",
+        value: function addJob(param) {
+            return new Promise(function (resolve, reject) {
+                var staffModel = new _staff.StaffModel();
+
+                var requiredData = {
+                    u_id: param.staff,
+                    store_id: param.store
+                };
+
+                staffModel.addJob(requiredData).then(function () {
+                    return resolve(true);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Change Job Position
+        ** PUT :: /store/staff/job/update
+        */
+
+    }, {
+        key: "changeJob",
+        value: function changeJob(param) {
+            return new Promise(function (resolve, reject) {
+                var staffModel = new _staff.StaffModel();
+
+                var requiredData = {
+                    u_id: param.staff,
+                    store_id: param.store
+                };
+
+                staffModel.changeJob(requiredData, param.id).then(function () {
+                    return resolve(true);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Delete Job Position
+        ** DELETE :: /store/staff/job/delete
+        */
+
+    }, {
+        key: "deleteJob",
+        value: function deleteJob(param) {
+            return new Promise(function (resolve, reject) {
+                var staffModel = new _staff.StaffModel();
+
+                staffModel.deleteJob(param.id).then(function () {
+                    return resolve(true);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
     }]);
 
     return StaffController;

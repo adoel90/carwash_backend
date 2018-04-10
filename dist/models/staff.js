@@ -94,6 +94,41 @@ var StaffModel = exports.StaffModel = function (_Model) {
 
             return this.db.execute();
         }
+
+        /*--- Add job ---*/
+
+    }, {
+        key: "addJob",
+        value: function addJob(param) {
+            this.db.init();
+            this.db.insert("owner", param);
+
+            return this.db.execute();
+        }
+
+        /*--- Update job ---*/
+
+    }, {
+        key: "changeJob",
+        value: function changeJob(param, id) {
+            this.db.init();
+            this.db.update("owner", param);
+            this.db.where("o_id", id);
+
+            return this.db.execute();
+        }
+
+        /*--- Delete job ---*/
+
+    }, {
+        key: "deleteJob",
+        value: function deleteJob(id) {
+            this.db.init();
+            this.db.delete("owner");
+            this.db.where("o_id", id);
+
+            return this.db.execute();
+        }
     }]);
 
     return StaffModel;
