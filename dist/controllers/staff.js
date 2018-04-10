@@ -92,6 +92,8 @@ var StaffController = exports.StaffController = function (_Controller) {
     }, {
         key: "createNewStaff",
         value: function createNewStaff(param) {
+            var _this4 = this;
+
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
                 var storeModel = new _store.StoreModel();
@@ -100,7 +102,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                 var paramStaff = {
                     u_name: param.name,
                     u_username: param.username,
-                    u_password: param.password,
+                    u_password: _this4.encrypt(param.password),
                     u_email: param.email,
                     ul_id: param.level
                 };
@@ -133,7 +135,7 @@ var StaffController = exports.StaffController = function (_Controller) {
     }, {
         key: "updateStaff",
         value: function updateStaff(param) {
-            var _this4 = this;
+            var _this5 = this;
 
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
@@ -141,10 +143,10 @@ var StaffController = exports.StaffController = function (_Controller) {
                 var paramStaff = {
                     u_name: param.name,
                     u_username: param.username,
-                    u_password: param.password,
+                    u_password: _this5.encrypt(param.password),
                     u_email: param.email,
                     ul_id: param.level,
-                    updated_at: _this4.moment(new Date()).format()
+                    updated_at: _this5.moment(new Date()).format()
                 };
 
                 staffModel.updateStaff(paramStaff, param.id).then(function () {
@@ -163,13 +165,13 @@ var StaffController = exports.StaffController = function (_Controller) {
     }, {
         key: "deleteStaff",
         value: function deleteStaff(param) {
-            var _this5 = this;
+            var _this6 = this;
 
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
 
                 var paramStaff = {
-                    deleted_at: _this5.moment(new Date()).format()
+                    deleted_at: _this6.moment(new Date()).format()
                 };
 
                 staffModel.updateStaff(paramStaff, param.id).then(function () {
@@ -188,14 +190,14 @@ var StaffController = exports.StaffController = function (_Controller) {
     }, {
         key: "changeStaffStatus",
         value: function changeStaffStatus(param) {
-            var _this6 = this;
+            var _this7 = this;
 
             return new Promise(function (resolve, reject) {
                 var staffModel = new _staff.StaffModel();
 
                 staffModel.findStaff(param.id).then(function (staff) {
                     var paramStaff = {
-                        deleted_at: staff.deleted_at ? null : _this6.moment(new Date()).format()
+                        deleted_at: staff.deleted_at ? null : _this7.moment(new Date()).format()
                     };
 
                     staffModel.updateStaff(paramStaff, param.id).then(function () {
