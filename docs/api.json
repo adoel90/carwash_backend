@@ -501,6 +501,11 @@
 			"type" : "file",
 			"required" : false,
 			"description" : "Menu image"
+		},{
+			"name" : "category",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Special menu for member Taxi Online"
 		}]
 	},
 	"/store/menu/update" :{
@@ -533,6 +538,11 @@
 			"type" : "file",
 			"required" : false,
 			"description" : "Menu image"
+		},{
+			"name" : "category",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Special menu for member Taxi Online"
 		}]
 	},
 	"/store/menu/delete" :{

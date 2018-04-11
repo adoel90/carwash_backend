@@ -50,8 +50,6 @@ var StaffController = exports.StaffController = function (_Controller) {
                         staff: []
                     };
 
-                    console.log(staff);
-
                     for (var i = 0; i < staff[1].length; i++) {
                         result.staff.push(_this2.build.user(staff[1][i]));
                     }
