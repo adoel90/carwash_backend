@@ -754,6 +754,37 @@
 			}
 		]
 	},
+	"/store/report/transactions" :{
+		"method" : "get",
+		"description" : "Get report store transaction owner",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "store",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Store ID"
+			},
+			{
+				"name" : "start_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "Start date"
+			},
+			{
+				"name" : "end_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "End Date"
+			},
+			{
+				"name" : "print",
+				"type" : "string",
+				"required" : false,
+				"description" : "Print report transaction"
+			}
+		]
+	},
 	"/card/type" :{
 		"method" : "get",
 		"description" : "Get card type",
@@ -897,7 +928,7 @@
 		},{
 			"name" : "transaction",
 			"type" : "boolean",
-			"required" : true,
+			"required" : false,
 			"description" : "Get detail transaction member"
 		}]
 	},
@@ -1110,6 +1141,22 @@
 			"required" : true,
 			"description" : "Type (day, month, year)"
 		},{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		}]
+	},
+	"/report/owner" :{
+		"method" : "get",
+		"description" : "Get report owner list",
+		"token" : true,
+		"parameter" : [{
 			"name" : "start_date",
 			"type" : "date",
 			"required" : true,

@@ -202,7 +202,7 @@ var ReportController = exports.ReportController = function (_Controller) {
 
         /* 
         ** Get report member register
-        ** GET :: /report/member
+        ** GET :: /report/member/list
         */
 
     }, {
