@@ -73,6 +73,18 @@ var UserModel = exports.UserModel = function (_Model) {
 		/*** Get user by username All ***/
 
 	}, {
+		key: "getUserByUsernameUnique",
+		value: function getUserByUsernameUnique(username) {
+			this.db.init();
+			this.db.select("users");
+			this.db.where("lower(u_username)", username.toLowerCase());
+
+			return this.db.execute();
+		}
+
+		/*** Get user by username All ***/
+
+	}, {
 		key: "getUserByUsernameAll",
 		value: function getUserByUsernameAll(username) {
 			this.db.select("users");

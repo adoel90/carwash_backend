@@ -536,6 +536,36 @@ var StoreController = exports.StoreController = function (_Controller) {
 		}
 
 		/*
+  ** get detail report transaction per-store
+  ** GET :: /store/report/transaction
+  */
+
+	}, {
+		key: 'storeReportTransactions',
+		value: function storeReportTransactions(param) {
+			var _this15 = this;
+
+			return new Promise(function (resolve, reject) {
+				var storeModel = new _store.StoreModel();
+
+				storeModel.getReportDetailByStore(param.store, param.start_date, param.end_date).then(function (store) {
+					var result = {
+						count: store[0][0].count,
+						store: []
+					};
+
+					for (var i = 0; i < store[1].length; i++) {
+						result.store.push(_this15.build.storeTransaction(store[1][i]));
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Get store category list
   ** GET :: /store/category
   */
@@ -543,7 +573,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'getStoreCategoryList',
 		value: function getStoreCategoryList(param) {
-			var _this15 = this;
+			var _this16 = this;
 
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
@@ -552,7 +582,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 					var result = [];
 
 					for (var i = 0; i < category.length; i++) {
-						result.push(_this15.build.categoryStore(category[i]));
+						result.push(_this16.build.categoryStore(category[i]));
 					}
 
 					return resolve(result);

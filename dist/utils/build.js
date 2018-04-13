@@ -209,10 +209,10 @@ var Build = exports.Build = function () {
 		key: "transactionStore",
 		value: function transactionStore(data) {
 			var transaction = {
-				id: data.tc_id,
-				date: data.tc_date,
-				queue: data.tc_queue,
-				total: data.tc_total,
+				id: data.ts_id,
+				date: data.ts_date,
+				queue: data.ts_queue,
+				total: data.ts_total,
 				member: this.member(data)
 			};
 
@@ -397,9 +397,23 @@ var Build = exports.Build = function () {
 				name: data.m_name,
 				phone: data.m_phone,
 				email: data.m_email,
-				type: data.ct_name,
-				price: data.tp_value
+				address: data.m_address,
+				balance: data.m_balance,
+				payment: data.m_payment,
+				card: {
+					id: data.c_id
+				},
+				created_at: (0, _moment2.default)(data.created_at).format("DD MMM YYYY"),
+				status: true
 			};
+
+			if (data.ct_id) {
+				reportMember.card.type = this.card(data);
+			}
+
+			if (data.deleted) {
+				reportMember.status = false;
+			}
 
 			return reportMember;
 		}
@@ -412,6 +426,22 @@ var Build = exports.Build = function () {
 			};
 
 			return tierData;
+		}
+	}, {
+		key: "storeTransaction",
+		value: function storeTransaction(data) {
+			var store = {
+				id: data.ts_id,
+				date: data.ts_date,
+				total: parseInt(data.ts_total),
+				store: data.store_id
+			};
+
+			if (data.m_name) {
+				store.member = this.member(data);
+			}
+
+			return store;
 		}
 	}]);
 

@@ -894,6 +894,11 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Member ID"
+		},{
+			"name" : "transaction",
+			"type" : "boolean",
+			"required" : true,
+			"description" : "Get detail transaction member"
 		}]
 	},
 	"/member/list" :{
@@ -1077,100 +1082,6 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Card type ID"
-		}]
-	},
-	"/report/transaction/cafe" :{
-		"method" : "get",
-		"description" : "Get report cafe transaction",
-		"token" : true,
-		"parameter" : [{
-			"name" : "limit",
-			"type" : "integer",
-			"required" : false,
-			"description" : "Limit of data, default 10"
-		},{
-			"name" : "offset",
-			"type" : "integer",
-			"required" : false,
-			"description" : "Start of data, default 0"
-		},{
-			"name" : "start_date",
-			"type" : "date",
-			"required" : false,
-			"description" : "Start date"
-		},{
-			"name" : "end_date",
-			"type" : "date",
-			"required" : false,
-			"description" : "End date"
-		},{
-			"name" : "cafe",
-			"type" : "string",
-			"required" : false,
-			"description" : "Filter data by cafe ID"
-		}]
-	},
-	"/report/transaction/service" :{
-		"method" : "get",
-		"description" : "Get report service transaction",
-		"token" : true,
-		"parameter" : [{
-			"name" : "limit",
-			"type" : "integer",
-			"required" : false,
-			"description" : "Limit of data, default 10"
-		},{
-			"name" : "offset",
-			"type" : "integer",
-			"required" : false,
-			"description" : "Start of data, default 0"
-		},{
-			"name" : "start_date",
-			"type" : "date",
-			"required" : false,
-			"description" : "Start date"
-		},{
-			"name" : "end_date",
-			"type" : "date",
-			"required" : false,
-			"description" : "End date"
-		},{
-			"name" : "service",
-			"type" : "string",
-			"required" : false,
-			"description" : "Filter data by service ID"
-		}]
-	},
-	"/report/summary/cafe" :{
-		"method" : "get",
-		"description" : "Get report summary cafe transaction",
-		"token" : true,
-		"parameter" : [{
-			"name" : "start_date",
-			"type" : "date",
-			"required" : true,
-			"description" : "Start date"
-		},{
-			"name" : "end_date",
-			"type" : "date",
-			"required" : true,
-			"description" : "End date"
-		}]
-	},
-	"/report/summary/service" :{
-		"method" : "get",
-		"description" : "Get report summary service transaction",
-		"token" : true,
-		"parameter" : [{
-			"name" : "start_date",
-			"type" : "date",
-			"required" : true,
-			"description" : "Start date"
-		},{
-			"name" : "end_date",
-			"type" : "date",
-			"required" : true,
-			"description" : "End date"
 		}]
 	},
 	"/report/member/list" :{

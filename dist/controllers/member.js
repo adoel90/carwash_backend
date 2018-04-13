@@ -19,6 +19,8 @@ var _cafe = require("../models/cafe");
 
 var _service = require("../models/service");
 
+var _store = require("../models/store");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -106,6 +108,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 				var memberModel = new _member.MemberModel();
 				var cafeModel = new _cafe.CafeModel();
 				var serviceModel = new _service.ServiceModel();
+				var storeModel = new _store.StoreModel();
 
 				memberModel.getMemberById(param.id).then(function (member) {
 					var result = _this4.build.member(member);
@@ -114,41 +117,52 @@ var MemberController = exports.MemberController = function (_Controller) {
 					}
 
 					result.transaction = [];
-					serviceModel.getServiceTransaction(param.id).then(function (service) {
-						cafeModel.getCafeTransaction(param.id).then(function (cafe) {
-							memberModel.getTopupTransaction(param.id).then(function (topup) {
-								for (var i = 0; i < service.length; i++) {
-									var a = _this4.build.transactionService(service[i]);
-									a.timestamp = _this4.moment(a.date).format("x");
-									a.type = "service";
-									result.transaction.push(a);
-								}
-								for (var _i = 0; _i < cafe.length; _i++) {
-									var _a = _this4.build.transactionCafe(cafe[_i]);
-									_a.timestamp = _this4.moment(_a.date).format("x");
-									_a.type = "cafe";
-									result.transaction.push(_a);
-								}
-								for (var _i2 = 0; _i2 < topup.length; _i2++) {
-									var _a2 = _this4.build.topup(topup[_i2]);
-									_a2.timestamp = _this4.moment(_a2.date).format("x");
-									_a2.type = "topup";
-									result.transaction.push(_a2);
-								}
+					// serviceModel.getServiceTransaction(param.id).then((service) => {
+					// 	cafeModel.getCafeTransaction(param.id).then((cafe) => {
+					storeModel.getStoreTransaction(param.id).then(function (store) {
+						console.log(store);
+						memberModel.getTopupTransaction(param.id).then(function (topup) {
+							// for(let i=0; i<service.length; i++) {
+							// 	let a = this.build.transactionService(service[i]);
+							// 	a.timestamp = this.moment(a.date).format("x");
+							// 	a.type = "service";
+							// 	result.transaction.push(a);
+							// }
+							// for(let i=0; i<cafe.length; i++) {
+							// 	let a = this.build.transactionCafe(cafe[i]);
+							// 	a.timestamp = this.moment(a.date).format("x");
+							// 	a.type = "cafe";
+							// 	result.transaction.push(a);
+							// }
+							for (var i = 0; i < store.length; i++) {
+								var a = _this4.build.transactionStore(store[i]);
+								a.timestamp = _this4.moment(a.date).format("x");
+								a.type = "store";
+								result.transaction.push(a);
+							}
+							for (var _i = 0; _i < topup.length; _i++) {
+								var _a = _this4.build.topup(topup[_i]);
+								_a.timestamp = _this4.moment(_a.date).format("x");
+								_a.type = "topup";
+								result.transaction.push(_a);
+							}
 
-								result.transaction.sort(function (a, b) {
-									return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
-								});
-								return resolve(result);
-							}).catch(function (err) {
-								return reject(err);
+							result.transaction.sort(function (a, b) {
+								return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
 							});
+							return resolve(result);
 						}).catch(function (err) {
 							return reject(err);
 						});
 					}).catch(function (err) {
 						return reject(err);
 					});
+					// 	}).catch((err) => {
+					// 		return reject(err);
+					// 	});
+					// }).catch((err) => {
+					// 	return reject(err);
+					// });
 				}).catch(function (err) {
 					return reject(err);
 				});

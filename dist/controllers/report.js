@@ -201,8 +201,8 @@ var ReportController = exports.ReportController = function (_Controller) {
         }
 
         /* 
-        ** Get report cafe transaction
-        ** GET :: /report/member/list
+        ** Get report member register
+        ** GET :: /report/member
         */
 
     }, {
@@ -213,16 +213,42 @@ var ReportController = exports.ReportController = function (_Controller) {
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
 
-                reportModel.getReportMemberList(params.start_date, params.end_date).then(function (report) {
+                reportModel.getReportMember(params.start_date, params.end_date).then(function (report) {
                     var result = {
                         count: report[0][0].count,
                         report: []
                     };
 
-                    console.log(report);
-
                     for (var i = 0; i < report[1].length; i++) {
                         result.report.push(_this4.build.reportMember(report[1][i]));
+                    }
+
+                    return resolve(result);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Get report owner
+        ** GET :: /report/owner
+        */
+
+    }, {
+        key: "getReportOwner",
+        value: function getReportOwner(param) {
+            return new Promise(function (resolve, reject) {
+                var reportModel = new _report.ReportModel();
+
+                reportModel.getReportOwner(param.start_date, param.end_date).then(function (owner) {
+                    var result = {
+                        count: owner[0][0].count,
+                        data: []
+                    };
+
+                    for (var i = 0; i < owner[1].length; i++) {
+                        result.data.push(owner[1][i]);
                     }
 
                     return resolve(result);

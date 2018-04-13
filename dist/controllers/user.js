@@ -181,6 +181,9 @@ var UserController = exports.UserController = function (_Controller) {
 				userModel.insertUser(userParam).then(function (user) {
 					return resolve(user);
 				}).catch(function (err) {
+					if (err.code == 23505) {
+						return reject(12);
+					}
 					return reject(err);
 				});
 			});

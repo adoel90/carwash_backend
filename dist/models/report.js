@@ -28,6 +28,46 @@ var ReportModel = exports.ReportModel = function (_Model) {
 
 
     _createClass(ReportModel, [{
+        key: "getReportMember",
+        value: function getReportMember(start, end) {
+            this.db.init();
+            this.db.select("member", "count(*)");
+            this.db.join("card", "card.c_id = member.c_id", "LEFT");
+            this.db.join("card_type", "card_type.ct_id = card.ct_id", "LEFT");
+            this.db.whereBetween("date(member.created_at)", start, end);
+            this.db.push();
+
+            this.db.select("member", "member.*, card.*, card_type.*, member.created_at");
+            this.db.order("member.created_at", true);
+            this.db.push();
+
+            return this.db.executeMany();
+        }
+
+        /*** Get Report owner ***/
+
+    }, {
+        key: "getReportOwner",
+        value: function getReportOwner(start, end) {
+            this.db.init();
+            this.db.select("users", "count(*)");
+            this.db.join("owner", "users.u_id = owner.u_id");
+            this.db.join("store", "store.store_id = owner.store_id");
+            this.db.join("store_category", "store_category.cstore_id = store.cstore_id");
+            this.db.join("transaction_store", "store.store_id = transaction_store.store_id");
+            this.db.whereBetween("date(ts_date)", start, end);
+            this.db.push();
+
+            this.db.select("users");
+            this.db.push();
+
+            return this.db.executeMany();
+        }
+
+        /*** OLD ***/
+        /*** Get Report member list */
+
+    }, {
         key: "getReportMemberList",
         value: function getReportMemberList(start, end) {
             this.db.init();

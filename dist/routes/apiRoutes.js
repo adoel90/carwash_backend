@@ -165,7 +165,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					username: req.body.username,
-					password: req.body.password ? req.body.password : null,
+					password: req.body.password,
 					name: req.body.name,
 					email: req.body.email ? req.body.email : null,
 					level: req.body.level
@@ -858,6 +858,25 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/store/report/transactions", _auth.verifyToken, function (req, res) {
+				var param = {
+					store: req.query.store,
+					start_date: req.query.start_date ? req.query.start_date : null,
+					end_date: req.query.end_date ? req.query.end_date : null,
+					print: true
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				storeController.storeReportTransactions(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Owner Store routes ---*/
 
 			/*--- Start Member routes ---*/
@@ -1176,7 +1195,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/*--- End Card routes ---*/
 
 			/*--- Start Report routes ---*/
-			this.app.get("/report/member/list", _auth.verifyToken, function (req, res) {
+			this.app.get("/report/member", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date
@@ -1193,61 +1212,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.get("/report/member/graph", _auth.verifyToken, function (req, res) {
-				var param = {
-					type: req.query.type ? req.query.type : "month",
-					start_date: req.query.start_date,
-					end_date: req.query.end_date
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				reportController.getReportMemberGraph(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.get("/report/transaction/cafe", _auth.verifyToken, function (req, res) {
-				var param = {
-					start_date: req.query.start_date,
-					end_date: req.query.end_date,
-					cafe: req.query.cafe ? req.query.cafe : null
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				reportController.cafeTransactionReport(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.get("/report/transaction/service", _auth.verifyToken, function (req, res) {
-				var param = {
-					start_date: req.query.start_date,
-					end_date: req.query.end_date,
-					service: req.query.service ? req.query.service : null
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				reportController.serviceTransactionReport(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.get("/report/summary/cafe", _auth.verifyToken, function (req, res) {
+			this.app.get("/report/owner", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date
@@ -1257,24 +1222,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				reportController.cafeSummaryReport(param).then(function (data) {
-					return _this2.success(res, data);
-				}).catch(function (err) {
-					return _this2.error(res, err);
-				});
-			});
-
-			this.app.get("/report/summary/service", _auth.verifyToken, function (req, res) {
-				var param = {
-					start_date: req.query.start_date,
-					end_date: req.query.end_date
-				};
-
-				if (!_this2.checkParameters(param)) {
-					return _this2.error(res, 1);
-				}
-
-				reportController.serviceSummaryReport(param).then(function (data) {
+				reportController.getReportOwner(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
