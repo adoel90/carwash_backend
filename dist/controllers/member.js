@@ -21,6 +21,8 @@ var _service = require("../models/service");
 
 var _store = require("../models/store");
 
+var _log = require("../models/log");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -182,6 +184,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
+				var logModel = new _log.LogModel();
 
 				var cardParam = {
 					c_id: cardModel.generateCardId(param.card),
@@ -200,10 +203,23 @@ var MemberController = exports.MemberController = function (_Controller) {
 							c_id: card.c_id
 						};
 						memberModel.insertMember(memberParam).then(function (member) {
-							memberModel.getMemberById(member.m_id).then(function (m) {
-								member = _this5.build.member(m);
-								member.payment = param.payment;
-								return resolve(member);
+							var logParam = {
+								m_id: member.m_id,
+								log_value: parseFloat(card_type.ct_min) + parseFloat(card_type.ct_bonus),
+								log_before: 0,
+								log_payment: param.payment,
+								created_by: param.staff,
+								log_description: "Buat Member"
+							};
+
+							logModel.createLogUser(logParam).then(function () {
+								memberModel.getMemberById(member.m_id).then(function (m) {
+									member = _this5.build.member(m);
+									member.payment = param.payment;
+									return resolve(member);
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
@@ -357,6 +373,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
+				var logModel = new _log.LogModel();
 
 				param.balance = parseFloat(param.balance);
 				memberModel.getMemberById(param.id).then(function (member) {
@@ -370,14 +387,28 @@ var MemberController = exports.MemberController = function (_Controller) {
 							m_id: param.id,
 							tp_value: param.balance,
 							tp_before: member.m_balance,
-							tp_payment: param.payment
+							tp_payment: param.payment,
+							created_by: param.staff
 						};
 						memberModel.insertTopup(tpParam).then(function (topup) {
-							memberModel.increaseBalance(param.id, param.balance).then(function () {
-								member = _this10.build.member(member);
-								member.balance = parseFloat(member.balance) + parseFloat(param.balance);
-								member.transaction = topup.tp_id;
-								return resolve(member);
+							var logParam = {
+								m_id: param.id,
+								log_value: param.balance,
+								log_before: member.m_balance,
+								log_payment: param.payment,
+								created_by: param.staff,
+								log_description: "Topup"
+							};
+
+							logModel.createLogUser(logParam).then(function () {
+								memberModel.increaseBalance(param.id, param.balance).then(function () {
+									member = _this10.build.member(member);
+									member.balance = parseFloat(member.balance) + parseFloat(param.balance);
+									member.transaction = topup.tp_id;
+									return resolve(member);
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
@@ -437,6 +468,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
 				var cardModel = new _card.CardModel();
+				var logModel = new _log.LogModel();
 
 				cardModel.getCardById(param.card).then(function (card) {
 					if (!card.ct_refund) {
@@ -451,15 +483,30 @@ var MemberController = exports.MemberController = function (_Controller) {
 							m_id: member.m_id,
 							tp_value: parseFloat(member.m_balance) * -1,
 							tp_before: member.m_balance,
-							tp_payment: -1
+							tp_payment: -1,
+							created_by: param.staff,
+							log_description: "Refund"
 						};
+
 						memberModel.updateMember(card.m_id, memberParam).then(function () {
 							var cardParam = {
 								deleted_at: _this11.moment(new Date()).format()
 							};
 							memberModel.insertTopup(tpParam).then(function (topup) {
-								cardModel.updateCard(param.card, cardParam).then(function () {
-									return resolve(topup.tp_id);
+								var logParam = {
+									m_id: member.m_id,
+									log_value: parseFloat(member.m_balance) * -1,
+									log_before: member.m_balance,
+									log_payment: -1,
+									created_by: param.staff
+								};
+
+								logModel.createLogUser(logParam).then(function () {
+									cardModel.updateCard(param.card, cardParam).then(function () {
+										return resolve(topup.tp_id);
+									}).catch(function (err) {
+										return reject(err);
+									});
 								}).catch(function (err) {
 									return reject(err);
 								});

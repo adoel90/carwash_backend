@@ -443,6 +443,67 @@ var Build = exports.Build = function () {
 
 			return store;
 		}
+	}, {
+		key: "staffStoreReport",
+		value: function staffStoreReport(data) {
+			var staffStore = {
+				id: data.ts_id,
+				queue: data.ts_queue,
+				level: data.level,
+				status: true,
+				date: (0, _moment2.default)(data.ts_date).format("DD MMM YYYY"),
+				total: data.ts_total,
+				user: data.created_at
+			};
+
+			if (data.m_name) {
+				staffStore.member = this.member(data);
+			}
+
+			if (data.store_id) {
+				staffStore.store = this.store(data);
+			}
+
+			if (data.deleted_at || data.users_deleted) {
+				staffStore.status = false;
+			}
+
+			if (data.ul_name) {
+				staffStore.level = this.accessLevel(data);
+			}
+
+			return staffStore;
+		}
+	}, {
+		key: "userReport",
+		value: function userReport(data) {
+			var userReport = {
+				id: data.log_id,
+				transaction_date: data.log_date,
+				description: data.log_description,
+				total: parseInt(data.log_value),
+				total_before: parseInt(data.log_before),
+				user: data.created_at
+			};
+
+			if (data.m_name) {
+				userReport.member = this.member(data);
+			}
+
+			if (data.store_id) {
+				userReport.store = this.store(data);
+			}
+
+			if (data.deleted_at || data.users_deleted) {
+				userReport.status = false;
+			}
+
+			if (data.ul_name) {
+				userReport.level = this.accessLevel(data);
+			}
+
+			return userReport;
+		}
 	}]);
 
 	return Build;

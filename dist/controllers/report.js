@@ -15,6 +15,8 @@ var _service = require("../models/service");
 
 var _report = require("../models/report");
 
+var _user = require("../models/user");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -259,6 +261,68 @@ var ReportController = exports.ReportController = function (_Controller) {
         }
 
         /*
+        ** Get report user
+        ** GET :: /report/user
+        */
+
+    }, {
+        key: "getReportUser",
+        value: function getReportUser(param) {
+            var _this5 = this;
+
+            return new Promise(function (resolve, reject) {
+                var reportModel = new _report.ReportModel();
+                var userModel = new _user.UserModel();
+
+                reportModel.getReportUser(param.start_date, param.end_date, param.user).then(function (report) {
+                    var result = {
+                        count: report[0][0].count,
+                        data: []
+                    };
+
+                    if (report[1].length > 0) {
+                        var _loop = function _loop(i) {
+                            userModel.getUserById(report[1][i].created_by).then(function (user) {
+                                var u = _this5.build.userReport(report[1][i]);
+                                u.user = _this5.build.user(user);
+                                result.data.push(u);
+
+                                if (result.data.length >= report[1].length) {
+                                    return resolve(result);
+                                }
+                            }).catch(function (err) {
+                                return reject(err);
+                            });
+                        };
+
+                        for (var i = 0; i < report[1].length; i++) {
+                            _loop(i);
+                        }
+                    } else {
+                        return resolve(result);
+                    }
+                }).catch(function (err) {
+                    return reject(err);
+                });
+
+                // reportModel.getReportOwner(param.start_date, param.end_date).then((owner) => {
+                //     let result = {
+                //         count: owner[0][0].count,
+                //         data: []
+                //     }
+
+                //     for(let i=0; i<owner[1].length; i++) {
+                //         result.data.push(owner[1][i]);
+                //     }
+
+                //     return resolve(result)
+                // }).catch((err) => {
+                //     return reject(err)
+                // });
+            });
+        }
+
+        /*
         ** Get report member 
         ** GET :: /store/report
         */
@@ -266,12 +330,12 @@ var ReportController = exports.ReportController = function (_Controller) {
     }, {
         key: "getReportMemberGraph",
         value: function getReportMemberGraph(param) {
-            var _this5 = this;
+            var _this6 = this;
 
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
 
-                var result = _this5.buildRangeMember(param.type, param.start_date, param.end_date);
+                var result = _this6.buildRangeMember(param.type, param.start_date, param.end_date);
                 var format = "DD MMM YYYY";
                 if (param.type == "month") {
                     format = "MMM YYYY";
@@ -281,7 +345,7 @@ var ReportController = exports.ReportController = function (_Controller) {
 
                 reportModel.getGraphReportMember(param.type, param.start_date, param.end_date).then(function (reportMember) {
                     for (var i = 0; i < reportMember.length; i++) {
-                        var date = _this5.moment(reportMember[i].date).format(format);
+                        var date = _this6.moment(reportMember[i].date).format(format);
                         if (result[date]) {
                             result[date].saldo += parseFloat(reportMember[i].sum);
                         }

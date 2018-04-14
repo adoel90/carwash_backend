@@ -37,6 +37,19 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+
+		/* Get user by Access Level */
+
+	}, {
+		key: "getUserByLevelAccess",
+		value: function getUserByLevelAccess(id) {
+			this.db.init();
+			this.db.select("users");
+			this.db.where("ul_id", id);
+			this.db.order("u_id");
+
+			return this.db.execute();
+		}
 	}, {
 		key: "getUserById",
 		value: function getUserById(u_id) {

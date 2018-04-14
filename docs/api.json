@@ -709,6 +709,11 @@
 				"type" : "boolean",
 				"required" : false,
 				"description" : "Increase/Decrease Price"
+			},{
+				"name" : "staff",
+				"type" : "integer",
+				"required" : false,
+				"description" : "User ID login"
 			}
 		]
 	},
@@ -775,6 +780,43 @@
 				"name" : "end_date",
 				"type" : "string",
 				"required" : true,
+				"description" : "End Date"
+			},
+			{
+				"name" : "print",
+				"type" : "string",
+				"required" : false,
+				"description" : "Print report transaction"
+			}
+		]
+	},
+	"/store/staff/report" :{
+		"method" : "get",
+		"description" : "Get report store staff",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "staff",
+				"type" : "integer",
+				"required" : false,
+				"description" : "User ID / Staff ID"
+			},
+			{
+				"name" : "store",
+				"type" : "integer",
+				"required" : false,
+				"description" : "Store ID"
+			},
+			{
+				"name" : "start_date",
+				"type" : "string",
+				"required" : false,
+				"description" : "Start date"
+			},
+			{
+				"name" : "end_date",
+				"type" : "string",
+				"required" : false,
 				"description" : "End Date"
 			},
 			{
@@ -1073,6 +1115,11 @@
 			"type" : "integer",
 			"required" : true,
 			"description" : "Payment type (1: Cash | 2: Debit | 3: Credit Card)"
+		},{
+			"name" : "staff",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User ID"
 		}]
 	},
 	"/member/topup/print" :{
@@ -1166,6 +1213,27 @@
 			"type" : "date",
 			"required" : true,
 			"description" : "End date"
+		}]
+	},
+	"/report/user" :{
+		"method" : "get",
+		"description" : "Get report user list",
+		"token" : true,
+		"parameter" : [{
+			"name" : "start_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "Start date"
+		},{
+			"name" : "end_date",
+			"type" : "date",
+			"required" : true,
+			"description" : "End date"
+		},{
+			"name" : "user",
+			"type" : "integer",
+			"required" : false,
+			"description" : "User ID"
 		}]
 	},
 	"/tier/list" :{

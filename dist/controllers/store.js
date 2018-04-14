@@ -420,7 +420,8 @@ var StoreController = exports.StoreController = function (_Controller) {
 								m_id: member.m_id,
 								ts_total: total,
 								ts_queue: queue,
-								store_id: param.store
+								store_id: param.store,
+								created_by: param.staff
 							};
 
 							storeModel.insertStoreTransaction(transParam).then(function (transaction) {

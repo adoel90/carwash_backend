@@ -277,6 +277,53 @@ var StaffController = exports.StaffController = function (_Controller) {
                 });
             });
         }
+
+        /*
+        ** Get report staff by transaction
+        ** GET :: /store/staff/report
+        */
+
+    }, {
+        key: "getReportStaffByTransaction",
+        value: function getReportStaffByTransaction(param) {
+            var _this8 = this;
+
+            return new Promise(function (resolve, reject) {
+                var staffModel = new _staff.StaffModel();
+                var userModel = new _user.UserModel();
+
+                staffModel.getReportStaffByTransaction(param.staff, param.store, param.start_date, param.end_date).then(function (staff) {
+                    var result = {
+                        count: staff[0][0].count,
+                        data: []
+                    };
+
+                    if (staff[1].length > 0) {
+                        var _loop = function _loop(i) {
+                            userModel.getUserById(staff[1][i].created_by).then(function (user) {
+                                var u = _this8.build.staffStoreReport(staff[1][i]);
+                                u.user = _this8.build.user(user);
+                                result.data.push(u);
+
+                                if (result.data.length >= staff[1].length) {
+                                    return resolve(result);
+                                }
+                            }).catch(function (err) {
+                                return reject(err);
+                            });
+                        };
+
+                        for (var i = 0; i < staff[1].length; i++) {
+                            _loop(i);
+                        }
+                    } else {
+                        return resolve(result);
+                    }
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
     }]);
 
     return StaffController;

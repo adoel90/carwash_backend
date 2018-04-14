@@ -691,6 +691,25 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/store/staff/report", _auth.verifyToken, function (req, res) {
+				var param = {
+					staff: req.query.staff ? req.query.staff : null,
+					store: req.query.store ? req.query.store : null,
+					start_date: req.query.start_date ? req.query.start_date : null,
+					end_date: req.query.end_date ? req.query.end_date : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				staffController.getReportStaffByTransaction(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Staff Store routes ---*/
 
 			/*--- Start Menu Store routes ---*/
@@ -810,7 +829,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					menu: req.body.menu,
 					store: req.body.store,
 					discount: req.body.discount ? req.body.discount : 0,
-					increase: req.body.increase ? req.body.increase : false
+					increase: req.body.increase ? req.body.increase : false,
+					staff: req.body.staff ? req.body.staff : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -938,7 +958,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
 					card: req.body.card,
-					payment: req.body.payment
+					payment: req.body.payment,
+					staff: req.body.staff ? req.body.staff : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1025,7 +1046,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					id: res.locals.member.id,
 					type: res.locals.member.type,
 					balance: req.body.balance,
-					payment: req.body.payment
+					payment: req.body.payment,
+					staff: req.body.staff ? req.body.staff : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1060,7 +1082,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					/* id : res.locals.member.id,
      card : res.locals.member.card,
      type : res.locals.member.type */
-					card: req.body.card
+					card: req.body.card,
+					staff: req.body.staff ? req.body.staff : null
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1241,6 +1264,24 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				reportController.getReportOwner(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.get("/report/user", _auth.verifyToken, function (req, res) {
+				var param = {
+					start_date: req.query.start_date,
+					end_date: req.query.end_date,
+					user: req.query.user ? req.query.user : null
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				reportController.getReportUser(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

@@ -267,6 +267,20 @@ var StoreModel = exports.StoreModel = function (_Model) {
 
 			return this.db.execute();
 		}
+
+		/*** Get store by user ***/
+
+	}, {
+		key: "getStoreByUserId",
+		value: function getStoreByUserId(id) {
+			this.db.init();
+			this.db.select("owner");
+			this.db.join("store", "store.store_id = owner.store_id");
+			this.db.where("owner.u_id", id);
+			this.db.order("o_id");
+
+			return this.db.execute();
+		}
 	}]);
 
 	return StoreModel;
