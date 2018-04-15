@@ -209,13 +209,13 @@ var ReportController = exports.ReportController = function (_Controller) {
 
     }, {
         key: "getReportMember",
-        value: function getReportMember(params) {
+        value: function getReportMember(param) {
             var _this4 = this;
 
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
 
-                reportModel.getReportMember(params.start_date, params.end_date).then(function (report) {
+                reportModel.getReportMember(param.start_date, param.end_date).then(function (report) {
                     var result = {
                         count: report[0][0].count,
                         report: []
@@ -223,6 +223,34 @@ var ReportController = exports.ReportController = function (_Controller) {
 
                     for (var i = 0; i < report[1].length; i++) {
                         result.report.push(_this4.build.reportMember(report[1][i]));
+                    }
+
+                    if (param.print) {
+                        result = {
+                            title: "Daftar Member List",
+                            table: {
+                                header: {
+                                    "1": [{
+                                        name: "No. Kartu"
+                                    }, {
+                                        name: "Jenis Kartu"
+                                    }, {
+                                        name: "Nama Member"
+                                    }, {
+                                        name: "Tanggal Daftar"
+                                    }, {
+                                        name: "Saldo"
+                                    }]
+                                },
+                                data: []
+                            }
+                        };
+
+                        for (var _i5 = 0; _i5 < report[1].length; _i5++) {
+                            if (report[1][_i5].c_id) {
+                                result.table.data.push([report[1][_i5].c_id, report[1][_i5].ct_name ? report[1][_i5].ct_name : '-', report[1][_i5].m_name ? report[1][_i5].m_name : 'Non-Member', _this4.moment(report[1][_i5].created_at).format("DD MMM YYYY"), _this4.parseCurrency(report[1][_i5].m_balance, true)]);
+                            }
+                        }
                     }
 
                     return resolve(result);
@@ -288,6 +316,31 @@ var ReportController = exports.ReportController = function (_Controller) {
                                 result.data.push(u);
 
                                 if (result.data.length >= report[1].length) {
+                                    if (param.print) {
+                                        result = {
+                                            title: "Laporan Kasir",
+                                            sub_title: _this5.moment(param.start_date).format("DD MMM YYYY") + " sampai " + _this5.moment(param.end_date).format("DD MMM YYYY"),
+                                            table: {
+                                                header: {
+                                                    "1": [{
+                                                        name: "Tanggal"
+                                                    }, {
+                                                        name: "Nama Kasir"
+                                                    }, {
+                                                        name: "Total"
+                                                    }, {
+                                                        name: "Deskripsi"
+                                                    }]
+                                                },
+                                                data: []
+                                            }
+                                        };
+
+                                        for (var _i6 = 0; _i6 < report[1].length; _i6++) {
+                                            result.table.data.push([_this5.moment(report[1][_i6].log_date).format("DD MMM YYYY"), user.u_name, _this5.parseCurrency(report[1][_i6].log_value, true), report[1][_i6].log_description]);
+                                        }
+                                    }
+
                                     return resolve(result);
                                 }
                             }).catch(function (err) {
@@ -352,9 +405,9 @@ var ReportController = exports.ReportController = function (_Controller) {
                     }
 
                     var data = [];
-                    for (var _i5 in result) {
-                        result[_i5].name = _i5;
-                        data.push(result[_i5]);
+                    for (var _i7 in result) {
+                        result[_i7].name = _i7;
+                        data.push(result[_i7]);
                     }
 
                     return resolve(data);

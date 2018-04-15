@@ -1,0 +1,32 @@
+body {
+      font-size: 8px;
+}
+
+.w-100 {
+      width: 100%;
+}
+
+.ml-1 {
+      margin-left: 5px;
+}
+
+.mr-1 {
+      margin-right: 5px;
+}
+
+.item-column {
+      width: 100%;
+      display: flex;
+}
+
+.d-flex {
+      display: flex;
+}
+
+.d-flex .flex-row {
+      flex-direction: row;
+}
+
+.d-flex .flex-column {
+      flex-direction: column;
+}

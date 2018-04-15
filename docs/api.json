@@ -458,6 +458,11 @@
 			"type" : "boolean",
 			"required" : false,
 			"description" : "Filter menu list by status menu active"
+		},{
+			"name" : "print",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Print menu list"
 		}]
 	},
 	"/store/menu/detail" :{
@@ -1176,6 +1181,11 @@
 			"type" : "date",
 			"required" : true,
 			"description" : "End date"
+		},{
+			"name" : "print",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Print member list"
 		}]
 	},
 	"/report/member/graph" :{
@@ -1234,6 +1244,11 @@
 			"type" : "integer",
 			"required" : false,
 			"description" : "User ID"
+		},{
+			"name" : "print",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Print cashier activity"
 		}]
 	},
 	"/tier/list" :{

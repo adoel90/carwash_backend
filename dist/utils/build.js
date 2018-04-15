@@ -504,6 +504,23 @@ var Build = exports.Build = function () {
 
 			return userReport;
 		}
+	}, {
+		key: "itemMenu",
+		value: function itemMenu(data) {
+			var itemMenu = [];
+			for (var i = 0; i < data.length; i++) {
+				var menu = {
+					id: data[i].mn_id,
+					quantity: data[i].ti_date,
+					price: parseInt(data[i].ti_price),
+					name: data[i].ti_item
+				};
+
+				itemMenu.push(menu);
+			}
+
+			return itemMenu;
+		}
 	}]);
 
 	return Build;

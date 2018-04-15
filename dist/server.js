@@ -52,7 +52,8 @@ if (_config2.default.docs) {
 }
 
 app.use("/public", _express2.default.static(__dirname + "/../public"));
-
+app.use("/print", _express2.default.static(__dirname + "/../print"));
+app.use("/print/css", _express2.default.static(__dirname + "/../print/css"));
 app.use((0, _auth.initialize)());
 
 var apiRouter = new _apiRoutes.ApiRoutes();

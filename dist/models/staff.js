@@ -157,6 +157,18 @@ var StaffModel = exports.StaffModel = function (_Model) {
 
             return this.db.executeMany();
         }
+
+        /*--- Get detail transaction item ---*/
+
+    }, {
+        key: "getDetailTransactionItem",
+        value: function getDetailTransactionItem(id) {
+            this.db.init();
+            this.db.select("transaction_item");
+            this.db.where("ts_id", id);
+
+            return this.db.execute();
+        }
     }]);
 
     return StaffModel;

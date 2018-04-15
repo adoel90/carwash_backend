@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/print/css/print.css">
+		<link rel="stylesheet" type="text/css" href="/print/css/item.css">
+		{{#if orientation}}
+		<style type="text/css">
+			@page{
+				size: {{orientation}};
+			}
+
+			@media print {
+				.blue-color {
+					-webkit-print-color-adjust: exact;
+					background-color: #4198d8 !important;
+				}
+			}
+
+			.w-100 {
+				width: 100%;
+			}
+
+			.ml-5 {
+				margin-right: -30px;
+			}
+			
+			.text-right {
+				text-align: right;
+			}
+		</style>
+		{{/if}}
+	</head>
+	<body>
+		{{#if page}}
+		<div class="{{page}}">
+		{{else}}
+		<div class="f4-page">
+		{{/if}}
+			<center><h1>{{title}}</h1></center>
+			<center><h3>{{sub_title}}</h3></center>
+			<br/>
+
+			<div class="item-column">
+				<div class="w-100 mr-1">
+					{{#if table}}
+						<table>
+							<thead>
+							{{#each table.header as |value key|}}
+								<tr>
+								{{#each value as |header|}}
+									<th class="blue-color" width="{{header.width}}" rowspan="{{header.rowspan}}" colspan="{{header.colspan}}">{{header.name}}</th>
+								{{/each}}
+								</tr>
+							{{/each}}
+							</thead>
+							{{#rowLeft table.data}}
+								{{this}}
+							{{/rowLeft}}
+						</table>
+					{{/if}}
+				</div>
+				<div class="w-100 ml-1">
+					{{#if table}}
+						<table>
+							<thead>
+							{{#each table.header as |value key|}}
+								<tr>
+								{{#each value as |header|}}
+									<th class="blue-color" width="{{header.width}}" rowspan="{{header.rowspan}}" colspan="{{header.colspan}}">{{header.name}}</th>
+								{{/each}}
+								</tr>
+							{{/each}}
+							</thead>
+							{{#rowRight table.data}}
+								{{this}}
+							{{/rowRight}}
+						</table>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		<script>
+			window.onload = window.print();
+		</script>
+	</body>
+</html>

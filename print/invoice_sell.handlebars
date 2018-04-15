@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/print/css/print.css">
+		{{#if orientation}}
+		<style type="text/css">
+			@page{
+				size: "a4";
+			}
+
+			@media print {
+				.blue-color {
+					-webkit-print-color-adjust: exact;
+					background-color: #4198d8 !important;
+				}
+			}
+		</style>
+		{{/if}}
+	</head>
+	<body>
+        <style>
+            .invoice-header {
+                width: 40%;
+                float: left;
+            }
+            
+            .invoice-date {
+                width: 40%;
+                float: right;
+            }
+
+            .invoice-date td {
+                text-align: left;
+                padding: 5px;
+            }
+
+            .invoice-date h1{
+                color: #4198d8;
+                margin: 10px 0px;
+            }
+            
+            .customer td{
+                text-align: left;
+            }
+
+            .date {
+                width: 50%;
+                float: right;
+            }
+
+            .date td {
+                text-align: right;
+            }
+
+            .bill-to {
+                margin: 10px 0px;
+                padding: 8px 5px;
+                color: white;
+            }
+
+            .clear {
+                clear: both;
+            }
+        </style>
+		<div class="a4-page">
+            <div class="invoice-header">
+                <div class="company">
+                    <p class="company-name">{{company.name}}</p>
+                    {{!-- {{#companyIf company}}
+                        {{this}}
+                    {{/companyIf}} --}}
+                    {{!-- <p>{{company.address}}</p>
+                    <p>Phone : {{company.phone}}</p>
+                    <p>Fax : {{company.fax}}</p>
+                    <p>Email : {{company.email}}</p> --}}
+                    {{#if company.gst}}
+                        <p>CO REG : {{company.co_reg}}</p>
+                        <p>GST REG : {{company.gst_reg}}</p>
+                    {{/if}}
+                </div>
+                <div class="customer">
+                    <div class="bill-to blue-color">
+                        BILL TO
+                    </div>
+                    <p>Attention : {{attention}}</p>
+                    <p>{{customer.name}}</p>
+                    <p>{{customer.address}}</p>
+                    {{#if customer.phone}}
+                        <p>Phone : {{customer.phone}}</p>
+                    {{/if}}
+                    {{#if customer.fax}}
+                    <p>Fax : {{customer.fax}}</p>
+                    {{/if}}
+                    {{#if company.gst}}
+                    <p>CO REG : {{customer.co_reg}}</p>
+                    <p>GST REG : {{customer.gst_reg}}</p>
+                    {{/if}}
+                </div>
+            </div>
+
+            <div class="invoice-date">
+                <center>
+                    <h1>
+                        {{#xif company.gst}}
+                            {{this}}
+                        {{/xif}}
+                    </h1>
+                </center>
+                <table>
+                    <tr>
+                        <td>Date</td>
+                        <td>{{date}}</td>
+                    </tr>
+                    <tr>
+                        <td>No</td>
+                        <td>{{id}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <br>
+            <div class="item-detail">
+                <table>
+                    <thead class="blue-color white-text">
+                        <th width="50%">DESCRIPTION</th>
+                        <th width="15%">QTY (Kg)</th>
+                        <th width="15%">UNIT PRICE</th>
+                        <th width="15%">AMOUNT</th>
+                    </thead>
+
+                    {{#if printSummary}}
+                        {{#each summary}}
+                            <tr>
+                                {{#if this.start}}
+                                <td class="side-border" style="text-align: left;">{{this.name}} ({{this.start}} to {{this.end}}) </td>
+                                <td class="side-border"  style="text-align: right;">{{this.quantity}}</td>
+                                <td class="side-border"  style="text-align: right;">{{this.price}}</td>
+                                <td class="side-border"  style="text-align: right;">{{this.amount}}</td>
+                                {{else}}
+                                <td class="side-border"  style="text-align: left;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                {{/if}}
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        {{#each detail}}
+                            <tr>
+                                {{#if this.name}}
+                                <td class="side-border" style="text-align: left;">{{this.name}}</td>
+                                <td class="side-border"  style="text-align: right;">{{this.quantity}}</td>
+                                <td class="side-border"  style="text-align: right;">{{this.price}}</td>
+                                <td class="side-border"  style="text-align: right;">{{this.amount}}</td>
+                                {{else}}
+                                <td class="side-border"  style="text-align: left;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                <td class="side-border"  style="text-align: right;">&nbsp;</td>
+                                {{/if}}
+                            </tr>
+                        {{/each}}
+                    {{/if}}
+                </table>
+                <table class="no-border">
+                    <tr>
+                        <td class="no-border" width="50%" >&nbsp;</td>
+                        <td class="no-border" width="15%" >&nbsp;</td>
+                        <td class="no-border" width="15%" >Subtotal</td>
+                        <td class="no-border" style="text-align: right;" width="15%" >{{total}}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border" width="50%" >&nbsp;</td>
+                        <td class="no-border" width="15%" >&nbsp;</td>
+                        <td class="no-border" width="15%" >GST 7%</td>
+                        <td class="no-border" style="text-align: right;" width="15%" >{{gst.after}}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border" width="50%" >&nbsp;</td>
+                        <td class="no-border" width="15%" >&nbsp;</td>
+                        <td class="no-border blue-color" width="15%" >Total</td>
+                        <td class="no-border blue-color" style="text-align: right;" width="15%" >{{grand}}</td>
+                    </tr>
+                </table>
+
+                <table class="no-border" style="margin-top: 20px">
+                    <tr>
+                        <th class="blue-color white-text" width="50%">Remarks</th>
+                        <td class="no-border" width="50%" rowspan="4">{{remarks2}}</td>
+                    </tr>
+                    <tr>
+                        <td class="side-border padding" style="text-align: left;">Check Received : </td>
+                    </tr>
+                    <tr>
+                        <td class="side-border padding" style="text-align: left;">PO : </td>
+                    </tr>
+                    <tr>
+                        <td class="side-border bottom-border padding" style="text-align: left;">{{remarks1}}</td>
+                    </tr>
+                </table>
+
+            </div>
+		</div>
+		<script>
+			window.onload = window.print();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,153 @@
+body {
+	font-size: 10px;
+	font-family: "Times New Roman";
+}
+
+p {
+	margin: 0.1cm;
+}
+
+.area {
+	position: absolute;
+}
+
+.text-nomargin p {
+	margin: 0;
+}
+
+.area table {
+	text-align: center;
+	width: 100%;
+}
+
+.po-header {
+	width: 100%;
+}
+
+
+.po-detail {
+	position: relative;
+	float: left;
+	margin: auto;
+}
+
+
+.po-detail td {
+	text-align: left;
+	padding: 0 0.2cm;
+}
+
+.po-item {
+	float: right;
+}
+
+.po-item td{
+	text-align: center;
+	padding: 0 0.2cm;
+}
+
+.a4-page {
+	position: relative;
+	max-width: 21cm;
+	max-height: 29.7cm;
+}
+
+.f4-page {
+	position: relative;
+	max-width: 21.6cm;
+	max-height: 27.9cm;
+}
+
+.f4-page-landscape {
+	max-width: 27.9cm;
+	max-height: 21.6cm;
+}
+
+table {
+	width: 100%;
+	page-break-inside: auto;
+}
+
+table, th, td {
+	border: 1px solid black;
+	padding: 8px;
+	border-collapse: collapse;
+}
+
+.no-border{
+	border: none !important;	
+}
+
+.side-border {
+	border-top: none !important;
+	border-bottom: none !important;
+}
+
+.bottom-border {
+	border-bottom: 1px solid black !important;
+}
+
+.padding {
+	padding: 5px;
+}
+
+td {
+	text-align: center;
+}
+
+tr { 
+	page-break-inside: avoid;
+	page-break-after: auto;
+}
+
+thead {
+	display: table-header-group;
+}
+
+.table-head{
+	display: table-header-group;	
+}
+
+h1 {
+	padding: 0;
+	margin: 0;
+	font-size: 14pt;
+}
+
+h2 {
+	padding: 0;
+	margin: 0;
+	font-size: 12pt;
+}
+
+h3 {
+	padding: 0;
+	margin: 0;
+	font-size: 10pt;
+}
+
+.blue-color {
+	-webkit-print-color-adjust: exact;
+	background-color: #4198d8 !important;
+}
+
+.white-text {
+	color: white;
+}
+
+.text-right {
+	text-align:  right;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.company-name{
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+.font-weight {
+	font-weight: bold;
+}

@@ -7,6 +7,7 @@ exports.stringFormat = stringFormat;
 exports.rewriteImage = rewriteImage;
 exports.buildRange = buildRange;
 exports.buildRangeMember = buildRangeMember;
+exports.parseCurrency = parseCurrency;
 
 var _moment = require("moment");
 
@@ -110,4 +111,18 @@ function buildRangeMember(type, start, end) {
 	}
 
 	return build;
+}
+
+function parseCurrency(data) {
+	var dollars = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+	if (!data) {
+		data = 0;
+	}
+	data = parseFloat(data);
+	if (dollars) {
+		data = data.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+		data = "Rp. " + data;
+	}
+	return data;
 }

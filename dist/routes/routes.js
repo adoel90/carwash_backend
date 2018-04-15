@@ -60,6 +60,11 @@ var Routes = exports.Routes = function () {
 			console.log(code);
 			return res.status(error.get("status")).send({ status: error.get("status"), message: error.get("message") });
 		}
+	}, {
+		key: "render",
+		value: function render(res, page, data) {
+			return res.render("../print/" + page, data);
+		}
 	}]);
 
 	return Routes;

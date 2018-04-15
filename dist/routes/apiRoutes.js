@@ -697,7 +697,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					staff: req.query.staff ? req.query.staff : null,
 					store: req.query.store ? req.query.store : null,
 					start_date: req.query.start_date ? req.query.start_date : null,
-					end_date: req.query.end_date ? req.query.end_date : null
+					end_date: req.query.end_date ? req.query.end_date : null,
+					print: req.query.print ? req.query.print : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -705,7 +706,11 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				staffController.getReportStaffByTransaction(param).then(function (data) {
-					return _this2.success(res, data);
+					if (param.print) {
+						return _this2.render(res, "reportUser", data);
+					} else {
+						return _this2.success(res, data);
+					}
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
@@ -717,7 +722,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					store_id: req.query.store,
 					name: req.query.name ? req.query.name : null,
-					active: req.query.active ? req.query.active : null
+					active: req.query.active ? req.query.active : null,
+					print: req.query.print ? req.query.print : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -725,7 +731,11 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				storeController.getStoreMenuList(param).then(function (data) {
-					return _this2.success(res, data);
+					if (param.print) {
+						return _this2.render(res, "menu", data);
+					} else {
+						return _this2.success(res, data);
+					}
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
@@ -1221,7 +1231,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.get("/report/member/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
-					end_date: req.query.end_date
+					end_date: req.query.end_date,
+					print: req.query.print ? req.query.print : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1229,7 +1240,11 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				reportController.getReportMember(param).then(function (data) {
-					return _this2.success(res, data);
+					if (param.print) {
+						return _this2.render(res, "member", data);
+					} else {
+						return _this2.success(res, data);
+					}
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});
@@ -1274,7 +1289,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
-					user: req.query.user ? req.query.user : null
+					user: req.query.user ? req.query.user : null,
+					print: req.query.print ? req.query.print : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1282,7 +1298,11 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				reportController.getReportUser(param).then(function (data) {
-					return _this2.success(res, data);
+					if (param.print) {
+						return _this2.render(res, "reportUser", data);
+					} else {
+						return _this2.success(res, data);
+					}
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});

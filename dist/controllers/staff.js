@@ -300,14 +300,46 @@ var StaffController = exports.StaffController = function (_Controller) {
 
                     if (staff[1].length > 0) {
                         var _loop = function _loop(i) {
-                            userModel.getUserById(staff[1][i].created_by).then(function (user) {
-                                var u = _this8.build.staffStoreReport(staff[1][i]);
-                                u.user = _this8.build.user(user);
-                                result.data.push(u);
+                            staffModel.getDetailTransactionItem(staff[1][i].ts_id).then(function (item) {
+                                userModel.getUserById(staff[1][i].created_by).then(function (user) {
+                                    var u = _this8.build.staffStoreReport(staff[1][i]);
+                                    u.user = _this8.build.user(user);
+                                    u.item = _this8.build.itemMenu(item);
+                                    result.data.push(u);
 
-                                if (result.data.length >= staff[1].length) {
-                                    return resolve(result);
-                                }
+                                    if (result.data.length >= staff[1].length) {
+                                        if (param.print) {
+                                            result = {
+                                                title: "Laporan Staff",
+                                                sub_title: _this8.moment(param.start_date).format("DD MMM YYYY") + " sampai " + _this8.moment(param.end_date).format("DD MMM YYYY"),
+                                                table: {
+                                                    header: {
+                                                        "1": [{
+                                                            name: "Tanggal"
+                                                        }, {
+                                                            name: "Nama Staff"
+                                                        }, {
+                                                            name: "Nama Member"
+                                                        }, {
+                                                            name: "No. Kartu"
+                                                        }, {
+                                                            name: "Total"
+                                                        }]
+                                                    },
+                                                    data: []
+                                                }
+                                            };
+
+                                            for (var _i = 0; _i < staff[1].length; _i++) {
+                                                result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i].m_name, staff[1][_i].c_id, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
+                                            }
+                                        }
+
+                                        return resolve(result);
+                                    }
+                                }).catch(function (err) {
+                                    return reject(err);
+                                });
                             }).catch(function (err) {
                                 return reject(err);
                             });

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/print/css/print.css">
+		{{#if orientation}}
+		<style type="text/css">
+			@page{
+				size: {{orientation}};
+			}
+
+			@media print {
+				.blue-color {
+					-webkit-print-color-adjust: exact;
+					background-color: #4198d8 !important;
+				}
+			}
+
+			.w-100 {
+				width: 100%;
+			}
+
+			.ml-5 {
+				margin-right: -30px;
+			}
+			
+			.text-right {
+				text-align: right;
+			}
+		</style>
+		{{/if}}
+	</head>
+	<body>
+		{{#if page}}
+		<div class="{{page}}">
+		{{else}}
+		<div class="f4-page">
+		{{/if}}
+			<center><h1>{{title}}</h1></center>
+			<center><h3>{{sub_title}}</h3></center>
+			<br/>
+			{{#if table}}
+				<table>
+					<thead>
+					{{#each table.header as |value key|}}
+						<tr>
+						{{#each value as |header|}}
+							<th class="blue-color" width="{{header.width}}" rowspan="{{header.rowspan}}" colspan="{{header.colspan}}">{{header.name}}</th>
+						{{/each}}
+						</tr>
+					{{/each}}
+					</thead>
+					{{#each table.data as |data|}}
+					<tr>
+						{{#each data}}
+						<td>{{this}}</td>
+						{{/each}}
+					</tr>
+					{{/each}}
+				</table>
+			{{/if}}
+		</div>
+		<script>
+			window.onload = window.print();
+		</script>
+	</body>
+</html>

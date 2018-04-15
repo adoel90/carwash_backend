@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/print/css/print.css">
+		{{#if orientation}}
+		<style type="text/css">
+			@page{
+				size: "a4";
+			}
+
+			@media print {
+				.blue-color {
+					-webkit-print-color-adjust: exact;
+					background-color: #4198d8 !important;
+				}
+			}
+		</style>
+		{{/if}}
+	</head>
+	<body>
+        <style>
+            .customer {
+                width: 50%;
+                float: left;
+            }
+            
+            .customer td{
+                text-align: left;
+            }
+
+            .date {
+                width: 50%;
+                float: right;
+            }
+
+            .date td {
+                text-align: right;
+            }
+
+            .invoice-total {
+                width: 35%;
+                text-align: left;
+                margin-right: 0;
+                margin-left: auto;
+            }
+
+            .invoice-total td {
+                text-align: right;
+            }
+        </style>
+		<div class="a4-page">
+
+            <div class="customer">
+                <table class="no-border">
+                    <tr>
+                        <td class="no-border" width="40%">Customer ID</td>
+                        <td class="no-border">: {{customer.id}}</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border">Customer Name</td>
+                        <td class="no-border">: {{customer.name}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="date">
+                <table class="no-border">
+                    <tr>
+                        <td class="no-border" width="60%">Date :</td>
+                        <td class="no-border">{{date}}</td>
+                    </tr>
+                </table>
+            </div>
+            <br><br><br><br><br>
+            <div class="item-detail">
+                <table>
+                    <thead>
+                        <th>ITEM ID</th>
+                        <th width="40%">ITEM NAME</th>
+                        <th width="15%">Qty</th>
+                        <th>Unit Price</th>
+                        <th>Amount</th>
+                    </thead>
+                        {{#each items}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.weight}}</td>
+                            <td class="text-right">{{this.price}}</td>
+                            <td class="text-right">{{this.total}}</td>
+                        </tr>
+                        {{/each}}
+                </table>
+            </div>
+            <br>
+            <div class="invoice-total">
+                <table>
+                    {{#if company.gst}}
+                        <tr>
+                            <th width="60%">Sub Total</th>
+                            <td>{{total}}</td>
+                        </tr>
+                        <tr>
+                            <th>GST</th>
+                            <td>{{gst.after}}</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td>{{grand}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <th>Total</th>
+                            <td>{{total}}</td>
+                        </tr>
+                    {{/if}}
+                </table>
+            </div>
+		</div>
+		<script>
+			window.onload = window.print();
+		</script>
+	</body>
+</html>

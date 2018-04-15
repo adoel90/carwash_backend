@@ -34,6 +34,7 @@ var Controller = exports.Controller = function () {
 		this.rewriteImage = _util.rewriteImage;
 		this.buildRange = _util.buildRange;
 		this.buildRangeMember = _util.buildRangeMember;
+		this.parseCurrency = _util.parseCurrency;
 	}
 
 	_createClass(Controller, [{

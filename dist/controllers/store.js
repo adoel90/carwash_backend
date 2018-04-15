@@ -220,6 +220,28 @@ var StoreController = exports.StoreController = function (_Controller) {
 						result.menu.push(_this6.build.menu(menu[1][i]));
 					}
 
+					if (param.print) {
+						result = {
+							title: "Daftar Menu List",
+							table: {
+								header: {
+									"1": [{
+										name: "Nama Produk"
+									}, {
+										name: "Deskripsi Produk"
+									}, {
+										name: "Harga"
+									}]
+								},
+								data: []
+							}
+						};
+
+						for (var _i = 0; _i < menu[1].length; _i++) {
+							result.table.data.push([menu[1][_i].mn_name, menu[1][_i].mn_desc ? menu[1][_i].mn_desc : '-', _this6.parseCurrency(menu[1][_i].mn_price, true)]);
+						}
+					}
+
 					return resolve(result);
 				}).catch(function (err) {
 					return reject(err);
@@ -395,9 +417,9 @@ var StoreController = exports.StoreController = function (_Controller) {
 					var total = 0;
 
 					menuModel.findMenuById(findMenu).then(function (menu) {
-						for (var _i = 0; _i < menu.length; _i++) {
+						for (var _i2 = 0; _i2 < menu.length; _i2++) {
 							for (var j = 0; j < param.menu.length; j++) {
-								if (param.menu[j].id == menu[_i].mn_id) {
+								if (param.menu[j].id == menu[_i2].mn_id) {
 									var price = void 0;
 									if (param.increase) {
 										price = param.menu[j].price + param.menu[j].price * parseInt(param.discount) / 100;
@@ -408,7 +430,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 									if (balance - total < 0) {
 										return reject(31);
 									}
-									store = menu[_i].store_id;
+									store = menu[_i2].store_id;
 
 									param.menu[j].price = price;
 								}
@@ -524,9 +546,9 @@ var StoreController = exports.StoreController = function (_Controller) {
 					}
 
 					var data = [];
-					for (var _i2 in result) {
-						result[_i2].name = _i2;
-						data.push(result[_i2]);
+					for (var _i3 in result) {
+						result[_i3].name = _i3;
+						data.push(result[_i3]);
 					}
 
 					return resolve(data);
