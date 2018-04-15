@@ -253,6 +253,24 @@ var ReportController = exports.ReportController = function (_Controller) {
                         }
                     }
 
+                    if (param.convert) {
+                        result = [];
+
+                        for (var _i6 = 0; _i6 < report[1].length; _i6++) {
+                            var paramConvert = {
+                                "Nomor Kartu": report[1][_i6].c_id,
+                                "Jenis Kartu": report[1][_i6].ct_name ? report[1][_i6].ct_name : '-',
+                                "Nama Member": report[1][_i6].m_name ? report[1][_i6].m_name : 'Non-Member',
+                                "Tanggal Daftar": _this4.moment(report[1][_i6].created_at).format("DD MMM YYYY"),
+                                "Saldo": _this4.parseCurrency(report[1][_i6].m_balance, true)
+                            };
+
+                            if (report[1][_i6].c_id) {
+                                result.push(paramConvert);
+                            }
+                        }
+                    }
+
                     return resolve(result);
                 }).catch(function (err) {
                     return reject(err);
@@ -336,8 +354,8 @@ var ReportController = exports.ReportController = function (_Controller) {
                                             }
                                         };
 
-                                        for (var _i6 = 0; _i6 < report[1].length; _i6++) {
-                                            result.table.data.push([_this5.moment(report[1][_i6].log_date).format("DD MMM YYYY"), user.u_name, _this5.parseCurrency(report[1][_i6].log_value, true), report[1][_i6].log_description]);
+                                        for (var _i7 = 0; _i7 < report[1].length; _i7++) {
+                                            result.table.data.push([_this5.moment(report[1][_i7].log_date).format("DD MMM YYYY"), user.u_name, _this5.parseCurrency(report[1][_i7].log_value, true), report[1][_i7].log_description]);
                                         }
                                     }
 
@@ -405,9 +423,9 @@ var ReportController = exports.ReportController = function (_Controller) {
                     }
 
                     var data = [];
-                    for (var _i7 in result) {
-                        result[_i7].name = _i7;
-                        data.push(result[_i7]);
+                    for (var _i8 in result) {
+                        result[_i8].name = _i8;
+                        data.push(result[_i8]);
                     }
 
                     return resolve(data);

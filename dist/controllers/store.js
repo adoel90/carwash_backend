@@ -581,6 +581,38 @@ var StoreController = exports.StoreController = function (_Controller) {
 						result.store.push(_this15.build.storeTransaction(store[1][i]));
 					}
 
+					if (param.print) {
+						result = {
+							title: "Daftar Member List",
+							table: {
+								header: {
+									"1": [{ name: "No. Kartu" }, { name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Total Harga" }]
+								},
+								data: []
+							}
+						};
+
+						for (var _i4 = 0; _i4 < store[1].length; _i4++) {
+							result.table.data.push([store[1][_i4].c_id, store[1][_i4].ct_name ? store[1][_i4].ct_name : '-', store[1][_i4].m_name ? store[1][_i4].m_name : 'Non-Member', _this15.moment(store[1][_i4].ts_date).format("DD MMM YYYY"), _this15.parseCurrency(store[1][_i4].ts_total, true)]);
+						}
+					}
+
+					if (param.convert) {
+						result = [];
+
+						for (var _i5 = 0; _i5 < store[1].length; _i5++) {
+							var paramTransaction = {
+								"Nomor Kartu": store[1][_i5].c_id,
+								"Jenis Kartu": store[1][_i5].ct_name ? store[1][_i5].ct_name : '-',
+								"Nama Member": store[1][_i5].m_name ? store[1][_i5].m_name : 'Non-Member',
+								"Tanggal Transaksi": _this15.moment(store[1][_i5].ts_date).format("DD MMM YYYY"),
+								"Total Harga": _this15.parseCurrency(store[1][_i5].ts_total, true)
+							};
+
+							result.push(paramTransaction);
+						}
+					}
+
 					return resolve(result);
 				}).catch(function (err) {
 					return reject(err);

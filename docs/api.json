@@ -792,6 +792,12 @@
 				"type" : "string",
 				"required" : false,
 				"description" : "Print report transaction"
+			},
+			{
+				"name" : "convert",
+				"type" : "string",
+				"required" : false,
+				"description" : "Convert to XLS file"
 			}
 		]
 	},
@@ -1186,6 +1192,11 @@
 			"type" : "boolean",
 			"required" : false,
 			"description" : "Print member list"
+		},{
+			"name" : "convert",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Convert to XLS file"
 		}]
 	},
 	"/report/member/graph" :{

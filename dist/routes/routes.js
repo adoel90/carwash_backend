@@ -15,6 +15,10 @@ var _multer = require("multer");
 
 var _multer2 = _interopRequireDefault(_multer);
 
+var _json2xls = require("json2xls");
+
+var _json2xls2 = _interopRequireDefault(_json2xls);
+
 var _response = require("../utils/response");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -64,6 +68,11 @@ var Routes = exports.Routes = function () {
 		key: "render",
 		value: function render(res, page, data) {
 			return res.render("../print/" + page, data);
+		}
+	}, {
+		key: "convertToXls",
+		value: function convertToXls(res, data) {
+			res.xls('data.xlsx', data);
 		}
 	}]);
 

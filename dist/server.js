@@ -12,6 +12,10 @@ var _bodyParser = require("body-parser");
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _json2xls = require("json2xls");
+
+var _json2xls2 = _interopRequireDefault(_json2xls);
+
 var _auth = require("./middleware/auth");
 
 var _apiRoutes = require("./routes/apiRoutes");
@@ -54,6 +58,7 @@ if (_config2.default.docs) {
 app.use("/public", _express2.default.static(__dirname + "/../public"));
 app.use("/print", _express2.default.static(__dirname + "/../print"));
 app.use("/print/css", _express2.default.static(__dirname + "/../print/css"));
+app.use(_json2xls2.default.middleware);
 app.use((0, _auth.initialize)());
 
 var apiRouter = new _apiRoutes.ApiRoutes();
