@@ -801,6 +801,43 @@
 			}
 		]
 	},
+	"/store/report/transactions/item" :{
+		"method" : "get",
+		"description" : "Get report store transaction per-item by store",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "store",
+				"type" : "integer",
+				"required" : true,
+				"description" : "Store ID"
+			},
+			{
+				"name" : "start_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "Start date"
+			},
+			{
+				"name" : "end_date",
+				"type" : "string",
+				"required" : true,
+				"description" : "End Date"
+			},
+			{
+				"name" : "print",
+				"type" : "string",
+				"required" : false,
+				"description" : "Print report transaction"
+			},
+			{
+				"name" : "convert",
+				"type" : "string",
+				"required" : false,
+				"description" : "Convert to XLS file"
+			}
+		]
+	},
 	"/store/staff/report" :{
 		"method" : "get",
 		"description" : "Get report store staff",
