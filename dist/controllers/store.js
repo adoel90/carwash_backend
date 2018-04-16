@@ -583,7 +583,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 					if (param.print) {
 						result = {
-							title: "Daftar Member List",
+							title: "Daftar Transaksi List",
 							table: {
 								header: {
 									"1": [{ name: "No. Kartu" }, { name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Total Harga" }]
@@ -621,6 +621,72 @@ var StoreController = exports.StoreController = function (_Controller) {
 		}
 
 		/*
+  ** get detail report transaction per-store
+  ** GET :: /store/report/transaction/item
+  */
+
+	}, {
+		key: 'storeReportTransactionsItem',
+		value: function storeReportTransactionsItem(param) {
+			var _this16 = this;
+
+			return new Promise(function (resolve, reject) {
+				var storeModel = new _store.StoreModel();
+
+				storeModel.getReportDetailItemByStore(param.store, param.start_date, param.end_date).then(function (store) {
+					var result = {
+						count: store[0][0].count,
+						store: []
+					};
+
+					console.log(store);
+
+					for (var i = 0; i < store[1].length; i++) {
+						result.store.push(_this16.build.storeTransactionItem(store[1][i]));
+					}
+
+					if (param.print) {
+						result = {
+							title: "Daftar Transaksi Item List",
+							table: {
+								header: {
+									"1": [{ name: "No. Kartu" }, { name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Nama Item" }, { name: "Jumlah Item" }, { name: "Total Harga" }]
+								},
+								data: []
+							}
+						};
+
+						for (var _i6 = 0; _i6 < store[1].length; _i6++) {
+							result.table.data.push([store[1][_i6].c_id, store[1][_i6].ct_name ? store[1][_i6].ct_name : '-', store[1][_i6].m_name ? store[1][_i6].m_name : 'Non-Member', _this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', _this16.parseCurrency(store[1][_i6].ti_price, true)]);
+						}
+					}
+
+					if (param.convert) {
+						result = [];
+
+						for (var _i7 = 0; _i7 < store[1].length; _i7++) {
+							var paramTransaction = {
+								"Nomor Kartu": store[1][_i7].c_id,
+								"Jenis Kartu": store[1][_i7].ct_name ? store[1][_i7].ct_name : '-',
+								"Nama Member": store[1][_i7].m_name ? store[1][_i7].m_name : 'Non-Member',
+								"Tanggal Transaksi": _this16.moment(store[1][_i7].ts_date).format("DD MMM YYYY"),
+								"Nama Item": store[1][_i7].mn_name ? store[1][_i7].mn_name : '-',
+								"Jumlah Item": store[1][_i7].ti_quantity ? store[1][_i7].ti_quantity : '-',
+								"Total Harga": _this16.parseCurrency(store[1][_i7].ti_price, true)
+							};
+
+							result.push(paramTransaction);
+						}
+					}
+
+					return resolve(result);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
+
+		/*
   ** Get store category list
   ** GET :: /store/category
   */
@@ -628,7 +694,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 	}, {
 		key: 'getStoreCategoryList',
 		value: function getStoreCategoryList(param) {
-			var _this16 = this;
+			var _this17 = this;
 
 			return new Promise(function (resolve, reject) {
 				var storeModel = new _store.StoreModel();
@@ -637,7 +703,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 					var result = [];
 
 					for (var i = 0; i < category.length; i++) {
-						result.push(_this16.build.categoryStore(category[i]));
+						result.push(_this17.build.categoryStore(category[i]));
 					}
 
 					return resolve(result);

@@ -444,6 +444,26 @@ var Build = exports.Build = function () {
 			return store;
 		}
 	}, {
+		key: "storeTransactionItem",
+		value: function storeTransactionItem(data) {
+			var transactionItem = {
+				id: data.ts_id,
+				date: data.ts_date,
+				total: parseInt(data.ts_total),
+				store: data.store_id
+			};
+
+			if (data.m_name) {
+				transactionItem.member = this.member(data);
+			}
+
+			if (data.mn_name) {
+				transactionItem.menu = this.menu(data);
+			}
+
+			return transactionItem;
+		}
+	}, {
 		key: "staffStoreReport",
 		value: function staffStoreReport(data) {
 			var staffStore = {

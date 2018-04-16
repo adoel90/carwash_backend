@@ -243,6 +243,31 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			return this.db.executeMany();
 		}
 
+		/*** Report detail transaction item per-store ***/
+
+	}, {
+		key: "getReportDetailItemByStore",
+		value: function getReportDetailItemByStore(store, start, end) {
+			this.db.init();
+			this.db.select("transaction_item", "count(*)");
+			this.db.join("menu", "menu.mn_id = transaction_item.mn_id");
+			this.db.join("transaction_store", "transaction_store.ts_id = transaction_item.ts_id");
+			this.db.join("member", "member.m_id = transaction_store.m_id", "LEFT");
+			this.db.join("card", "card.c_id = member.c_id", "LEFT");
+			this.db.join("card_type", "card_type.ct_id = card.ct_id", "LEFT");
+			this.db.where("transaction_store.store_id", store);
+			if (start && end) {
+				this.db.whereBetween("date(ts_date)", start, end);
+			}
+			this.db.push();
+
+			this.db.select("transaction_item");
+			this.db.order("transaction_store.ts_date", true);
+			this.db.push();
+
+			return this.db.executeMany();
+		}
+
 		/*** Get Store Category List ***/
 
 	}, {

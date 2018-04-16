@@ -914,6 +914,32 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/store/report/transactions/item", _auth.verifyToken, function (req, res) {
+				var param = {
+					store: req.query.store,
+					start_date: req.query.start_date ? req.query.start_date : null,
+					end_date: req.query.end_date ? req.query.end_date : null,
+					print: req.query.print ? req.query.print : false,
+					convert: req.query.convert ? req.query.convert : false
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				storeController.storeReportTransactionsItem(param).then(function (data) {
+					if (param.print) {
+						return _this2.render(res, "reportTransactions", data);
+					} else if (param.convert) {
+						return _this2.convertToXls(res, data);
+					} else {
+						return _this2.success(res, data);
+					}
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Owner Store routes ---*/
 
 			/*--- Start Member routes ---*/
