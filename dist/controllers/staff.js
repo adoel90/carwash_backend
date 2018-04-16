@@ -322,8 +322,6 @@ var StaffController = exports.StaffController = function (_Controller) {
                                                         }, {
                                                             name: "Nama Member"
                                                         }, {
-                                                            name: "No. Kartu"
-                                                        }, {
                                                             name: "Total"
                                                         }]
                                                     },
@@ -332,7 +330,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                                             };
 
                                             for (var _i = 0; _i < staff[1].length; _i++) {
-                                                result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i].m_name, staff[1][_i].c_id, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
+                                                result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i].m_name, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
                                             }
                                         }
 
@@ -348,6 +346,87 @@ var StaffController = exports.StaffController = function (_Controller) {
 
                         for (var i = 0; i < staff[1].length; i++) {
                             _loop(i);
+                        }
+                    } else {
+                        return resolve(result);
+                    }
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+
+        /*
+        ** Get report staff by transaction by item
+        ** GET :: /store/staff/report/detail
+        */
+
+    }, {
+        key: "getReportStaffByTransactionDetail",
+        value: function getReportStaffByTransactionDetail(param) {
+            var _this9 = this;
+
+            return new Promise(function (resolve, reject) {
+                var staffModel = new _staff.StaffModel();
+                var userModel = new _user.UserModel();
+
+                staffModel.getReportStaffByTransactionItem(param.staff, param.store, param.start_date, param.end_date).then(function (staff) {
+                    var result = {
+                        count: staff[0][0].count,
+                        data: []
+                    };
+
+                    if (staff[1].length > 0) {
+                        var _loop2 = function _loop2(i) {
+                            staffModel.getDetailTransactionItem(staff[1][i].ts_id).then(function (item) {
+                                userModel.getUserById(staff[1][i].created_by).then(function (user) {
+                                    var u = _this9.build.staffStoreReport(staff[1][i]);
+                                    u.user = _this9.build.user(user);
+                                    u.item = _this9.build.itemMenu(item);
+                                    result.data.push(u);
+
+                                    if (result.data.length >= staff[1].length) {
+                                        if (param.print) {
+                                            result = {
+                                                title: "Laporan Staff Detail",
+                                                sub_title: _this9.moment(param.start_date).format("DD MMM YYYY") + " sampai " + _this9.moment(param.end_date).format("DD MMM YYYY"),
+                                                table: {
+                                                    header: {
+                                                        "1": [{
+                                                            name: "Tanggal"
+                                                        }, {
+                                                            name: "Nama Staff"
+                                                        }, {
+                                                            name: "Nama Member"
+                                                        }, {
+                                                            name: "Nama Item"
+                                                        }, {
+                                                            name: "Jumlah Item"
+                                                        }, {
+                                                            name: "Harga Item"
+                                                        }]
+                                                    },
+                                                    data: []
+                                                }
+                                            };
+
+                                            for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
+                                                result.table.data.push([_this9.moment(staff[1][_i2].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i2].m_name, staff[1][_i2].ti_item, staff[1][_i2].ti_quantity, _this9.parseCurrency(staff[1][_i2].ti_price, true)]);
+                                            }
+                                        }
+
+                                        return resolve(result);
+                                    }
+                                }).catch(function (err) {
+                                    return reject(err);
+                                });
+                            }).catch(function (err) {
+                                return reject(err);
+                            });
+                        };
+
+                        for (var i = 0; i < staff[1].length; i++) {
+                            _loop2(i);
                         }
                     } else {
                         return resolve(result);

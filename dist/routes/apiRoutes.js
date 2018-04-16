@@ -715,6 +715,30 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.get("/store/staff/report/detail", _auth.verifyToken, function (req, res) {
+				var param = {
+					staff: req.query.staff ? req.query.staff : null,
+					store: req.query.store ? req.query.store : null,
+					start_date: req.query.start_date ? req.query.start_date : null,
+					end_date: req.query.end_date ? req.query.end_date : null,
+					print: req.query.print ? req.query.print : false
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				staffController.getReportStaffByTransactionDetail(param).then(function (data) {
+					if (param.print) {
+						return _this2.render(res, "reportUser", data);
+					} else {
+						return _this2.success(res, data);
+					}
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/*--- End Staff Store routes ---*/
 
 			/*--- Start Menu Store routes ---*/

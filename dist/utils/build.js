@@ -531,7 +531,7 @@ var Build = exports.Build = function () {
 			for (var i = 0; i < data.length; i++) {
 				var menu = {
 					id: data[i].mn_id,
-					quantity: data[i].ti_date,
+					quantity: data[i].ti_quantity,
 					price: parseInt(data[i].ti_price),
 					name: data[i].ti_item
 				};

@@ -158,6 +158,35 @@ var StaffModel = exports.StaffModel = function (_Model) {
             return this.db.executeMany();
         }
 
+        /*--- Get report staff by transaction ---*/
+
+    }, {
+        key: "getReportStaffByTransactionItem",
+        value: function getReportStaffByTransactionItem(staff, store, start, end) {
+            this.db.init();
+            this.db.select("transaction_item", "count(*)");
+            this.db.join("transaction_store", "transaction_store.ts_id = transaction_item.ts_id");
+            this.db.join("member", "member.m_id = transaction_store.m_id");
+            this.db.join("store", "transaction_store.store_id = store.store_id");
+            this.db.whereNotNull("transaction_store.created_by");
+            if (staff) {
+                this.db.where("transaction_store.created_by", staff);
+            }
+            if (store) {
+                this.db.where("transaction_store.store_id", store);
+            }
+            if (start && end) {
+                this.db.whereBetween("date(transaction_store.ts_date)", start, end);
+            }
+            this.db.push();
+
+            this.db.select("transaction_item", "transaction_item.*, transaction_store.*, member.*, store.*, transaction_store.created_by");
+            this.db.order("transaction_store.ts_date", true);
+            this.db.push();
+
+            return this.db.executeMany();
+        }
+
         /*--- Get detail transaction item ---*/
 
     }, {

@@ -55,9 +55,11 @@ var ReportModel = exports.ReportModel = function (_Model) {
         }
     }, {
         key: "calculateTotalPriceByStore",
-        value: function calculateTotalPriceByStore(id) {
+        value: function calculateTotalPriceByStore(start, end, id) {
             this.db.init();
-            this.db.select("transaction_store", "sum(ts_total)");
+            this.db.select("transaction_store", "date(ts_date), sum(ts_total)");
+            this.db.group("date(ts_date)");
+            this.db.whereBetween("date(ts_date)", start, end);
             this.db.where("store_id", id);
 
             return this.db.execute();

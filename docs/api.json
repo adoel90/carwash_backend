@@ -875,6 +875,43 @@
 			}
 		]
 	},
+	"/store/staff/report/detail" :{
+		"method" : "get",
+		"description" : "Get report store staff detail",
+		"token" : true,
+		"parameter" : [
+			{
+				"name" : "staff",
+				"type" : "integer",
+				"required" : false,
+				"description" : "User ID / Staff ID"
+			},
+			{
+				"name" : "store",
+				"type" : "integer",
+				"required" : false,
+				"description" : "Store ID"
+			},
+			{
+				"name" : "start_date",
+				"type" : "string",
+				"required" : false,
+				"description" : "Start date"
+			},
+			{
+				"name" : "end_date",
+				"type" : "string",
+				"required" : false,
+				"description" : "End Date"
+			},
+			{
+				"name" : "print",
+				"type" : "string",
+				"required" : false,
+				"description" : "Print report transaction detail by item"
+			}
+		]
+	},
 	"/card/type" :{
 		"method" : "get",
 		"description" : "Get card type",
