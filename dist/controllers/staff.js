@@ -330,7 +330,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                                             };
 
                                             for (var _i = 0; _i < staff[1].length; _i++) {
-                                                result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i].m_name, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
+                                                result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY hh:mm:ss"), user.u_name, staff[1][_i].m_name, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
                                             }
                                         }
 
@@ -411,7 +411,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                                             };
 
                                             for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
-                                                result.table.data.push([_this9.moment(staff[1][_i2].ts_date).format("DD MMM YYYY"), user.u_name, staff[1][_i2].m_name, staff[1][_i2].ti_item, staff[1][_i2].ti_quantity, _this9.parseCurrency(staff[1][_i2].ti_price, true)]);
+                                                result.table.data.push([_this9.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"), user.u_name, staff[1][_i2].m_name, staff[1][_i2].ti_item, staff[1][_i2].ti_quantity, _this9.parseCurrency(staff[1][_i2].ti_price, true)]);
                                             }
                                         }
 

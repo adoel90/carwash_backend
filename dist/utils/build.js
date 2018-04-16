@@ -471,7 +471,7 @@ var Build = exports.Build = function () {
 				queue: data.ts_queue,
 				level: data.level,
 				status: true,
-				date: (0, _moment2.default)(data.ts_date).format("DD MMM YYYY"),
+				date: (0, _moment2.default)(data.ts_date).format("DD MMM YYYY hh:mm:ss"),
 				total: data.ts_total,
 				user: data.created_at
 			};
