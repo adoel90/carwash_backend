@@ -286,20 +286,38 @@ var ReportController = exports.ReportController = function (_Controller) {
     }, {
         key: "getReportOwner",
         value: function getReportOwner(param) {
+            var _this5 = this;
+
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
+                var userModel = new _user.UserModel();
 
-                reportModel.getReportOwner(param.start_date, param.end_date).then(function (owner) {
-                    var result = {
-                        count: owner[0][0].count,
-                        data: []
+                userModel.getUserByLevelAccess(4).then(function (user) {
+                    var result = [];
+
+                    var _loop = function _loop(i) {
+                        reportModel.getOwnerByUserId(user[i].u_id).then(function (owner) {
+                            if (owner[0]) {
+                                reportModel.calculateTotalPriceByStore(owner[0].store_id).then(function (price) {
+                                    var u = _this5.build.user(user[i]);
+                                    u.price = price[0].sum ? parseInt(price[0].sum) : null;
+                                    result.push(u);
+
+                                    if (result.length >= Object.keys(owner[0]).length + 1) {
+                                        return resolve(result);
+                                    }
+                                }).catch(function (err) {
+                                    return reject(err);
+                                });
+                            }
+                        }).catch(function (err) {
+                            return reject(err);
+                        });
                     };
 
-                    for (var i = 0; i < owner[1].length; i++) {
-                        result.data.push(owner[1][i]);
+                    for (var i = 0; i < user.length; i++) {
+                        _loop(i);
                     }
-
-                    return resolve(result);
                 }).catch(function (err) {
                     return reject(err);
                 });
@@ -314,7 +332,7 @@ var ReportController = exports.ReportController = function (_Controller) {
     }, {
         key: "getReportUser",
         value: function getReportUser(param) {
-            var _this5 = this;
+            var _this6 = this;
 
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
@@ -327,17 +345,17 @@ var ReportController = exports.ReportController = function (_Controller) {
                     };
 
                     if (report[1].length > 0) {
-                        var _loop = function _loop(i) {
+                        var _loop2 = function _loop2(i) {
                             userModel.getUserById(report[1][i].created_by).then(function (user) {
-                                var u = _this5.build.userReport(report[1][i]);
-                                u.user = _this5.build.user(user);
+                                var u = _this6.build.userReport(report[1][i]);
+                                u.user = _this6.build.user(user);
                                 result.data.push(u);
 
                                 if (result.data.length >= report[1].length) {
                                     if (param.print) {
                                         result = {
                                             title: "Laporan Kasir",
-                                            sub_title: _this5.moment(param.start_date).format("DD MMM YYYY") + " sampai " + _this5.moment(param.end_date).format("DD MMM YYYY"),
+                                            sub_title: _this6.moment(param.start_date).format("DD MMM YYYY") + " sampai " + _this6.moment(param.end_date).format("DD MMM YYYY"),
                                             table: {
                                                 header: {
                                                     "1": [{
@@ -355,7 +373,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                                         };
 
                                         for (var _i7 = 0; _i7 < report[1].length; _i7++) {
-                                            result.table.data.push([_this5.moment(report[1][_i7].log_date).format("DD MMM YYYY"), user.u_name, _this5.parseCurrency(report[1][_i7].log_value, true), report[1][_i7].log_description]);
+                                            result.table.data.push([_this6.moment(report[1][_i7].log_date).format("DD MMM YYYY"), user.u_name, _this6.parseCurrency(report[1][_i7].log_value, true), report[1][_i7].log_description]);
                                         }
                                     }
 
@@ -367,7 +385,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                         };
 
                         for (var i = 0; i < report[1].length; i++) {
-                            _loop(i);
+                            _loop2(i);
                         }
                     } else {
                         return resolve(result);
@@ -401,12 +419,12 @@ var ReportController = exports.ReportController = function (_Controller) {
     }, {
         key: "getReportMemberGraph",
         value: function getReportMemberGraph(param) {
-            var _this6 = this;
+            var _this7 = this;
 
             return new Promise(function (resolve, reject) {
                 var reportModel = new _report.ReportModel();
 
-                var result = _this6.buildRangeMember(param.type, param.start_date, param.end_date);
+                var result = _this7.buildRangeMember(param.type, param.start_date, param.end_date);
                 var format = "DD MMM YYYY";
                 if (param.type == "month") {
                     format = "MMM YYYY";
@@ -416,7 +434,7 @@ var ReportController = exports.ReportController = function (_Controller) {
 
                 reportModel.getGraphReportMember(param.type, param.start_date, param.end_date).then(function (reportMember) {
                     for (var i = 0; i < reportMember.length; i++) {
-                        var date = _this6.moment(reportMember[i].date).format(format);
+                        var date = _this7.moment(reportMember[i].date).format(format);
                         if (result[date]) {
                             result[date].saldo += parseFloat(reportMember[i].sum);
                         }

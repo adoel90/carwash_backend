@@ -43,6 +43,25 @@ var ReportModel = exports.ReportModel = function (_Model) {
 
             return this.db.executeMany();
         }
+    }, {
+        key: "getOwnerByUserId",
+        value: function getOwnerByUserId(id) {
+            this.db.init();
+            this.db.select("owner");
+            this.db.join("store", "store.store_id = owner.store_id");
+            this.db.where("owner.u_id", id);
+
+            return this.db.execute();
+        }
+    }, {
+        key: "calculateTotalPriceByStore",
+        value: function calculateTotalPriceByStore(id) {
+            this.db.init();
+            this.db.select("transaction_store", "sum(ts_total)");
+            this.db.where("store_id", id);
+
+            return this.db.execute();
+        }
 
         /*** Get Report owner ***/
 
