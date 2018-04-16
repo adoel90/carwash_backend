@@ -401,7 +401,7 @@
 		{
 			"name" : "password",
 			"type" : "string",
-			"required" : true,
+			"required" : false,
 			"description" : "Employee password"
 		},{
 			"name" : "email",

@@ -165,7 +165,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					username: req.body.username,
-					password: req.body.password,
+					password: req.body.password ? req.body.password : null,
 					name: req.body.name,
 					email: req.body.email ? req.body.email : null,
 					level: req.body.level
@@ -593,7 +593,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					id: req.body.id,
 					name: req.body.name,
 					username: req.body.username,
-					password: req.body.password,
+					password: req.body.password ? req.body.password : null,
 					email: req.body.email ? req.body.email : null,
 					level: req.body.level
 				};

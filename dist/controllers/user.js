@@ -204,7 +204,7 @@ var UserController = exports.UserController = function (_Controller) {
 
 				var userParam = {
 					u_name: param.name,
-					u_username: param.username,
+					u_username: param.username.toLowerCase(),
 					u_email: param.email,
 					ul_id: param.level,
 					updated_at: _this7.moment(new Date()).format()

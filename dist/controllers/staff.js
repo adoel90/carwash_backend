@@ -101,7 +101,7 @@ var StaffController = exports.StaffController = function (_Controller) {
 
                 var paramStaff = {
                     u_name: param.name,
-                    u_username: param.username,
+                    u_username: param.username.toLowerCase(),
                     u_password: _this4.encrypt(param.password),
                     u_email: param.email,
                     ul_id: param.level
@@ -142,13 +142,14 @@ var StaffController = exports.StaffController = function (_Controller) {
 
                 var paramStaff = {
                     u_name: param.name,
-                    u_username: param.username,
-                    u_password: _this5.encrypt(param.password),
+                    u_username: param.username.toLowerCase(),
                     u_email: param.email,
                     ul_id: param.level,
                     updated_at: _this5.moment(new Date()).format()
                 };
-
+                if (param.password) {
+                    paramStaff.u_password = _this5.encrypt(param.password);
+                }
                 staffModel.updateStaff(paramStaff, param.id).then(function () {
                     return resolve(true);
                 }).catch(function (err) {
