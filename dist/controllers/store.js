@@ -586,14 +586,14 @@ var StoreController = exports.StoreController = function (_Controller) {
 							title: "Daftar Transaksi List",
 							table: {
 								header: {
-									"1": [{ name: "No. Kartu" }, { name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Total Harga" }]
+									"1": [{ name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Total Harga" }]
 								},
 								data: []
 							}
 						};
 
 						for (var _i4 = 0; _i4 < store[1].length; _i4++) {
-							result.table.data.push([store[1][_i4].c_id, store[1][_i4].ct_name ? store[1][_i4].ct_name : '-', store[1][_i4].m_name ? store[1][_i4].m_name : 'Non-Member', _this15.moment(store[1][_i4].ts_date).format("DD MMM YYYY"), _this15.parseCurrency(store[1][_i4].ts_total, true)]);
+							result.table.data.push([store[1][_i4].ct_name ? store[1][_i4].ct_name : '-', store[1][_i4].m_name ? store[1][_i4].m_name : 'Non-Member', _this15.moment(store[1][_i4].ts_date).format("DD MMM YYYY"), _this15.parseCurrency(store[1][_i4].ts_total, true)]);
 						}
 					}
 
@@ -602,7 +602,6 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 						for (var _i5 = 0; _i5 < store[1].length; _i5++) {
 							var paramTransaction = {
-								"Nomor Kartu": store[1][_i5].c_id,
 								"Jenis Kartu": store[1][_i5].ct_name ? store[1][_i5].ct_name : '-',
 								"Nama Member": store[1][_i5].m_name ? store[1][_i5].m_name : 'Non-Member',
 								"Tanggal Transaksi": _this15.moment(store[1][_i5].ts_date).format("DD MMM YYYY"),
@@ -650,14 +649,14 @@ var StoreController = exports.StoreController = function (_Controller) {
 							title: "Daftar Transaksi Item List",
 							table: {
 								header: {
-									"1": [{ name: "No. Kartu" }, { name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Nama Item" }, { name: "Jumlah Item" }, { name: "Total Harga" }]
+									"1": [{ name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Nama Item" }, { name: "Jumlah Item" }, { name: "Total Harga" }]
 								},
 								data: []
 							}
 						};
 
 						for (var _i6 = 0; _i6 < store[1].length; _i6++) {
-							result.table.data.push([store[1][_i6].c_id, store[1][_i6].ct_name ? store[1][_i6].ct_name : '-', store[1][_i6].m_name ? store[1][_i6].m_name : 'Non-Member', _this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', _this16.parseCurrency(store[1][_i6].ti_price, true)]);
+							result.table.data.push([store[1][_i6].ct_name ? store[1][_i6].ct_name : '-', store[1][_i6].m_name ? store[1][_i6].m_name : 'Non-Member', _this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', _this16.parseCurrency(store[1][_i6].ti_price, true)]);
 						}
 					}
 
