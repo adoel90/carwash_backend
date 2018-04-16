@@ -172,7 +172,7 @@ var UserController = exports.UserController = function (_Controller) {
 
 				var userParam = {
 					u_name: param.name,
-					u_username: param.username,
+					u_username: param.username.toLowerCase(),
 					u_email: param.email,
 					u_password: _this6.encrypt(param.password),
 					ul_id: param.level
