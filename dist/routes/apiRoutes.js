@@ -718,6 +718,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.get("/store/staff/report/detail", _auth.verifyToken, function (req, res) {
 				var param = {
+					id: req.query.id ? req.query.id : null,
 					staff: req.query.staff ? req.query.staff : null,
 					store: req.query.store ? req.query.store : null,
 					start_date: req.query.start_date ? req.query.start_date : null,

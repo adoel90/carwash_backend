@@ -881,6 +881,12 @@
 		"token" : true,
 		"parameter" : [
 			{
+				"name" : "id",
+				"type" : "integer",
+				"required" : false,
+				"description" : "Transaction ID"
+			},
+			{
 				"name" : "staff",
 				"type" : "integer",
 				"required" : false,

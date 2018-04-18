@@ -370,7 +370,7 @@ var StaffController = exports.StaffController = function (_Controller) {
                 var staffModel = new _staff.StaffModel();
                 var userModel = new _user.UserModel();
 
-                staffModel.getReportStaffByTransactionItem(param.staff, param.store, param.start_date, param.end_date).then(function (staff) {
+                staffModel.getReportStaffByTransactionItem(param.staff, param.store, param.start_date, param.end_date, param.id).then(function (staff) {
                     var result = {
                         count: staff[0][0].count,
                         data: []

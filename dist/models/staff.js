@@ -162,7 +162,7 @@ var StaffModel = exports.StaffModel = function (_Model) {
 
     }, {
         key: "getReportStaffByTransactionItem",
-        value: function getReportStaffByTransactionItem(staff, store, start, end) {
+        value: function getReportStaffByTransactionItem(staff, store, start, end, id) {
             this.db.init();
             this.db.select("transaction_item", "count(*)");
             this.db.join("transaction_store", "transaction_store.ts_id = transaction_item.ts_id");
@@ -177,6 +177,9 @@ var StaffModel = exports.StaffModel = function (_Model) {
             }
             if (start && end) {
                 this.db.whereBetween("date(transaction_store.ts_date)", start, end);
+            }
+            if (id) {
+                this.db.where("transaction_item.ts_id", id);
             }
             this.db.push();
 
