@@ -544,7 +544,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 					member.topup = topup.tp_value;
 					member.payment = topup.tp_payment;
 
-					return resolve(member);
+					memberModel.getTopupCount().then(function (queue) {
+						member.queue = parseInt(queue[0].count);
+
+						return resolve(member);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

@@ -155,6 +155,15 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 			return this.db.execute(true);
 		}
+	}, {
+		key: "getTopupCount",
+		value: function getTopupCount() {
+			this.db.init();
+			this.db.select("topup", "count(*)");
+			this.db.whereBetween("date(tp_date)", "2018-04-12", "2018-04-12");
+
+			return this.db.execute();
+		}
 
 		/*** Get topup transaction ***/
 
