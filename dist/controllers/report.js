@@ -301,13 +301,14 @@ var ReportController = exports.ReportController = function (_Controller) {
                                 reportModel.calculateTotalPriceByStore(param.start_date, param.end_date, owner[0].store_id).then(function (price) {
                                     var u = _this5.build.user(user[i]);
                                     u.price = price[0] ? parseInt(price[0].sum) : null;
+                                    u.store = owner[0];
+
                                     result.push(u);
 
                                     if (result.length >= Object.keys(owner[0]).length + 1) {
                                         return resolve(result);
                                     }
                                 }).catch(function (err) {
-                                    console.log('ga ada');
                                     return reject(err);
                                 });
                             }
