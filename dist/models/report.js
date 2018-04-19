@@ -143,6 +143,20 @@ var ReportModel = exports.ReportModel = function (_Model) {
 
             return this.db.execute();
         }
+
+        /*** */
+
+    }, {
+        key: "getLastTransactionMember",
+        value: function getLastTransactionMember(id) {
+            this.db.init();
+            this.db.select("topup");
+            this.db.where("m_id", id);
+            this.db.order("tp_id", true);
+            this.db.limit(1, 0);
+
+            return this.db.execute();
+        }
     }]);
 
     return ReportModel;

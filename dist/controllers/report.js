@@ -221,59 +221,92 @@ var ReportController = exports.ReportController = function (_Controller) {
                         report: []
                     };
 
+                    var resultPrint = void 0;
+                    var resultConvert = void 0;
+
+                    var _loop = function _loop(i) {
+                        reportModel.getLastTransactionMember(report[1][i].m_id).then(function (transaction) {
+                            var reportData = _this4.build.reportMember(report[1][i]);
+                            reportData.last_transaction = transaction[0] ? _this4.moment(transaction[0].tp_date).format("DD MMM YYYY hh:mm:ss") : null;
+                            result.report.push(reportData);
+
+                            if (param.print) {
+                                resultPrint = {
+                                    title: "Daftar Member List",
+                                    table: {
+                                        header: {
+                                            "1": [{
+                                                name: "No. Kartu"
+                                            }, {
+                                                name: "Jenis Kartu"
+                                            }, {
+                                                name: "Nama Member"
+                                            }, {
+                                                name: "Tanggal Daftar"
+                                            }, {
+                                                name: "Saldo"
+                                            }, {
+                                                name: "Tanggal Transaksi"
+                                            }]
+                                        },
+                                        data: []
+                                    }
+                                };
+
+                                for (var _i5 = 0; _i5 < report[1].length; _i5++) {
+                                    for (var j = 0; j < result.report.length; j++) {
+                                        if (report[1][_i5].m_id == result.report[j].id) {
+                                            // if(report[1][i].c_id) {
+                                            resultPrint.table.data.push([report[1][_i5].c_id ? report[1][_i5].c_id : '-', report[1][_i5].ct_name ? report[1][_i5].ct_name : '-', report[1][_i5].m_name ? report[1][_i5].m_name : 'Non-Member', _this4.moment(report[1][_i5].created_at).format("DD MMM YYYY"), _this4.parseCurrency(report[1][_i5].m_balance, true), result.report[j].last_transaction ? result.report[j].last_transaction : '-']);
+                                            // }
+                                        }
+                                    }
+                                }
+
+                                if (resultPrint.table.data.length >= report[1].length) {
+                                    return resolve(resultPrint);
+                                }
+                            }
+
+                            if (param.convert) {
+                                resultConvert = [];
+
+                                for (var _i6 = 0; _i6 < report[1].length; _i6++) {
+                                    for (var _j = 0; _j < result.report.length; _j++) {
+                                        if (report[1][_i6].m_id == result.report[_j].id) {
+                                            var paramConvert = {
+                                                "Nomor Kartu": report[1][_i6].c_id ? report[1][_i6].c_id : '-',
+                                                "Jenis Kartu": report[1][_i6].ct_name ? report[1][_i6].ct_name : 'Non-Member',
+                                                "Nama Member": report[1][_i6].m_name ? report[1][_i6].m_name : 'Non-Member',
+                                                "Tanggal Daftar": _this4.moment(report[1][_i6].created_at).format("DD MMM YYYY"),
+                                                "Saldo": parseInt(report[1][_i6].m_balance),
+                                                "Tanggal Transaksi": result.report[_j].last_transaction ? result.report[_j].last_transaction : '-'
+
+                                                // if(report[1][i].c_id) {
+                                            };resultConvert.push(paramConvert);
+                                            // }
+                                        }
+                                    }
+                                }
+
+                                if (resultConvert.length >= report[1].length) {
+                                    return resolve(resultConvert);
+                                }
+                            }
+
+                            if (!param.print && !param.convert) {
+                                if (result.report.length >= report[1].length) {
+                                    return resolve(result);
+                                }
+                            }
+                        }).catch(function (err) {
+                            return reject(err);
+                        });
+                    };
+
                     for (var i = 0; i < report[1].length; i++) {
-                        console.log(report[1][i].m_id);
-                        var reportData = _this4.build.reportMember(report[1][i]);
-                        result.report.push(reportData);
+                        _loop(i);
                     }
-
-                    if (param.print) {
-                        result = {
-                            title: "Daftar Member List",
-                            table: {
-                                header: {
-                                    "1": [{
-                                        name: "No. Kartu"
-                                    }, {
-                                        name: "Jenis Kartu"
-                                    }, {
-                                        name: "Nama Member"
-                                    }, {
-                                        name: "Tanggal Daftar"
-                                    }, {
-                                        name: "Saldo"
-                                    }]
-                                },
-                                data: []
-                            }
-                        };
-
-                        for (var _i5 = 0; _i5 < report[1].length; _i5++) {
-                            if (report[1][_i5].c_id) {
-                                result.table.data.push([report[1][_i5].c_id, report[1][_i5].ct_name ? report[1][_i5].ct_name : '-', report[1][_i5].m_name ? report[1][_i5].m_name : 'Non-Member', _this4.moment(report[1][_i5].created_at).format("DD MMM YYYY"), _this4.parseCurrency(report[1][_i5].m_balance, true)]);
-                            }
-                        }
-                    }
-
-                    if (param.convert) {
-                        result = [];
-
-                        for (var _i6 = 0; _i6 < report[1].length; _i6++) {
-                            var paramConvert = {
-                                "Nomor Kartu": report[1][_i6].c_id,
-                                "Jenis Kartu": report[1][_i6].ct_name ? report[1][_i6].ct_name : '-',
-                                "Nama Member": report[1][_i6].m_name ? report[1][_i6].m_name : 'Non-Member',
-                                "Tanggal Daftar": _this4.moment(report[1][_i6].created_at).format("DD MMM YYYY"),
-                                "Saldo": _this4.parseCurrency(report[1][_i6].m_balance, true)
-                            };
-
-                            if (report[1][_i6].c_id) {
-                                result.push(paramConvert);
-                            }
-                        }
-                    }
-
-                    return resolve(result);
                 }).catch(function (err) {
                     return reject(err);
                 });
@@ -297,7 +330,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                 userModel.getUserByLevelAccess(4).then(function (user) {
                     var result = [];
 
-                    var _loop = function _loop(i) {
+                    var _loop2 = function _loop2(i) {
                         reportModel.getOwnerByUserId(user[i].u_id).then(function (owner) {
                             if (owner[0]) {
                                 reportModel.calculateTotalPriceByStore(param.start_date, param.end_date, owner[0].store_id).then(function (price) {
@@ -320,7 +353,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                     };
 
                     for (var i = 0; i < user.length; i++) {
-                        _loop(i);
+                        _loop2(i);
                     }
                 }).catch(function (err) {
                     return reject(err);
@@ -349,7 +382,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                     };
 
                     if (report[1].length > 0) {
-                        var _loop2 = function _loop2(i) {
+                        var _loop3 = function _loop3(i) {
                             userModel.getUserById(report[1][i].created_by).then(function (user) {
                                 var u = _this6.build.userReport(report[1][i]);
                                 u.user = _this6.build.user(user);
@@ -389,7 +422,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                         };
 
                         for (var i = 0; i < report[1].length; i++) {
-                            _loop2(i);
+                            _loop3(i);
                         }
                     } else {
                         return resolve(result);
