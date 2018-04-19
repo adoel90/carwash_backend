@@ -222,7 +222,9 @@ var ReportController = exports.ReportController = function (_Controller) {
                     };
 
                     for (var i = 0; i < report[1].length; i++) {
-                        result.report.push(_this4.build.reportMember(report[1][i]));
+                        console.log(report[1][i].m_id);
+                        var reportData = _this4.build.reportMember(report[1][i]);
+                        result.report.push(reportData);
                     }
 
                     if (param.print) {
@@ -301,7 +303,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                                 reportModel.calculateTotalPriceByStore(param.start_date, param.end_date, owner[0].store_id).then(function (price) {
                                     var u = _this5.build.user(user[i]);
                                     u.price = price[0] ? parseInt(price[0].sum) : null;
-                                    u.store = owner[0];
+                                    u.store = owner;
 
                                     result.push(u);
 
