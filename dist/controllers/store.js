@@ -649,14 +649,20 @@ var StoreController = exports.StoreController = function (_Controller) {
 							title: "Daftar Transaksi Item List",
 							table: {
 								header: {
-									"1": [{ name: "Jenis Kartu" }, { name: "Nama Member" }, { name: "Tanggal Transaksi" }, { name: "Nama Item" }, { name: "Jumlah Item" }, { name: "Total Harga" }]
+									"1": [
+									// { name : "Jenis Kartu" },
+									// { name : "Nama Member" },
+									{ name: "Tanggal Transaksi" }, { name: "Nama Item" }, { name: "Jumlah Item" }, { name: "Total Harga" }]
 								},
 								data: []
 							}
 						};
 
 						for (var _i6 = 0; _i6 < store[1].length; _i6++) {
-							result.table.data.push([store[1][_i6].ct_name ? store[1][_i6].ct_name : '-', store[1][_i6].m_name ? store[1][_i6].m_name : 'Non-Member', _this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', parseInt(store[1][_i6].ti_price)]);
+							result.table.data.push([
+							// store[1][i].ct_name ? store[1][i].ct_name : '-',
+							// store[1][i].m_name ? store[1][i].m_name : 'Non-Member',
+							_this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', parseInt(store[1][_i6].ti_price)]);
 						}
 					}
 
@@ -665,9 +671,9 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 						for (var _i7 = 0; _i7 < store[1].length; _i7++) {
 							var paramTransaction = {
-								"Nomor Kartu": store[1][_i7].c_id,
-								"Jenis Kartu": store[1][_i7].ct_name ? store[1][_i7].ct_name : '-',
-								"Nama Member": store[1][_i7].m_name ? store[1][_i7].m_name : 'Non-Member',
+								// "Nomor Kartu" : store[1][i].c_id,
+								// "Jenis Kartu" : store[1][i].ct_name ? store[1][i].ct_name : '-',
+								// "Nama Member" : store[1][i].m_name ? store[1][i].m_name : 'Non-Member',
 								"Tanggal Transaksi": _this16.moment(store[1][_i7].ts_date).format("DD MMM YYYY"),
 								"Nama Item": store[1][_i7].mn_name ? store[1][_i7].mn_name : '-',
 								"Jumlah Item": store[1][_i7].ti_quantity ? store[1][_i7].ti_quantity : '-',
