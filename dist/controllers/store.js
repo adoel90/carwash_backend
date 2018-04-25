@@ -638,10 +638,10 @@ var StoreController = exports.StoreController = function (_Controller) {
 						store: []
 					};
 
-					console.log(store);
-
 					for (var i = 0; i < store[1].length; i++) {
-						result.store.push(_this16.build.storeTransactionItem(store[1][i]));
+						var strItem = _this16.build.storeTransactionItem(store[1][i]);
+						strItem.quantity = store[1][i].ti_quantity;
+						result.store.push(strItem);
 					}
 
 					if (param.print) {
