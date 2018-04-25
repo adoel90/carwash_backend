@@ -71,18 +71,33 @@ var ReportModel = exports.ReportModel = function (_Model) {
         key: "getReportOwner",
         value: function getReportOwner(start, end) {
             this.db.init();
-            this.db.select("users", "count(*)");
-            this.db.join("owner", "users.u_id = owner.u_id");
-            this.db.join("store", "store.store_id = owner.store_id");
+            this.db.select("store", "count(*)");
+            this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
+            this.db.join("users", "users.u_id = owner.u_id", "LEFT");
             this.db.join("store_category", "store_category.cstore_id = store.cstore_id");
-            this.db.join("transaction_store", "store.store_id = transaction_store.store_id");
-            this.db.whereBetween("date(ts_date)", start, end);
+            this.db.where("owner.o_status", true);
+            // this.db.join("transaction_store", "store.store_id = transaction_store.store_id");
+            // this.db.whereBetween("date(ts_date)", start, end);
             this.db.push();
 
-            this.db.select("users");
+            this.db.select("store");
             this.db.push();
 
             return this.db.executeMany();
+        }
+
+        /*** Get total report owner */
+
+    }, {
+        key: "getTotalReportOwner",
+        value: function getTotalReportOwner(start, end, id) {
+            this.db.init();
+            this.db.select("transaction_store", "sum(ts_total)");
+            this.db.group("date(ts_date)");
+            this.db.whereBetween("date(ts_date)", start, end);
+            this.db.where("store_id", id);
+
+            return this.db.execute();
         }
 
         /*** Get Report User ***/

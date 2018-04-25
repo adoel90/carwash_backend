@@ -327,37 +327,68 @@ var ReportController = exports.ReportController = function (_Controller) {
                 var reportModel = new _report.ReportModel();
                 var userModel = new _user.UserModel();
 
-                userModel.getUserByLevelAccess(4).then(function (user) {
+                reportModel.getReportOwner(param.start_date, param.end_date).then(function (owner) {
                     var result = [];
 
                     var _loop2 = function _loop2(i) {
-                        reportModel.getOwnerByUserId(user[i].u_id).then(function (owner) {
-                            if (owner[0]) {
-                                reportModel.calculateTotalPriceByStore(param.start_date, param.end_date, owner[0].store_id).then(function (price) {
-                                    var u = _this5.build.user(user[i]);
-                                    u.price = price[0] ? parseInt(price[0].sum) : null;
-                                    u.store = owner;
 
-                                    result.push(u);
+                        reportModel.getTotalReportOwner(param.start_date, param.end_date, owner[1][i].store_id).then(function (total) {
+                            var reportOwner = _this5.build.reportOwner(owner[1][i]);
 
-                                    if (result.length >= Object.keys(owner[0]).length + 1) {
-                                        return resolve(result);
-                                    }
-                                }).catch(function (err) {
-                                    return reject(err);
-                                });
+                            var totalTransaction = 0;
+
+                            for (var j = 0; j < total.length; j++) {
+                                totalTransaction += parseInt(total[j].sum);
+                            }
+
+                            reportOwner.total = totalTransaction;
+
+                            result.push(reportOwner);
+
+                            if (result.length >= owner[1].length) {
+                                return resolve(result);
                             }
                         }).catch(function (err) {
                             return reject(err);
                         });
                     };
 
-                    for (var i = 0; i < user.length; i++) {
+                    for (var i = 0; i < owner[1].length; i++) {
                         _loop2(i);
                     }
                 }).catch(function (err) {
                     return reject(err);
                 });
+
+                //     userModel.getUserByLevelAccess(4).then((user) => {
+                //         let result = [];
+
+                //         for(let i=0; i<user.length; i++) {
+                //             reportModel.getOwnerByUserId(user[i].u_id).then((owner) => {
+                //                 console.log(owner)
+                //                 return resolve(owner);
+                //                 // if(owner[0]) {
+                //                 //     reportModel.calculateTotalPriceByStore(param.start_date, param.end_date, owner[0].store_id).then((price) => {
+                //                 //             let u = this.build.user(user[i]);
+                //                 //             u.price = price[0] ? parseInt(price[0].sum) : null;
+                //                 //             u.store = owner;
+
+                //                 //             result.push(u);
+
+                //                 //             if(result.length >= Object.keys(owner[0]).length+1) {
+                //                 //                 return resolve(result);
+                //                 //             }
+                //                 //     }).catch((err) => {
+                //                 //         return reject(err);
+                //                 //     });
+                //                 // }
+                //             }).catch((err) => {
+                //                 return reject(err);
+                //             });
+                //         }
+                //     }).catch((err) => {
+                //         return reject(err);
+                //     });
             });
         }
 

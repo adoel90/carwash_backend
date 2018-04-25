@@ -541,6 +541,16 @@ var Build = exports.Build = function () {
 
 			return itemMenu;
 		}
+	}, {
+		key: "reportOwner",
+		value: function reportOwner(data) {
+			var reportOwner = {
+				users: this.user(data),
+				store: this.store(data)
+			};
+
+			return reportOwner;
+		}
 	}]);
 
 	return Build;
