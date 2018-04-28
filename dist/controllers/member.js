@@ -474,6 +474,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					if (!card.ct_refund) {
 						return reject(22);
 					}
+
 					memberModel.getMemberById(card.m_id).then(function (member) {
 						var memberParam = {
 							c_id: null,
@@ -484,8 +485,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							tp_value: parseFloat(member.m_balance) * -1,
 							tp_before: member.m_balance,
 							tp_payment: -1,
-							created_by: param.staff,
-							log_description: "Refund"
+							created_by: param.staff
 						};
 
 						memberModel.updateMember(card.m_id, memberParam).then(function () {
@@ -498,7 +498,8 @@ var MemberController = exports.MemberController = function (_Controller) {
 									log_value: parseFloat(member.m_balance) * -1,
 									log_before: member.m_balance,
 									log_payment: -1,
-									created_by: param.staff
+									created_by: param.staff,
+									log_description: "Refund"
 								};
 
 								logModel.createLogUser(logParam).then(function () {
