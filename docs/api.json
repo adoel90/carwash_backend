@@ -1234,6 +1234,12 @@
 			"type" : "string",
 			"required" : true,
 			"description" : "Card ID"
+		},
+		{
+			"name" : "staff",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Log activity refund"
 		}]
 	},
 	"/member/card/change" :{
