@@ -43,6 +43,10 @@ var _staff = require("../controllers/staff");
 
 var _promo = require("../controllers/promo");
 
+var _path = require("path");
+
+var _assert = require("assert");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1278,6 +1282,18 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				cardController.updateCardTypeStatus(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/card/list/generate/id", _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.body.type
+				};
+
+				cardController.generateCardId(param.type).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);

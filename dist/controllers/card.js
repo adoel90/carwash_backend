@@ -13,6 +13,8 @@ var _card = require("../models/card");
 
 var _os = require("os");
 
+var _fs = require("fs");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -189,6 +191,34 @@ var CardController = exports.CardController = function (_Controller) {
 				}).catch(function (err) {
 					return reject(err);
 				});
+			});
+		}
+
+		/**
+  ** Generate card id by type
+  ** POST :: /card/list/generate/id
+  */
+
+	}, {
+		key: "generateCardId",
+		value: function generateCardId(param) {
+			return new Promise(function (resolve, reject) {
+				var cardModel = new _card.CardModel();
+				for (var i = 0; i < 10; i++) {
+					cardModel.getCardTypeById(param).then(function (type) {
+						cardModel.generateCardId(type.ct_id).then(function () {
+							cardModel.getCardFromLastInserted(10).then(function (data) {
+								return resolve(data);
+							}).catch(function (err) {
+								return reject(err);
+							});
+						}).catch(function (err) {
+							return reject(err);
+						});
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}
 			});
 		}
 	}]);
