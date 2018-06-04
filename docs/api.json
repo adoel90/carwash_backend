@@ -918,6 +918,17 @@
 			}
 		]
 	},
+	"/card/generate/id" : {
+		"method" : "post",
+		"description" : "Generate card id by type",
+		"token" : true,
+		"parameter" : [{
+			"name" : "type",
+			"type" : "integer",
+			"required" : true,
+			"description": "Status card ID"
+		}]
+	},
 	"/card/type" :{
 		"method" : "get",
 		"description" : "Get card type",

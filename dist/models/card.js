@@ -58,15 +58,15 @@ var CardModel = exports.CardModel = function (_Model) {
 				ct_id: ct_id
 			};
 
-			this.db.insert('card', param);
+			this.db.insert('card', param, 'c_id');
 			return this.db.execute();
 		}
 	}, {
-		key: 'getCardFromLastInserted',
-		value: function getCardFromLastInserted(limit) {
+		key: 'getLastRow',
+		value: function getLastRow(limit) {
 			this.db.init();
-			this.db.select('card', 'c_id');
-			this.db.order('created_at', true);
+			this.db.select("card");
+			this.db.order("created_at", true);
 			this.db.limit(limit);
 
 			return this.db.execute();

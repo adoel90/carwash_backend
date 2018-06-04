@@ -11,6 +11,10 @@ var _controller = require("./controller");
 
 var _card = require("../models/card");
 
+var _member = require("../models/member");
+
+var _log = require("../models/log");
+
 var _os = require("os");
 
 var _fs = require("fs");
@@ -203,12 +207,31 @@ var CardController = exports.CardController = function (_Controller) {
 		key: "generateCardId",
 		value: function generateCardId(param) {
 			return new Promise(function (resolve, reject) {
-				var cardModel = new _card.CardModel();
+				var Member = new _member.MemberModel();
+				var Log = new _log.LogModel();
+				var Card = new _card.CardModel();
 				for (var i = 0; i < 10; i++) {
-					cardModel.getCardTypeById(param).then(function (type) {
-						cardModel.generateCardId(type.ct_id).then(function () {
-							cardModel.getCardFromLastInserted(10).then(function (data) {
-								return resolve(data);
+					Card.getCardTypeById(param).then(function (type) {
+						Card.generateCardId(type.ct_id).then(function (data) {
+							var memberParam = {
+								c_id: data[0].c_id
+							};
+							Member.insertMember(memberParam).then(function (member) {
+								var logParam = {
+									m_id: member.m_id,
+									log_value: parseFloat(0) + parseFloat(0),
+									log_before: 0,
+									log_payment: null,
+									created_by: null,
+									log_description: "Buat Member"
+								};
+								Log.createLogUser(logParam).then(function () {
+									Card.getLastRow('10').then(function (result) {
+										return resolve(result);
+									});
+								}).catch(function (err) {
+									return reject(err);
+								});
 							}).catch(function (err) {
 								return reject(err);
 							});
