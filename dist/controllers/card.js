@@ -210,12 +210,17 @@ var CardController = exports.CardController = function (_Controller) {
 				var Member = new _member.MemberModel();
 				var Log = new _log.LogModel();
 				var Card = new _card.CardModel();
-				for (var i = 0; i < 10; i++) {
+				for (var i = 0; i < 2; i++) {
 					Card.getCardTypeById(param).then(function (type) {
 						Card.generateCardId(type.ct_id).then(function (data) {
+							var balance = 0;
+							if (type.ct_id === 1) balance = '100000';else if (type.ct_id === 2) balance = '10000';else if (type.ct_id === 3) balance = '20000';
+
 							var memberParam = {
+								m_balance: balance,
 								c_id: data[0].c_id
 							};
+
 							Member.insertMember(memberParam).then(function (member) {
 								var logParam = {
 									m_id: member.m_id,
