@@ -551,6 +551,22 @@ var Build = exports.Build = function () {
 
 			return reportOwner;
 		}
+	}, {
+		key: "generateCardId",
+		value: function generateCardId(type) {
+			var leng,
+			    randomInt = '',
+			    number = '123456789',
+			    dateNow = new Date().toJSON().slice(0, 10).replace(/-/g, '');
+
+			type <= 10 ? leng = 4 : leng = 3;
+
+			for (var i = 0; i <= leng; i++) {
+				randomInt += number.charAt(Math.floor(Math.random() * number.length));
+			}
+
+			return '00' + type + dateNow + randomInt;
+		}
 	}]);
 
 	return Build;

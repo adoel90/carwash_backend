@@ -919,7 +919,7 @@
 		]
 	},
 	"/card/generate/id" : {
-		"method" : "post",
+		"method" : "get",
 		"description" : "Generate card id by type",
 		"token" : true,
 		"parameter" : [{
@@ -1269,6 +1269,11 @@
 			"required" : true,
 			"description" : "Card type ID"
 		}]
+	},
+	"/member/remove" :{
+		"method": "delete",
+		"description": "Delete member by name member is null",
+		"token": true
 	},
 	"/report/member/list" :{
 		"method" : "get",

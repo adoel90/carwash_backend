@@ -1181,6 +1181,14 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.delete("/member/remove", _auth.verifyToken, function (res, respo) {
+				memberController.deleteMemberWhereNameIsNull().then(function (data) {
+					return _this2.success(respo, data);
+				}).catch(function (err) {
+					return _this2.error(respo, err);
+				});
+			});
 			/*--- End Member routes ---*/
 
 			/*--- Start Card routes ---*/
@@ -1284,11 +1292,13 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.post("/card/list/generate/id", _auth.verifyToken, function (req, res) {
-				cardController.generateCardId(req.body.type).then(function (result) {
-					return _this2.success(res, result);
-				}).catch(function (err) {
-					return _this2.error(res, err);
+			this.app.get("/card/list/generate/id", _auth.verifyToken, function (req, res) {
+				if (!_this2.checkParameters(req.query.type)) {
+					return _this2.error(res, 1);
+				}
+
+				cardController.generateCardId(req.query.type).then(function (data) {
+					return _this2.success(res, data);
 				});
 			});
 			/*--- End Card routes ---*/

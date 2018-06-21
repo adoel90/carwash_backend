@@ -206,33 +206,53 @@ var CardController = exports.CardController = function (_Controller) {
 	}, {
 		key: "generateCardId",
 		value: function generateCardId(param) {
+			var _this7 = this;
+
 			return new Promise(function (resolve, reject) {
 				var Member = new _member.MemberModel();
 				var Log = new _log.LogModel();
 				var Card = new _card.CardModel();
-				for (var i = 0; i < 2; i++) {
-					Card.getCardTypeById(param).then(function (type) {
-						Card.generateCardId(type.ct_id).then(function (data) {
+
+				var checkCard = [];
+
+				for (var i = 0; i < 10; i++) {
+					Card.getCardTypeById(param).then(function (_ref) {
+						var ct_id = _ref.ct_id;
+
+						var generateCard = _this7.build.generateCardId(ct_id);
+						var cardParam = {
+							c_id: generateCard,
+							ct_id: parseInt(generateCard, 10).toString().charAt(0)
+						};
+
+						Card.insertCard(cardParam).then(function (data) {
 							var balance = 0;
-							if (type.ct_id === 1) balance = '100000';else if (type.ct_id === 2) balance = '10000';else if (type.ct_id === 3) balance = '20000';
+							if (ct_id === 1) balance = '100000';else if (ct_id === 2) balance = '10000';else if (ct_id === 3) balance = '20000';
 
 							var memberParam = {
 								m_balance: balance,
-								c_id: data[0].c_id
+								c_id: data.c_id
 							};
 
-							Member.insertMember(memberParam).then(function (member) {
+							Member.insertMember(memberParam).then(function (_ref2) {
+								var m_id = _ref2.m_id;
+
 								var logParam = {
-									m_id: member.m_id,
+									m_id: m_id,
 									log_value: parseFloat(0) + parseFloat(0),
 									log_before: 0,
 									log_payment: null,
 									created_by: null,
 									log_description: "Buat Member"
 								};
+
 								Log.createLogUser(logParam).then(function () {
-									Card.getLastRow('10').then(function (result) {
-										return resolve(result);
+									Card.getLastRow('10', m_id).then(function (result) {
+										checkCard.push(result[0]);
+
+										if (checkCard.length >= 10) {
+											return resolve(checkCard);
+										}
 									});
 								}).catch(function (err) {
 									return reject(err);

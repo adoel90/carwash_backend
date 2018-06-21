@@ -586,6 +586,25 @@ var MemberController = exports.MemberController = function (_Controller) {
 				});
 			});
 		}
+
+		/**
+   * Delete member data where name is null
+   * DELETE :: /member/remove
+   */
+
+	}, {
+		key: "deleteMemberWhereNameIsNull",
+		value: function deleteMemberWhereNameIsNull() {
+			return new Promise(function (resolve, reject) {
+				var memberModel = new _member.MemberModel();
+
+				memberModel.deleteMemberWhereNameIsNull().then(function () {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
+			});
+		}
 	}]);
 
 	return MemberController;
