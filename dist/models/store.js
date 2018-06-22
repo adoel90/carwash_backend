@@ -35,6 +35,7 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			this.db.join("store_category", "store_category.cstore_id = store.cstore_id", "LEFT");
 			this.db.join("owner", "store.store_id = owner.store_id", "LEFT");
 			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
+			this.db.where("owner.o_status", true);
 			if (id) {
 				this.db.where("owner.u_id", id);
 			}
@@ -44,6 +45,7 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("store", "store.*, owner.*, store_category.*, users.u_id, users.u_name, store.deleted_at");
+			this.db.where("owner.o_status", true);
 			this.db.order("store.store_id");
 			this.db.push();
 

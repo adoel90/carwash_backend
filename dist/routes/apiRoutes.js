@@ -1182,8 +1182,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.delete("/member/remove", _auth.verifyToken, function (res, respo) {
-				memberController.deleteMemberWhereNameIsNull().then(function (data) {
+			this.app.delete("/member/remove", _auth.verifyToken, function (req, respo) {
+				memberController.removeMember(req.query.ct_id).then(function (data) {
 					return _this2.success(respo, data);
 				}).catch(function (err) {
 					return _this2.error(respo, err);
@@ -1293,11 +1293,15 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			});
 
 			this.app.get("/card/list/generate/id", _auth.verifyToken, function (req, res) {
-				if (!_this2.checkParameters(req.query.type)) {
+				var param = {
+					type: req.query.type,
+					u_id: res.locals.user.u_id
+				};
+				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				cardController.generateCardId(req.query.type).then(function (data) {
+				cardController.generateCardId(param).then(function (data) {
 					return _this2.success(res, data);
 				});
 			});

@@ -499,7 +499,7 @@ var Build = exports.Build = function () {
 		value: function userReport(data) {
 			var userReport = {
 				id: data.log_id,
-				transaction_date: data.log_date,
+				transaction_date: (0, _moment2.default)(data.log_date).format("YYYY-MM-DD HH:mm:ss"),
 				description: data.log_description,
 				total: parseInt(data.log_value),
 				total_before: parseInt(data.log_before),

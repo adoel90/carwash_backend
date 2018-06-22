@@ -588,18 +588,32 @@ var MemberController = exports.MemberController = function (_Controller) {
 		}
 
 		/**
-   * Delete member data where name is null
+   * Delete member data where name is null and where ct_id
    * DELETE :: /member/remove
    */
 
 	}, {
-		key: "deleteMemberWhereNameIsNull",
-		value: function deleteMemberWhereNameIsNull() {
+		key: "removeMember",
+		value: function removeMember(ct_id) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
+				var memberId = [];
 
-				memberModel.deleteMemberWhereNameIsNull().then(function () {
-					return resolve(true);
+				memberModel.getMemberQueries(ct_id).then(function (member) {
+					for (var i = 0; i < 10; i++) {
+						memberId.push(member[i].m_id);
+					}
+
+					memberModel.removeMember(ct_id).then(function () {
+						return resolve(true);
+						// memberModel.removeLog(memberId).then(() => {
+						// 	return resolve(true);
+						// }).catch((err) => {
+						// 	return reject(err);
+						// });
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

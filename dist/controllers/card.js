@@ -216,7 +216,7 @@ var CardController = exports.CardController = function (_Controller) {
 				var checkCard = [];
 
 				for (var i = 0; i < 10; i++) {
-					Card.getCardTypeById(param).then(function (_ref) {
+					Card.getCardTypeById(param.type).then(function (_ref) {
 						var ct_id = _ref.ct_id;
 
 						var generateCard = _this7.build.generateCardId(ct_id);
@@ -231,7 +231,8 @@ var CardController = exports.CardController = function (_Controller) {
 
 							var memberParam = {
 								m_balance: balance,
-								c_id: data.c_id
+								c_id: data.c_id,
+								ct_id: ct_id
 							};
 
 							Member.insertMember(memberParam).then(function (_ref2) {
@@ -242,7 +243,7 @@ var CardController = exports.CardController = function (_Controller) {
 									log_value: parseFloat(0) + parseFloat(0),
 									log_before: 0,
 									log_payment: null,
-									created_by: null,
+									created_by: param.u_id,
 									log_description: "Buat Member"
 								};
 

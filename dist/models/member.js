@@ -188,9 +188,28 @@ var MemberModel = exports.MemberModel = function (_Model) {
 			return this.db.execute();
 		}
 	}, {
-		key: "deleteMemberWhereNameIsNull",
-		value: function deleteMemberWhereNameIsNull() {
-			this.db.setQuery("DELETE FROM member WHERE m_name IS NULL");
+		key: "getMemberQueries",
+		value: function getMemberQueries(ct_id) {
+			this.db.select('member');
+			this.db.where('ct_id', ct_id);
+			this.db.whereIsNull('m_name');
+
+			return this.db.execute();
+		}
+	}, {
+		key: "removeMember",
+		value: function removeMember(ct_id) {
+			this.db.delete('member');
+			this.db.where('ct_id', ct_id);
+			this.db.whereIsNull('m_name');
+
+			return this.db.execute();
+		}
+	}, {
+		key: "removeLog",
+		value: function removeLog(m_id) {
+			this.db.delete('log');
+			this.db.where('m_id', m_id);
 
 			return this.db.execute();
 		}

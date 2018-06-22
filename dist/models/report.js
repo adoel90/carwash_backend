@@ -108,7 +108,7 @@ var ReportModel = exports.ReportModel = function (_Model) {
             this.db.init();
             this.db.select("log", "count(*)");
             this.db.join("member", "member.m_id = log.m_id");
-            this.db.whereNotNull("log.created_by");
+            this.db.whereNotNull("log.log_date");
             if (user) {
                 this.db.where("log.created_by", user);
             }
@@ -118,7 +118,7 @@ var ReportModel = exports.ReportModel = function (_Model) {
             this.db.push();
 
             this.db.select("log", "log.*, member.*, log.created_by");
-            this.db.order("log.log_date", true);
+            this.db.order("log.log_date");
             this.db.push();
 
             return this.db.executeMany();
