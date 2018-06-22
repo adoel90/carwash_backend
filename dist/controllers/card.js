@@ -13,12 +13,6 @@ var _card = require("../models/card");
 
 var _member = require("../models/member");
 
-var _log = require("../models/log");
-
-var _os = require("os");
-
-var _fs = require("fs");
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -210,13 +204,12 @@ var CardController = exports.CardController = function (_Controller) {
 
 			return new Promise(function (resolve, reject) {
 				var Member = new _member.MemberModel();
-				var Log = new _log.LogModel();
 				var Card = new _card.CardModel();
 
 				var checkCard = [];
 
 				for (var i = 0; i < 10; i++) {
-					Card.getCardTypeById(param.type).then(function (_ref) {
+					Card.getCardTypeById(param).then(function (_ref) {
 						var ct_id = _ref.ct_id;
 
 						var generateCard = _this7.build.generateCardId(ct_id);
@@ -238,25 +231,12 @@ var CardController = exports.CardController = function (_Controller) {
 							Member.insertMember(memberParam).then(function (_ref2) {
 								var m_id = _ref2.m_id;
 
-								var logParam = {
-									m_id: m_id,
-									log_value: parseFloat(0) + parseFloat(0),
-									log_before: 0,
-									log_payment: null,
-									created_by: param.u_id,
-									log_description: "Buat Member"
-								};
+								Card.getLastRow('10', m_id).then(function (result) {
+									checkCard.push(result[0]);
 
-								Log.createLogUser(logParam).then(function () {
-									Card.getLastRow('10', m_id).then(function (result) {
-										checkCard.push(result[0]);
-
-										if (checkCard.length >= 10) {
-											return resolve(checkCard);
-										}
-									});
-								}).catch(function (err) {
-									return reject(err);
+									if (checkCard.length >= 10) {
+										return resolve(checkCard);
+									}
 								});
 							}).catch(function (err) {
 								return reject(err);

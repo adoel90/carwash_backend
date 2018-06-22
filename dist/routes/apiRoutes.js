@@ -304,7 +304,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.get("/store/list", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.query.id ? req.query.id : null,
-					active: req.query.active ? req.query.active : null
+					active: req.query.active ? req.query.active : null,
+					user: res.locals.user
 				};
 
 				storeController.getStoreList(param).then(function (data) {
@@ -1047,7 +1048,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					name: req.body.name,
 					phone: req.body.phone ? req.body.phone : null,
 					email: req.body.email ? req.body.email : null,
-					address: req.body.address ? req.body.address : null
+					address: req.body.address ? req.body.address : null,
+					user: res.locals.user.u_id
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1294,8 +1296,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.get("/card/list/generate/id", _auth.verifyToken, function (req, res) {
 				var param = {
-					type: req.query.type,
-					u_id: res.locals.user.u_id
+					type: req.query.type
 				};
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);

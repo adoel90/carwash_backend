@@ -50,8 +50,20 @@ var StoreController = exports.StoreController = function (_Controller) {
 						store: []
 					};
 
-					for (var i = 0; i < store[1].length; i++) {
-						result.store.push(_this2.build.store(store[1][i]));
+					if (param.user.ul_name !== 'Owner' || param.user.ul_name !== 'Staff') {
+						var storeData = store[1].filter(function (data, index, self) {
+							return index === self.findIndex(function (s) {
+								return s.store_name === data.store_name;
+							});
+						});
+
+						for (var i = 0; i < storeData.length; i++) {
+							result.store.push(_this2.build.store(storeData[i]));
+						}
+					} else {
+						for (var _i = 0; _i < store[1].length; _i++) {
+							result.store.push(_this2.build.store(store[1][_i]));
+						}
 					}
 
 					return resolve(result);
@@ -237,8 +249,8 @@ var StoreController = exports.StoreController = function (_Controller) {
 							}
 						};
 
-						for (var _i = 0; _i < menu[1].length; _i++) {
-							result.table.data.push([menu[1][_i].mn_name, menu[1][_i].mn_desc ? menu[1][_i].mn_desc : '-', _this6.parseCurrency(menu[1][_i].mn_price, true)]);
+						for (var _i2 = 0; _i2 < menu[1].length; _i2++) {
+							result.table.data.push([menu[1][_i2].mn_name, menu[1][_i2].mn_desc ? menu[1][_i2].mn_desc : '-', _this6.parseCurrency(menu[1][_i2].mn_price, true)]);
 						}
 					}
 
@@ -417,9 +429,9 @@ var StoreController = exports.StoreController = function (_Controller) {
 					var total = 0;
 
 					menuModel.findMenuById(findMenu).then(function (menu) {
-						for (var _i2 = 0; _i2 < menu.length; _i2++) {
+						for (var _i3 = 0; _i3 < menu.length; _i3++) {
 							for (var j = 0; j < param.menu.length; j++) {
-								if (param.menu[j].id == menu[_i2].mn_id) {
+								if (param.menu[j].id == menu[_i3].mn_id) {
 									var price = void 0;
 									if (param.increase) {
 										price = param.menu[j].price + param.menu[j].price * parseInt(param.discount) / 100;
@@ -430,7 +442,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 									if (balance - total < 0) {
 										return reject(31);
 									}
-									store = menu[_i2].store_id;
+									store = menu[_i3].store_id;
 
 									param.menu[j].price = price;
 								}
@@ -546,9 +558,9 @@ var StoreController = exports.StoreController = function (_Controller) {
 					}
 
 					var data = [];
-					for (var _i3 in result) {
-						result[_i3].name = _i3;
-						data.push(result[_i3]);
+					for (var _i4 in result) {
+						result[_i4].name = _i4;
+						data.push(result[_i4]);
 					}
 
 					return resolve(data);
@@ -592,20 +604,20 @@ var StoreController = exports.StoreController = function (_Controller) {
 							}
 						};
 
-						for (var _i4 = 0; _i4 < store[1].length; _i4++) {
-							result.table.data.push([store[1][_i4].ct_name ? store[1][_i4].ct_name : '-', store[1][_i4].m_name ? store[1][_i4].m_name : 'Non-Member', _this15.moment(store[1][_i4].ts_date).format("DD MMM YYYY"), parseInt(store[1][_i4].ts_total)]);
+						for (var _i5 = 0; _i5 < store[1].length; _i5++) {
+							result.table.data.push([store[1][_i5].ct_name ? store[1][_i5].ct_name : '-', store[1][_i5].m_name ? store[1][_i5].m_name : 'Non-Member', _this15.moment(store[1][_i5].ts_date).format("DD MMM YYYY"), parseInt(store[1][_i5].ts_total)]);
 						}
 					}
 
 					if (param.convert) {
 						result = [];
 
-						for (var _i5 = 0; _i5 < store[1].length; _i5++) {
+						for (var _i6 = 0; _i6 < store[1].length; _i6++) {
 							var paramTransaction = {
-								"Jenis Kartu": store[1][_i5].ct_name ? store[1][_i5].ct_name : '-',
-								"Nama Member": store[1][_i5].m_name ? store[1][_i5].m_name : 'Non-Member',
-								"Tanggal Transaksi": _this15.moment(store[1][_i5].ts_date).format("DD MMM YYYY"),
-								"Total Harga": parseInt(store[1][_i5].ts_total)
+								"Jenis Kartu": store[1][_i6].ct_name ? store[1][_i6].ct_name : '-',
+								"Nama Member": store[1][_i6].m_name ? store[1][_i6].m_name : 'Non-Member',
+								"Tanggal Transaksi": _this15.moment(store[1][_i6].ts_date).format("DD MMM YYYY"),
+								"Total Harga": parseInt(store[1][_i6].ts_total)
 							};
 
 							result.push(paramTransaction);
@@ -658,26 +670,26 @@ var StoreController = exports.StoreController = function (_Controller) {
 							}
 						};
 
-						for (var _i6 = 0; _i6 < store[1].length; _i6++) {
+						for (var _i7 = 0; _i7 < store[1].length; _i7++) {
 							result.table.data.push([
 							// store[1][i].ct_name ? store[1][i].ct_name : '-',
 							// store[1][i].m_name ? store[1][i].m_name : 'Non-Member',
-							_this16.moment(store[1][_i6].ts_date).format("DD MMM YYYY"), store[1][_i6].mn_name ? store[1][_i6].mn_name : '-', store[1][_i6].ti_quantity ? store[1][_i6].ti_quantity : '-', parseInt(store[1][_i6].ti_price)]);
+							_this16.moment(store[1][_i7].ts_date).format("DD MMM YYYY"), store[1][_i7].mn_name ? store[1][_i7].mn_name : '-', store[1][_i7].ti_quantity ? store[1][_i7].ti_quantity : '-', parseInt(store[1][_i7].ti_price)]);
 						}
 					}
 
 					if (param.convert) {
 						result = [];
 
-						for (var _i7 = 0; _i7 < store[1].length; _i7++) {
+						for (var _i8 = 0; _i8 < store[1].length; _i8++) {
 							var paramTransaction = {
 								// "Nomor Kartu" : store[1][i].c_id,
 								// "Jenis Kartu" : store[1][i].ct_name ? store[1][i].ct_name : '-',
 								// "Nama Member" : store[1][i].m_name ? store[1][i].m_name : 'Non-Member',
-								"Tanggal Transaksi": _this16.moment(store[1][_i7].ts_date).format("DD MMM YYYY"),
-								"Nama Item": store[1][_i7].mn_name ? store[1][_i7].mn_name : '-',
-								"Jumlah Item": store[1][_i7].ti_quantity ? store[1][_i7].ti_quantity : '-',
-								"Total Harga": parseInt(store[1][_i7].ti_price)
+								"Tanggal Transaksi": _this16.moment(store[1][_i8].ts_date).format("DD MMM YYYY"),
+								"Nama Item": store[1][_i8].mn_name ? store[1][_i8].mn_name : '-',
+								"Jumlah Item": store[1][_i8].ti_quantity ? store[1][_i8].ti_quantity : '-',
+								"Total Harga": parseInt(store[1][_i8].ti_price)
 							};
 
 							result.push(paramTransaction);

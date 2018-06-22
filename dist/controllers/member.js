@@ -250,6 +250,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
+				var logModel = new _log.LogModel();
 
 				var memberParam = {
 					m_name: param.name,
@@ -259,8 +260,21 @@ var MemberController = exports.MemberController = function (_Controller) {
 					updated_at: _this6.moment(new Date()).format()
 				};
 
-				memberModel.updateMember(param.id, memberParam).then(function (member) {
-					return resolve(true);
+				memberModel.updateMember(param.id, memberParam).then(function () {
+					var logParam = {
+						m_id: param.id,
+						log_value: parseFloat(0) + parseFloat(0),
+						log_before: 0,
+						log_payment: null,
+						created_by: param.user.u_id,
+						log_description: "Buat Member"
+					};
+
+					logModel.createLogUser(logParam).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
