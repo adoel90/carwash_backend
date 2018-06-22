@@ -1298,11 +1298,12 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					type: req.query.type
 				};
+
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				cardController.generateCardId(param).then(function (data) {
+				cardController.generateCardId(param.type).then(function (data) {
 					return _this2.success(res, data);
 				});
 			});

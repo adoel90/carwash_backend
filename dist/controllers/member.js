@@ -611,23 +611,9 @@ var MemberController = exports.MemberController = function (_Controller) {
 		value: function removeMember(ct_id) {
 			return new Promise(function (resolve, reject) {
 				var memberModel = new _member.MemberModel();
-				var memberId = [];
 
-				memberModel.getMemberQueries(ct_id).then(function (member) {
-					for (var i = 0; i < 10; i++) {
-						memberId.push(member[i].m_id);
-					}
-
-					memberModel.removeMember(ct_id).then(function () {
-						return resolve(true);
-						// memberModel.removeLog(memberId).then(() => {
-						// 	return resolve(true);
-						// }).catch((err) => {
-						// 	return reject(err);
-						// });
-					}).catch(function (err) {
-						return reject(err);
-					});
+				memberModel.removeMember(ct_id).then(function () {
+					return resolve(true);
 				}).catch(function (err) {
 					return reject(err);
 				});
