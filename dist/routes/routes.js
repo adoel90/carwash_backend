@@ -43,7 +43,7 @@ var Routes = exports.Routes = function () {
 		value: function checkParameters(parameter) {
 			for (var i in parameter) {
 				if (typeof parameter[i] === "undefined") {
-					console.log(i);
+					// console.log(i);
 					return false;
 				}
 			}

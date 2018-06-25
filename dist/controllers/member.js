@@ -266,10 +266,10 @@ var MemberController = exports.MemberController = function (_Controller) {
 						log_value: parseFloat(0) + parseFloat(0),
 						log_before: 0,
 						log_payment: null,
-						created_by: param.user.u_id,
+						created_by: param.user,
 						log_description: "Buat Member"
 					};
-
+					console.log('param.user: ', param.user);
 					logModel.createLogUser(logParam).then(function () {
 						return resolve(true);
 					}).catch(function (err) {
