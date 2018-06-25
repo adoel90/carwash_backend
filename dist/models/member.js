@@ -196,14 +196,6 @@ var MemberModel = exports.MemberModel = function (_Model) {
 
 			return this.db.execute();
 		}
-	}, {
-		key: "removeLog",
-		value: function removeLog(m_id) {
-			this.db.delete('log');
-			this.db.where('m_id', m_id);
-
-			return this.db.execute();
-		}
 	}]);
 
 	return MemberModel;

@@ -260,18 +260,22 @@ var MemberController = exports.MemberController = function (_Controller) {
 					updated_at: _this6.moment(new Date()).format()
 				};
 
-				memberModel.updateMember(param.id, memberParam).then(function () {
-					var logParam = {
-						m_id: param.id,
-						log_value: parseFloat(0) + parseFloat(0),
-						log_before: 0,
-						log_payment: null,
-						created_by: param.user,
-						log_description: "Buat Member"
-					};
-					console.log('param.user: ', param.user);
-					logModel.createLogUser(logParam).then(function () {
-						return resolve(true);
+				memberModel.getMemberById(param.id).then(function (member) {
+					memberModel.updateMember(param.id, memberParam).then(function () {
+						var logParam = {
+							m_id: param.id,
+							log_value: member.ct_min,
+							log_before: 0,
+							log_payment: null,
+							created_by: param.user,
+							log_description: "Buat Member"
+						};
+
+						logModel.createLogUser(logParam).then(function () {
+							return resolve(true);
+						}).catch(function (err) {
+							return reject(err);
+						});
 					}).catch(function (err) {
 						return reject(err);
 					});
