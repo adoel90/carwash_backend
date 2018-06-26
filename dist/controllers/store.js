@@ -452,6 +452,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 						storeModel.getStoreQueue(store).then(function (queue) {
 							var transParam = {
 								m_id: member.m_id,
+								ts_date: _this12.moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
 								ts_total: total,
 								ts_queue: queue,
 								store_id: param.store,

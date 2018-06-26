@@ -328,6 +328,7 @@ var ReportController = exports.ReportController = function (_Controller) {
                 var userModel = new _user.UserModel();
 
                 reportModel.getReportOwner(param.start_date, param.end_date).then(function (owner) {
+                    console.log('owner', owner);
                     var result = [];
 
                     var _loop2 = function _loop2(i) {
