@@ -108,7 +108,7 @@ var UserModel = exports.UserModel = function (_Model) {
 		}
 	}, {
 		key: "getUser",
-		value: function getUser(name, access, active) {
+		value: function getUser(name, access, active, limit, offset) {
 			this.db.init();
 			this.db.select("users", "users.*, user_level.ul_id, user_level.ul_name");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
@@ -122,6 +122,7 @@ var UserModel = exports.UserModel = function (_Model) {
 				this.db.whereIsNull("users.deleted_at");
 			}
 			this.db.order("u_id");
+			this.db.limit(limit, offset);
 
 			return this.db.execute();
 		}

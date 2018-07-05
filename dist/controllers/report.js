@@ -328,7 +328,6 @@ var ReportController = exports.ReportController = function (_Controller) {
                 var userModel = new _user.UserModel();
 
                 reportModel.getReportOwner(param.start_date, param.end_date).then(function (owner) {
-                    console.log('owner', owner);
                     var result = [];
 
                     var _loop2 = function _loop2(i) {
@@ -444,9 +443,32 @@ var ReportController = exports.ReportController = function (_Controller) {
                                         for (var _i7 = 0; _i7 < report[1].length; _i7++) {
                                             result.table.data.push([_this6.moment(report[1][_i7].log_date).format("DD MMM YYYY"), user.u_name, _this6.parseCurrency(report[1][_i7].log_value, true), report[1][_i7].log_description]);
                                         }
+
+                                        return resolve(result);
                                     }
 
-                                    return resolve(result);
+                                    if (param.convert) {
+                                        var resultConvert = [];
+
+                                        for (var _i8 = 0; _i8 < report[1].length; _i8++) {
+                                            var paramConvert = {
+                                                "Tanggal Transaksi": _this6.moment(report[1][_i8].log_date).format("DD MMM YYYY"),
+                                                "Nama Kasir": user.u_name,
+                                                "Total Transaksi": _this6.parseCurrency(report[1][_i8].log_value, true),
+                                                "Deskripsi": report[1][_i8].log_description
+                                            };
+
+                                            resultConvert.push(paramConvert);
+                                        }
+
+                                        if (resultConvert.length >= report[1].length) {
+                                            return resolve(resultConvert);
+                                        }
+                                    }
+
+                                    if (!param.print && !param.convert) {
+                                        return resolve(result);
+                                    }
                                 }
                             }).catch(function (err) {
                                 return reject(err);
@@ -510,9 +532,9 @@ var ReportController = exports.ReportController = function (_Controller) {
                     }
 
                     var data = [];
-                    for (var _i8 in result) {
-                        result[_i8].name = _i8;
-                        data.push(result[_i8]);
+                    for (var _i9 in result) {
+                        result[_i9].name = _i9;
+                        data.push(result[_i9]);
                     }
 
                     return resolve(data);

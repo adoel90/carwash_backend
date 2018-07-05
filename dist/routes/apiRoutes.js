@@ -111,7 +111,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					name: req.query.name ? req.query.name : null,
 					access: req.query.access ? req.query.access : null,
-					active: req.query.active ? req.query.active : null
+					active: req.query.active ? req.query.active : null,
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -699,7 +701,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					store: req.query.store ? req.query.store : null,
 					start_date: req.query.start_date ? req.query.start_date : null,
 					end_date: req.query.end_date ? req.query.end_date : null,
-					print: req.query.print ? req.query.print : false
+					print: req.query.print ? req.query.print : false,
+					convert: req.query.convert ? req.query.convert : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -709,6 +712,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				staffController.getReportStaffByTransaction(param).then(function (data) {
 					if (param.print) {
 						return _this2.render(res, "reportUser", data);
+					} else if (param.convert) {
+						return _this2.convertToXls(res, data);
 					} else {
 						return _this2.success(res, data);
 					}
@@ -724,7 +729,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					store: req.query.store ? req.query.store : null,
 					start_date: req.query.start_date ? req.query.start_date : null,
 					end_date: req.query.end_date ? req.query.end_date : null,
-					print: req.query.print ? req.query.print : false
+					print: req.query.print ? req.query.print : false,
+					convert: req.query.convert ? req.query.convert : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -734,6 +740,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				staffController.getReportStaffByTransactionDetail(param).then(function (data) {
 					if (param.print) {
 						return _this2.render(res, "reportUser", data);
+					} else if (param.convert) {
+						return _this2.convertToXls(res, data);
 					} else {
 						return _this2.success(res, data);
 					}
@@ -749,7 +757,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					store_id: req.query.store,
 					name: req.query.name ? req.query.name : null,
 					active: req.query.active ? req.query.active : null,
-					print: req.query.print ? req.query.print : false
+					print: req.query.print ? req.query.print : false,
+					convert: req.query.convert ? req.query.convert : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -759,6 +768,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				storeController.getStoreMenuList(param).then(function (data) {
 					if (param.print) {
 						return _this2.render(res, "menu", data);
+					} else if (param.convert) {
+						return _this2.convertToXls(res, data);
 					} else {
 						return _this2.success(res, data);
 					}
@@ -1375,7 +1386,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					start_date: req.query.start_date,
 					end_date: req.query.end_date,
 					user: req.query.user ? req.query.user : null,
-					print: req.query.print ? req.query.print : false
+					print: req.query.print ? req.query.print : false,
+					convert: req.query.convert ? req.query.convert : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1385,6 +1397,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				reportController.getReportUser(param).then(function (data) {
 					if (param.print) {
 						return _this2.render(res, "reportUser", data);
+					} else if (param.convert) {
+						return _this2.convertToXls(res, data);
 					} else {
 						return _this2.success(res, data);
 					}

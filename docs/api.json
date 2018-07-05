@@ -789,13 +789,13 @@
 			},
 			{
 				"name" : "print",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Print report transaction"
 			},
 			{
 				"name" : "convert",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Convert to XLS file"
 			}
@@ -826,13 +826,13 @@
 			},
 			{
 				"name" : "print",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Print report transaction"
 			},
 			{
 				"name" : "convert",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Convert to XLS file"
 			}
@@ -869,9 +869,15 @@
 			},
 			{
 				"name" : "print",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Print report transaction"
+			},
+			{
+				"name" : "convert",
+				"type" : "boolean",
+				"required" : false,
+				"description" : "Convert report transaction to XLS file"
 			}
 		]
 	},
@@ -912,9 +918,15 @@
 			},
 			{
 				"name" : "print",
-				"type" : "string",
+				"type" : "boolean",
 				"required" : false,
 				"description" : "Print report transaction detail by item"
+			},
+			{
+				"name" : "convert",
+				"type" : "boolean",
+				"required" : false,
+				"description" : "Convert report transaction detail by item to XLS file"
 			}
 		]
 	},
@@ -1362,6 +1374,11 @@
 			"type" : "boolean",
 			"required" : false,
 			"description" : "Print cashier activity"
+		},{
+			"name" : "convert",
+			"type" : "boolean",
+			"required" : false,
+			"description" : "Convert to XLS file"
 		}]
 	},
 	"/tier/list" :{

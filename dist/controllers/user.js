@@ -144,7 +144,7 @@ var UserController = exports.UserController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
 
-				userModel.getUser(param.name, param.access, param.active).then(function (user) {
+				userModel.getUser(param.name, param.access, param.active, param.limit, param.offset).then(function (user) {
 					var result = [];
 					for (var i = 0; i < user.length; i++) {
 						result.push(_this5.build.user(user[i]));

@@ -332,9 +332,32 @@ var StaffController = exports.StaffController = function (_Controller) {
                                             for (var _i = 0; _i < staff[1].length; _i++) {
                                                 result.table.data.push([_this8.moment(staff[1][_i].ts_date).format("DD MMM YYYY hh:mm:ss"), user.u_name, staff[1][_i].m_name, _this8.parseCurrency(staff[1][_i].ts_total, true)]);
                                             }
+
+                                            return resolve(result);
                                         }
 
-                                        return resolve(result);
+                                        if (param.convert) {
+                                            var resultConvert = [];
+
+                                            for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
+                                                var paramConvert = {
+                                                    "Tanggal": _this8.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"),
+                                                    "Nama Staff": user.u_name,
+                                                    "Nama Member": staff[1][_i2].m_name,
+                                                    "Total": _this8.parseCurrency(staff[1][_i2].ts_total, true)
+                                                };
+
+                                                resultConvert.push(paramConvert);
+                                            }
+
+                                            if (resultConvert.length >= staff[1].length) {
+                                                return resolve(resultConvert);
+                                            }
+                                        }
+
+                                        if (!param.print && !param.convert) {
+                                            return resolve(result);
+                                        }
                                     }
                                 }).catch(function (err) {
                                     return reject(err);
@@ -410,12 +433,37 @@ var StaffController = exports.StaffController = function (_Controller) {
                                                 }
                                             };
 
-                                            for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
-                                                result.table.data.push([_this9.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"), user.u_name, staff[1][_i2].m_name, staff[1][_i2].ti_item, staff[1][_i2].ti_quantity, _this9.parseCurrency(staff[1][_i2].ti_price, true)]);
+                                            for (var _i3 = 0; _i3 < staff[1].length; _i3++) {
+                                                result.table.data.push([_this9.moment(staff[1][_i3].ts_date).format("DD MMM YYYY hh:mm:ss"), user.u_name, staff[1][_i3].m_name, staff[1][_i3].ti_item, staff[1][_i3].ti_quantity, _this9.parseCurrency(staff[1][_i3].ti_price, true)]);
+                                            }
+
+                                            return resolve(result);
+                                        }
+
+                                        if (param.convert) {
+                                            var resultConvert = [];
+
+                                            for (var _i4 = 0; _i4 < staff[1].length; _i4++) {
+                                                var paramConvert = {
+                                                    "Tanggal": _this9.moment(staff[1][_i4].ts_date).format("DD MMM YYYY hh:mm:ss"),
+                                                    "Nama Staff": user.u_name,
+                                                    "Nama Member": staff[1][_i4].m_name,
+                                                    "Nama Item": staff[1][_i4].ti_item,
+                                                    "Jumlah Item": staff[1][_i4].ti_quantity,
+                                                    "Harga Item": _this9.parseCurrency(staff[1][_i4].ti_price, true)
+                                                };
+
+                                                resultConvert.push(paramConvert);
+                                            }
+
+                                            if (resultConvert.length >= staff[1].length) {
+                                                return resolve(resultConvert);
                                             }
                                         }
 
-                                        return resolve(result);
+                                        if (!param.print && !param.convert) {
+                                            return resolve(result);
+                                        }
                                     }
                                 }).catch(function (err) {
                                     return reject(err);
