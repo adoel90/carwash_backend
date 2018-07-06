@@ -341,10 +341,12 @@ var StaffController = exports.StaffController = function (_Controller) {
 
                                             for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
                                                 var paramConvert = {
-                                                    "Tanggal": _this8.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"),
+                                                    "Tanggal Transaksi": _this8.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"),
+                                                    "Nama Item": result.data[_i2].item[0].name,
+                                                    "Harga Item": _this8.parseCurrency(result.data[_i2].item[0].price, true),
+                                                    "Total Item": result.data[_i2].item[0].quantity,
                                                     "Nama Staff": user.u_name,
-                                                    "Nama Member": staff[1][_i2].m_name,
-                                                    "Total": _this8.parseCurrency(staff[1][_i2].ts_total, true)
+                                                    "Nama Toko": staff[1][_i2].store_name
                                                 };
 
                                                 resultConvert.push(paramConvert);
