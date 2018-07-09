@@ -340,16 +340,18 @@ var StaffController = exports.StaffController = function (_Controller) {
                                             var resultConvert = [];
 
                                             for (var _i2 = 0; _i2 < staff[1].length; _i2++) {
-                                                var paramConvert = {
-                                                    "Tanggal Transaksi": _this8.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"),
-                                                    "Nama Item": result.data[_i2].item[0].name,
-                                                    "Harga Item": _this8.parseCurrency(result.data[_i2].item[0].price, true),
-                                                    "Total Item": result.data[_i2].item[0].quantity,
-                                                    "Nama Staff": user.u_name,
-                                                    "Nama Toko": staff[1][_i2].store_name
-                                                };
+                                                for (var z = 0; z < result.data[_i2].item.length; z++) {
+                                                    var paramConvert = {
+                                                        "Tanggal Transaksi": _this8.moment(staff[1][_i2].ts_date).format("DD MMM YYYY hh:mm:ss"),
+                                                        "Nama Item": result.data[_i2].item[z].name,
+                                                        "Harga Item": _this8.parseCurrency(result.data[_i2].item[z].price, true),
+                                                        "Total Item": result.data[_i2].item[z].quantity,
+                                                        "Nama Staff": user.u_name,
+                                                        "Nama Toko": staff[1][_i2].store_name
+                                                    };
 
-                                                resultConvert.push(paramConvert);
+                                                    resultConvert.push(paramConvert);
+                                                }
                                             }
 
                                             if (resultConvert.length >= staff[1].length) {
