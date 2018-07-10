@@ -275,12 +275,13 @@ var ReportController = exports.ReportController = function (_Controller) {
                                     for (var _j = 0; _j < result.report.length; _j++) {
                                         if (report[1][_i6].m_id == result.report[_j].id) {
                                             var paramConvert = {
-                                                "Nomor Kartu": report[1][_i6].c_id ? report[1][_i6].c_id : '-',
+                                                "Nomor Kartu": report[1][_i6].c_id,
                                                 "Jenis Kartu": report[1][_i6].ct_name ? report[1][_i6].ct_name : 'Non-Member',
                                                 "Nama Member": report[1][_i6].m_name ? report[1][_i6].m_name : 'Non-Member',
+                                                "Email Member": report[1][_i6].m_email ? report[1][_i6].m_email : '-',
+                                                "Telepon Member": report[1][_i6].m_phone ? report[1][_i6].m_phone : '-',
                                                 "Tanggal Daftar": _this4.moment(report[1][_i6].created_at).format("DD MMM YYYY"),
-                                                "Saldo": parseInt(report[1][_i6].m_balance),
-                                                "Tanggal Transaksi": result.report[_j].last_transaction ? result.report[_j].last_transaction : '-'
+                                                "Saldo": parseInt(report[1][_i6].m_balance)
 
                                                 // if(report[1][i].c_id) {
                                             };resultConvert.push(paramConvert);

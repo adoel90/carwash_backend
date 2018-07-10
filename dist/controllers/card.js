@@ -208,38 +208,32 @@ var CardController = exports.CardController = function (_Controller) {
 
 				var checkCard = [];
 
-				for (var i = 0; i < 10; i++) {
-					Card.getCardTypeById(param).then(function (_ref) {
-						var ct_id = _ref.ct_id;
+				// for (let i = 0; i < 10; i++) {
+				Card.getCardTypeById(param).then(function (_ref) {
+					var ct_id = _ref.ct_id;
 
-						var generateCard = _this7.build.generateCardId(ct_id);
-						var cardParam = {
-							c_id: generateCard,
-							ct_id: parseInt(generateCard, 10).toString().charAt(0)
+					var generateCard = _this7.build.generateCardId(ct_id);
+					var cardParam = {
+						c_id: generateCard,
+						ct_id: parseInt(generateCard, 10).toString().charAt(0)
+					};
+
+					Card.insertCard(cardParam).then(function (data) {
+						var balance = 0;
+						if (ct_id === 1) balance = '100000';else if (ct_id === 2) balance = '10000';else if (ct_id === 3) balance = '20000';
+
+						var memberParam = {
+							m_balance: balance,
+							c_id: data.c_id,
+							ct_id: ct_id
 						};
 
-						Card.insertCard(cardParam).then(function (data) {
-							var balance = 0;
-							if (ct_id === 1) balance = '100000';else if (ct_id === 2) balance = '10000';else if (ct_id === 3) balance = '20000';
+						Member.insertMember(memberParam).then(function (_ref2) {
+							var m_id = _ref2.m_id;
 
-							var memberParam = {
-								m_balance: balance,
-								c_id: data.c_id,
-								ct_id: ct_id
-							};
-
-							Member.insertMember(memberParam).then(function (_ref2) {
-								var m_id = _ref2.m_id;
-
-								Card.getLastRow('10', m_id).then(function (result) {
-									checkCard.push(result[0]);
-
-									if (checkCard.length >= 10) {
-										return resolve(checkCard);
-									}
-								});
-							}).catch(function (err) {
-								return reject(err);
+							Card.getLastRow('1', m_id).then(function (result) {
+								checkCard.push(result[0]);
+								return resolve(checkCard);
 							});
 						}).catch(function (err) {
 							return reject(err);
@@ -247,7 +241,10 @@ var CardController = exports.CardController = function (_Controller) {
 					}).catch(function (err) {
 						return reject(err);
 					});
-				}
+				}).catch(function (err) {
+					return reject(err);
+				});
+				// }
 			});
 		}
 	}]);
