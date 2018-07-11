@@ -34,6 +34,7 @@ var AccessModel = exports.AccessModel = function (_Model) {
         value: function getAccessLevel(active) {
             this.db.init();
             this.db.select("user_level");
+            this.db.where('ul_id', 1, null, '!=');
             if (active) {
                 this.db.whereIsNull("deleted_at");
             }

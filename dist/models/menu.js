@@ -66,7 +66,7 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("menu");
-			this.db.order("mn_id");
+			this.db.order("mn_name");
 			this.db.push();
 
 			return this.db.executeMany();
