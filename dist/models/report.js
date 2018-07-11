@@ -34,6 +34,7 @@ var ReportModel = exports.ReportModel = function (_Model) {
             this.db.select("member", "count(*)");
             this.db.join("card", "card.c_id = member.c_id", "LEFT");
             this.db.join("card_type", "card_type.ct_id = card.ct_id", "LEFT");
+            this.db.whereNotNull("m_name");
             this.db.whereBetween("date(member.created_at)", start, end);
             this.db.push();
 

@@ -309,6 +309,7 @@ var Db = function () {
 		key: "executeMany",
 		value: function executeMany() {
 			var queries = this.q_batch;
+			console.log(queries);
 			return dbConn.tx(function (t) {
 				return this.batch(queries);
 			});
