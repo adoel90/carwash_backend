@@ -11,15 +11,11 @@ var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _crypto = require("crypto");
-
-var _crypto2 = _interopRequireDefault(_crypto);
-
 var _auth = require("../middleware/auth");
 
 var _routes = require("./routes");
 
-var _index = require("../controllers/index");
+var _controllers = require("../controllers");
 
 var _user = require("../controllers/user");
 
@@ -42,6 +38,8 @@ var _store = require("../controllers/store");
 var _staff = require("../controllers/staff");
 
 var _promo = require("../controllers/promo");
+
+var _saldo = require("../controllers/saldo");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68,7 +66,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 		value: function routes() {
 			var _this2 = this;
 
-			var indexController = new _index.IndexController();
+			var indexController = new _controllers.IndexController();
 			var userController = new _user.UserController();
 			var memberController = new _member.MemberController();
 			var cardController = new _card.CardController();
@@ -80,6 +78,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			var storeController = new _store.StoreController();
 			var staffController = new _staff.StaffController();
 			var promoController = new _promo.PromoController();
+			var saldoController = new _saldo.SaldoController();
 
 			this.app.get("/", function (req, res) {
 				try {
@@ -1423,6 +1422,53 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 			/*--- End Tier routes ---*/
+
+			/* Start Saldo Route */
+			this.app.get("/saldo/list", _auth.verifyToken, function (req, res) {
+				var param = {
+					limit: req.query.limit ? req.query.limit : 4
+				};
+
+				saldoController.getAll(param.limit).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.post("/saldo/create", _auth.verifyToken, function (req, res) {
+				var param = {
+					saldo: req.body.saldo
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				saldoController.insert(param.saldo).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.patch("/saldo/update", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id,
+					saldo: req.body.saldo
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				saldoController.update(param).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+			/* End Saldo Route */
 
 			return this.app;
 		}

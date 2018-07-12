@@ -145,6 +145,13 @@ var UserModel = exports.UserModel = function (_Model) {
 
 			return this.db.executeMany();
 		}
+	}, {
+		key: "getUserListUsername",
+		value: function getUserListUsername() {
+			this.db.select("users", "u_username");
+
+			return this.db.execute();
+		}
 
 		/*** Insert user data ***/
 

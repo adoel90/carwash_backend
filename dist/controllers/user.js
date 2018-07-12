@@ -170,20 +170,32 @@ var UserController = exports.UserController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var userModel = new _user.UserModel();
 
-				var userParam = {
-					u_name: param.name,
-					u_username: param.username.toLowerCase(),
-					u_email: param.email,
-					u_password: _this6.encrypt(param.password),
-					ul_id: param.level
-				};
+				userModel.getUserListUsername().then(function (username) {
+					var u_username = param.username.toLowerCase();
 
-				userModel.insertUser(userParam).then(function (user) {
-					return resolve(user);
-				}).catch(function (err) {
-					if (err.code == 23505) {
-						return reject(12);
+					for (var i = 0; i < username.length; i++) {
+						if (u_username != username[i]) {
+							var userParam = {
+								u_name: param.name,
+								u_username: u_username,
+								u_email: param.email,
+								u_password: _this6.encrypt(param.password),
+								ul_id: param.level
+							};
+						} else {
+							return reject(12);
+						}
 					}
+
+					userModel.insertUser(userParam).then(function (user) {
+						return resolve(user);
+					}).catch(function (err) {
+						if (err.code == 23505) {
+							return reject(12);
+						}
+						return reject(err);
+					});
+				}).catch(function (err) {
 					return reject(err);
 				});
 			});

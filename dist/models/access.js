@@ -128,7 +128,7 @@ var AccessModel = exports.AccessModel = function (_Model) {
         value: function getModule() {
             this.db.init();
             this.db.select("module");
-            this.db.order("mod_id");
+            this.db.order("mod_name");
 
             return this.db.execute();
         }

@@ -122,7 +122,6 @@ var MemberController = exports.MemberController = function (_Controller) {
 					// serviceModel.getServiceTransaction(param.id).then((service) => {
 					// 	cafeModel.getCafeTransaction(param.id).then((cafe) => {
 					storeModel.getStoreTransaction(param.id).then(function (store) {
-						console.log(store);
 						memberModel.getTopupTransaction(param.id).then(function (topup) {
 							// for(let i=0; i<service.length; i++) {
 							// 	let a = this.build.transactionService(service[i]);
