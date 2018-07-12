@@ -1437,5 +1437,46 @@
 			"required" : true,
 			"description" : "Owner ID"
 		}]
-	}
+  },
+  "/saldo/list" :{
+    "method" : "get",
+    "description": "Get all saldo",
+    "token": true,
+    "parameter" : [{
+			"name" : "limit",
+			"type" : "integer",
+			"required" : false,
+			"description" : "Limit of data, default 4"
+		}]
+  },
+  "/saldo/create" :{
+    "method" : "post",
+    "description": "Create new saldo",
+    "token": true,
+    "parameter" : [{
+			"name" : "saldo",
+			"type" : "array / string",
+			"required" : true,
+			"description" : "Saldo for minimal saldo"
+		}]
+  },
+  "/saldo/update" :{
+    "method" : "patch",
+    "description": "Update the specified saldo",
+    "token": true,
+    "parameter" : [
+      {
+        "name" : "id",
+        "type" : "integer",
+        "required" : true,
+        "description" : "Id saldo"
+      },
+      {
+        "name" : "saldo",
+        "type" : "array / string",
+        "required" : true,
+        "description" : "Saldo for minimal saldo"
+      }
+    ]
+  }
 }
