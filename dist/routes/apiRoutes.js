@@ -1432,7 +1432,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/* Start Saldo Route */
 			this.app.get("/saldo/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					limit: req.query.limit ? req.query.limit : 4
+					limit: req.query.limit ? req.query.limit : 3
 				};
 
 				saldoController.getAll(param.limit).then(function (data) {
