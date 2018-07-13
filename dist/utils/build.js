@@ -125,10 +125,12 @@ var Build = exports.Build = function () {
 			var card = {
 				id: data.ct_id,
 				name: data.ct_name,
-				min: data.ct_min.replace(/{/g, '').replace(/}/g, '').split(",").reduce(function (result, item, index) {
-					result[index] = item;
-					return result;
-				}, {}),
+				min: data.ct_min,
+				// .replace(/{/g, '').replace(/}/g, '').split(","),
+				// .reduce((result, item, index) => {
+				// 	result[index] = item;
+				// 	return result;
+				// }, {}),
 				bonus: data.ct_bonus,
 				refund: data.ct_refund,
 				charge: data.ct_charge,
@@ -569,6 +571,16 @@ var Build = exports.Build = function () {
 			}
 
 			return '00' + type + dateNow + randomInt;
+		}
+	}, {
+		key: "totalTransaction",
+		value: function totalTransaction(data) {
+			var totalTransaction = {
+				'Nama Owner': data.u_name,
+				'Nama Store': data.store_name
+			};
+
+			return totalTransaction;
 		}
 	}]);
 

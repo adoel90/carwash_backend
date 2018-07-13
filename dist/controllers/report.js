@@ -334,37 +334,51 @@ var ReportController = exports.ReportController = function (_Controller) {
                     var _loop2 = function _loop2(i) {
 
                         reportModel.getTotalReportOwner(param.start_date, param.end_date, owner[1][i].store_id).then(function (total) {
-                            var reportOwner = _this5.build.reportOwner(owner[1][i]);
-
-                            var totalTransaction = 0;
-
-                            for (var j = 0; j < total.length; j++) {
-                                totalTransaction += parseInt(total[j].sum);
-                            }
-
-                            reportOwner.total = totalTransaction;
-                            result.push(reportOwner);
-
                             if (param.convert) {
-                                var resultConvert = [];
+                                //   let resultConvert = [];
 
-                                for (var _i7 = 0; _i7 < owner[1].length; _i7++) {
-                                    var paramConvert = {
-                                        "Nama Owner": owner[1][_i7].u_name,
-                                        "Nama Toko": owner[1][_i7].store_name
-                                        // "Total Laba Kotor" : this.parseCurrency(totalTransaction, true)
-                                    };
+                                //   for(let i=0; i<owner[1].length; i++){
+                                //     let paramConvert = {
+                                //       "Nama Owner" : owner[1][i].u_name,
+                                //       "Nama Toko" : owner[1][i].store_name,
+                                //       "Total Laba Kotor" : this.parseCurrency(totalTrans, true)
+                                //     }
 
-                                    resultConvert.push(paramConvert);
+                                //     resultConvert.push(paramConvert);
+                                //   }
+
+                                //   if(resultConvert.length >= owner[1].length) {
+                                //       return resolve(resultConvert);
+                                //   }
+                                var reportOwner = _this5.build.totalTransaction(owner[1][i]);
+
+                                var totalTransaction = 0;
+
+                                for (var j = 0; j < total.length; j++) {
+                                    totalTransaction += parseInt(total[j].sum);
                                 }
 
-                                if (resultConvert.length >= owner[1].length) {
-                                    return resolve(resultConvert);
-                                }
-                            }
+                                reportOwner.total = _this5.parseCurrency(totalTransaction, true);
+                                result.push(reportOwner);
 
-                            if (result.length >= owner[1].length) {
-                                return resolve(result);
+                                if (result.length >= owner[1].length) {
+                                    return resolve(result);
+                                }
+                            } else {
+                                var _reportOwner = _this5.build.reportOwner(owner[1][i]);
+
+                                var _totalTransaction = 0;
+
+                                for (var _j2 = 0; _j2 < total.length; _j2++) {
+                                    _totalTransaction += parseInt(total[_j2].sum);
+                                }
+
+                                _reportOwner.total = _totalTransaction;
+                                result.push(_reportOwner);
+
+                                if (result.length >= owner[1].length) {
+                                    return resolve(result);
+                                }
                             }
                         }).catch(function (err) {
                             return reject(err);
@@ -458,8 +472,8 @@ var ReportController = exports.ReportController = function (_Controller) {
                                             }
                                         };
 
-                                        for (var _i8 = 0; _i8 < report[1].length; _i8++) {
-                                            result.table.data.push([_this6.moment(report[1][_i8].log_date).format("DD MMM YYYY"), user.u_name, _this6.parseCurrency(report[1][_i8].log_value, true), report[1][_i8].log_description]);
+                                        for (var _i7 = 0; _i7 < report[1].length; _i7++) {
+                                            result.table.data.push([_this6.moment(report[1][_i7].log_date).format("DD MMM YYYY"), user.u_name, _this6.parseCurrency(report[1][_i7].log_value, true), report[1][_i7].log_description]);
                                         }
 
                                         return resolve(result);
@@ -468,12 +482,12 @@ var ReportController = exports.ReportController = function (_Controller) {
                                     if (param.convert) {
                                         var resultConvert = [];
 
-                                        for (var _i9 = 0; _i9 < report[1].length; _i9++) {
+                                        for (var _i8 = 0; _i8 < report[1].length; _i8++) {
                                             var paramConvert = {
-                                                "Tanggal Transaksi": _this6.moment(report[1][_i9].log_date).format("DD MMM YYYY"),
+                                                "Tanggal Transaksi": _this6.moment(report[1][_i8].log_date).format("DD MMM YYYY"),
                                                 "Nama Kasir": user.u_name,
-                                                "Total Transaksi": _this6.parseCurrency(report[1][_i9].log_value, true),
-                                                "Deskripsi": report[1][_i9].log_description
+                                                "Total Transaksi": _this6.parseCurrency(report[1][_i8].log_value, true),
+                                                "Deskripsi": report[1][_i8].log_description
                                             };
 
                                             resultConvert.push(paramConvert);
@@ -550,9 +564,9 @@ var ReportController = exports.ReportController = function (_Controller) {
                     }
 
                     var data = [];
-                    for (var _i10 in result) {
-                        result[_i10].name = _i10;
-                        data.push(result[_i10]);
+                    for (var _i9 in result) {
+                        result[_i9].name = _i9;
+                        data.push(result[_i9]);
                     }
 
                     return resolve(data);

@@ -43,6 +43,7 @@ var CardController = exports.CardController = function (_Controller) {
 				var cardModel = new _card.CardModel();
 
 				cardModel.getCardType().then(function (card) {
+					console.log(card);
 					var result = [];
 					for (var i = 0; i < card.length; i++) {
 						result.push(_this2.build.card(card[i]));
