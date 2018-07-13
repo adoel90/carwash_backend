@@ -1056,6 +1056,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
+					saldo: req.body.saldo,
 					phone: req.body.phone ? req.body.phone : null,
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
@@ -1366,7 +1367,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.get("/report/owner", _auth.verifyToken, function (req, res) {
 				var param = {
 					start_date: req.query.start_date,
-					end_date: req.query.end_date
+					end_date: req.query.end_date,
+					convert: req.query.convert ? req.query.convert : false
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1374,7 +1376,11 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				}
 
 				reportController.getReportOwner(param).then(function (data) {
-					return _this2.success(res, data);
+					if (param.convert) {
+						return _this2.convertToXls(res, data);
+					} else {
+						return _this2.success(res, data);
+					}
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});

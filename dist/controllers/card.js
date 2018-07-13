@@ -73,6 +73,7 @@ var CardController = exports.CardController = function (_Controller) {
 						row: card[0][0].count,
 						card: []
 					};
+
 					for (var i = 0; i < card[1].length; i++) {
 						result.card.push(_this3.build.card(card[1][i]));
 					}
@@ -95,6 +96,7 @@ var CardController = exports.CardController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var cardModel = new _card.CardModel();
 
+				// for (let i = 0; i < param.min.length; i++) {
 				var cardParam = {
 					ct_name: param.name,
 					ct_min: param.min,
@@ -108,6 +110,7 @@ var CardController = exports.CardController = function (_Controller) {
 				}).catch(function (err) {
 					return reject(err);
 				});
+				// }
 			});
 		}
 
@@ -124,19 +127,22 @@ var CardController = exports.CardController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var cardModel = new _card.CardModel();
 
-				var cardParam = {
-					ct_name: param.name,
-					ct_min: param.min,
-					ct_bonus: param.bonus,
-					ct_refund: param.refund,
-					ct_charge: param.charge,
-					updated_at: _this4.moment(new Date()).format()
-				};
-				cardModel.updateCardType(param.id, cardParam).then(function (data) {
-					return resolve(true);
-				}).catch(function (err) {
-					return reject(err);
-				});
+				for (var i = 0; i < param.min.length; i++) {
+					var cardParam = {
+						ct_name: param.name,
+						ct_min: param.min,
+						ct_bonus: param.bonus,
+						ct_refund: param.refund,
+						ct_charge: param.charge,
+						updated_at: _this4.moment(new Date()).format()
+					};
+
+					cardModel.updateCardType(param.id, cardParam).then(function (data) {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
+				}
 			});
 		}
 

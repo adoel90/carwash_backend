@@ -125,7 +125,7 @@ var Build = exports.Build = function () {
 			var card = {
 				id: data.ct_id,
 				name: data.ct_name,
-				min: data.ct_min,
+				min: data.ct_min.replace(/{/g, '').replace(/}/g, '').split(","),
 				bonus: data.ct_bonus,
 				refund: data.ct_refund,
 				charge: data.ct_charge,

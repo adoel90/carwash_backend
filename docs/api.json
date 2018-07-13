@@ -975,7 +975,7 @@
 			"description" : "Card type name"
 		},{
 			"name" : "minimum",
-			"type" : "numeric",
+			"type" : "array",
 			"required" : true,
 			"description" : "Card minimum topup value"
 		},{
@@ -1012,7 +1012,7 @@
 			"description" : "Card type name"
 		},{
 			"name" : "minimun",
-			"type" : "numeric",
+			"type" : "array",
 			"required" : true,
 			"description" : "Card minimun topup value"
 		},{

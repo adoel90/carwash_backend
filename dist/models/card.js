@@ -103,9 +103,11 @@ var CardModel = exports.CardModel = function (_Model) {
 	}, {
 		key: "insertCardType",
 		value: function insertCardType(param) {
+			this.db.init();
 			this.db.insert("card_type", param);
+			this.db.push(true);
 
-			return this.db.execute();
+			return this.db.executeMany();
 		}
 
 		/*** Update card type data ***/
@@ -113,10 +115,12 @@ var CardModel = exports.CardModel = function (_Model) {
 	}, {
 		key: "updateCardType",
 		value: function updateCardType(ct_id, param) {
+			this.db.init();
 			this.db.update("card_type", param);
 			this.db.where("ct_id", ct_id);
+			this.db.push(true);
 
-			return this.db.execute();
+			return this.db.executeMany();
 		}
 
 		/*** Update card data ***/
