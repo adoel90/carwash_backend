@@ -1432,10 +1432,13 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			/* Start Saldo Route */
 			this.app.get("/saldo/list", _auth.verifyToken, function (req, res) {
 				var param = {
-					limit: req.query.limit ? req.query.limit : 3
+					limit: req.query.limit ? req.query.limit : 10,
+					offset: req.query.offset ? req.query.offset : 0,
+					card: req.query.card ? req.query.card : null,
+					filter: req.query.filter ? req.query.filter : null
 				};
 
-				saldoController.getAll(param.limit).then(function (data) {
+				saldoController.getAll(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
@@ -1460,14 +1463,16 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.post("/saldo/create", _auth.verifyToken, function (req, res) {
 				var param = {
-					saldo: req.body.saldo
+					saldo: req.body.saldo,
+					bonus: req.body.bonus,
+					card: req.body.card
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				saldoController.insert(param.saldo).then(function (data) {
+				saldoController.createNewBalance(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
@@ -1477,14 +1482,16 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 			this.app.put("/saldo/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
-					saldo: req.body.saldo
+					saldo: req.body.saldo,
+					bonus: req.body.bonus,
+					card: req.body.card
 				};
 
 				if (!_this2.checkParameters(param)) {
 					return _this2.error(res, 1);
 				}
 
-				saldoController.update(param).then(function (data) {
+				saldoController.updateBalance(param).then(function (data) {
 					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
@@ -1493,6 +1500,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 
 			this.app.delete("/saldo/delete", _auth.verifyToken, function (req, res) {
 				var param = {
+					id: req.query.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				saldoController.deleteBalance(param).then(function (result) {
+					return _this2.success(res, result);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
+			this.app.put("/saldo/status", _auth.verifyToken, function (req, res) {
+				var param = {
 					id: req.body.id
 				};
 
@@ -1500,8 +1523,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, 1);
 				}
 
-				saldoController.destroy(param.id).then(function (result) {
-					return _this2.success(res, result);
+				saldoController.changeStatusBalance(param).then(function (data) {
+					return _this2.success(res, data);
 				}).catch(function (err) {
 					return _this2.error(res, err);
 				});

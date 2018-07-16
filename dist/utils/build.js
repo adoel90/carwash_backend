@@ -582,6 +582,21 @@ var Build = exports.Build = function () {
 
 			return totalTransaction;
 		}
+	}, {
+		key: "balance",
+		value: function balance(data) {
+			var balance = {
+				id: data.id,
+				balance: data.saldo,
+				bonus: data.bonus
+			};
+
+			if (data.ct_name) {
+				balance.card = this.card(data);
+			}
+
+			return balance;
+		}
 	}]);
 
 	return Build;

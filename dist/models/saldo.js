@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -7,7 +7,7 @@ exports.SaldoModel = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _model = require('./model');
+var _model = require("./model");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25,52 +25,61 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
   }
 
   _createClass(SaldoModel, [{
-    key: 'getAll',
-    value: function getAll(limit) {
-      this.db.select('saldo');
-      this.db.order('created_at', true);
-      this.db.limit(limit);
+    key: "getAll",
+    value: function getAll(limit, offset, card) {
+      this.db.select("saldo");
+      this.db.join("card_type", "card_type.ct_id = saldo.ct_id", "LEFT");
+      if (card) {
+        this.db.where("saldo.ct_id", card);
+      }
+      this.db.order("saldo.created_at", true);
+      // this.db.limit(limit, offset);
 
       return this.db.execute();
     }
   }, {
-    key: 'getOne',
+    key: "getOne",
     value: function getOne(type) {
-      this.db.select('saldo', 'id, saldo, created_at');
-      this.db.where('ct_id', type);
+      this.db.select("saldo");
+      this.db.join("card_type", "card_type.ct_id = saldo.ct_id", "LEFT");
+      this.db.where("ct_id", type);
 
       return this.db.execute();
     }
   }, {
-    key: 'insert',
-    value: function insert(saldo) {
+    key: "insert",
+    value: function insert(data) {
       this.db.init();
-      var data = { saldo: saldo };
-
       this.db.insert('saldo', data);
-      this.db.push(true);
 
-      return this.db.executeMany();
+      return this.db.execute();
     }
   }, {
-    key: 'update',
-    value: function update(id, saldo) {
+    key: "update",
+    value: function update(id, data) {
       this.db.init();
-      var data = { saldo: saldo };
-
       this.db.update('saldo', data);
       this.db.where('id', id);
-      this.db.push(true);
 
-      return this.db.executeMany();
+      return this.db.execute();
     }
   }, {
-    key: 'destroy',
+    key: "destroy",
     value: function destroy(id) {
+      this.db.init();
       this.db.delete('saldo');
       this.db.where('id', id);
 
       return this.db.execute();
+    }
+  }, {
+    key: "getBalanceId",
+    value: function getBalanceId(id) {
+      this.db.init();
+      this.db.select("saldo");
+      this.db.where("id", id);
+
+      return this.db.execute(true);
     }
   }]);
 
