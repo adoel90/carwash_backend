@@ -46,7 +46,7 @@ var StoreModel = exports.StoreModel = function (_Model) {
 
 			this.db.select("store", "store.*, owner.*, store_category.*, users.u_id, users.u_name, store.deleted_at");
 			// this.db.order("store.store_id");
-			this.db.order("store.deleted_at IS NULL", "DESC");
+			this.db.order("store.deleted_at IS NULL", true);
 			this.db.push();
 
 			return this.db.executeMany();

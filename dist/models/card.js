@@ -64,6 +64,7 @@ var CardModel = exports.CardModel = function (_Model) {
 		value: function getCardType() {
 			this.db.init();
 			this.db.select("card_type");
+			this.db.order("card_type.deleted_at IS NULL", true);
 			// this.db.whereIsNull("deleted_at");
 
 			return this.db.execute();

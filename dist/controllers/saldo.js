@@ -85,6 +85,19 @@ var SaldoController = exports.SaldoController = function (_Controller) {
         }
       });
     }
+  }, {
+    key: "destroy",
+    value: function destroy(id) {
+      return new Promise(function (resolve, reject) {
+        var model = new _saldo.SaldoModel();
+
+        model.destroy(id).then(function () {
+          return resolve(true);
+        }).catch(function (err) {
+          return reject(err);
+        });
+      });
+    }
   }]);
 
   return SaldoController;

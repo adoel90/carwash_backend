@@ -1474,6 +1474,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					return _this2.error(res, err);
 				});
 			});
+
+			this.app.delete("/saldo/delete", _auth.verifyToken, function (req, res) {
+				var param = {
+					id: req.body.id
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				saldoController.destroy(param.id).then(function (result) {
+					return _this2.success(res, result);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
 			/* End Saldo Route */
 
 			return this.app;

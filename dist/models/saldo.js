@@ -56,6 +56,14 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
 
       return this.db.executeMany();
     }
+  }, {
+    key: 'destroy',
+    value: function destroy(id) {
+      this.db.delete('saldo');
+      this.db.where('id', id);
+
+      return this.db.execute();
+    }
   }]);
 
   return SaldoModel;

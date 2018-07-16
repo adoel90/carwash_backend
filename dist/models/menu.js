@@ -66,7 +66,8 @@ var MenuModel = exports.MenuModel = function (_Model) {
 			this.db.push();
 
 			this.db.select("menu");
-			this.db.order("mn_name");
+			// this.db.order("mn_name");
+			this.db.order("menu.deleted_at IS NULL", true);
 			this.db.push();
 
 			return this.db.executeMany();

@@ -122,7 +122,8 @@ var UserModel = exports.UserModel = function (_Model) {
 			if (active) {
 				this.db.whereIsNull("users.deleted_at");
 			}
-			this.db.order("u_id");
+			// this.db.order("u_id");
+			this.db.order("users.deleted_at IS NULL", true);
 			this.db.limit(limit, offset);
 
 			return this.db.execute();

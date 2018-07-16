@@ -58,7 +58,8 @@ var MemberModel = exports.MemberModel = function (_Model) {
 				this.db.whereLike("lower(m_name)", "%" + name.toLowerCase() + "%");
 			}
 			// this.db.whereIsNull("member.deleted_at");
-			this.db.order("m_id");
+			// this.db.order("m_id");
+			this.db.order("member.deleted_at IS NULL", true);
 			this.db.push();
 
 			return this.db.execute();

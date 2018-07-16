@@ -41,6 +41,7 @@ var StaffModel = exports.StaffModel = function (_Model) {
             this.db.push();
 
             this.db.select("users", "users.*, user_level.*, owner.*, users.deleted_at");
+            this.db.order("users.deleted_at IS NULL", true);
             this.db.push();
 
             return this.db.executeMany();

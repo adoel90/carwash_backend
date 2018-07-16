@@ -1478,5 +1478,18 @@
         "description" : "Saldo for minimal saldo"
       }
     ]
+  },
+  "/saldo/delete": {
+	  "method" : "delete",
+	  "description": "Delete saldo",
+	  "token": true,
+	  "parameter": [
+		  {
+			  "name": "id",
+			  "type": "integer",
+			  "required": true,
+			  "description": "Id saldo"
+		  }
+	  ]
   }
 }
