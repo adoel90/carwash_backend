@@ -39,7 +39,6 @@ var ReportModel = exports.ReportModel = function (_Model) {
             this.db.push();
 
             this.db.select("member", "member.*, card.*, card_type.*, member.created_at");
-            // this.db.order("member.created_at", true);
             this.db.order("member.m_name");
             this.db.push();
 

@@ -1458,7 +1458,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
-			this.app.patch("/saldo/update", _auth.verifyToken, function (req, res) {
+			this.app.put("/saldo/update", _auth.verifyToken, function (req, res) {
 				var param = {
 					id: req.body.id,
 					saldo: req.body.saldo
