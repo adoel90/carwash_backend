@@ -1056,7 +1056,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
-					saldo: req.body.saldo,
+					saldo: req.body.saldo ? req.body.saldo : null,
 					phone: req.body.phone ? req.body.phone : null,
 					email: req.body.email ? req.body.email : null,
 					address: req.body.address ? req.body.address : null,
