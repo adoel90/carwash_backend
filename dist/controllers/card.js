@@ -128,22 +128,20 @@ var CardController = exports.CardController = function (_Controller) {
 			return new Promise(function (resolve, reject) {
 				var cardModel = new _card.CardModel();
 
-				for (var i = 0; i < param.min.length; i++) {
-					var cardParam = {
-						ct_name: param.name,
-						ct_min: param.min,
-						ct_bonus: param.bonus,
-						ct_refund: param.refund,
-						ct_charge: param.charge,
-						updated_at: _this4.moment(new Date()).format()
-					};
+				var cardParam = {
+					ct_name: param.name,
+					ct_min: param.min,
+					ct_bonus: param.bonus,
+					ct_refund: param.refund,
+					ct_charge: param.charge,
+					updated_at: _this4.moment(new Date()).format()
+				};
 
-					cardModel.updateCardType(param.id, cardParam).then(function (data) {
-						return resolve(true);
-					}).catch(function (err) {
-						return reject(err);
-					});
-				}
+				cardModel.updateCardType(param.id, cardParam).then(function (data) {
+					return resolve(true);
+				}).catch(function (err) {
+					return reject(err);
+				});
 			});
 		}
 

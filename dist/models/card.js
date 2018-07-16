@@ -119,9 +119,9 @@ var CardModel = exports.CardModel = function (_Model) {
 			this.db.init();
 			this.db.update("card_type", param);
 			this.db.where("ct_id", ct_id);
-			this.db.push(true);
+			// this.db.push(true);
 
-			return this.db.executeMany();
+			return this.db.execute();
 		}
 
 		/*** Update card data ***/
