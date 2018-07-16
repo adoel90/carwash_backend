@@ -1442,6 +1442,22 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				});
 			});
 
+			this.app.get('/saldo/detail', _auth.verifyToken, function (req, res) {
+				var param = {
+					type: req.query.type
+				};
+
+				if (!_this2.checkParameters(param)) {
+					return _this2.error(res, 1);
+				}
+
+				saldoController.getOne(param.type).then(function (data) {
+					return _this2.success(res, data);
+				}).catch(function (err) {
+					return _this2.error(res, err);
+				});
+			});
+
 			this.app.post("/saldo/create", _auth.verifyToken, function (req, res) {
 				var param = {
 					saldo: req.body.saldo

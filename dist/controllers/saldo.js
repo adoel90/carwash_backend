@@ -40,6 +40,19 @@ var SaldoController = exports.SaldoController = function (_Controller) {
       });
     }
   }, {
+    key: "getOne",
+    value: function getOne(type) {
+      return new Promise(function (resolve, reject) {
+        var model = new _saldo.SaldoModel();
+
+        model.getOne(type).then(function (data) {
+          return resolve(data);
+        }).catch(function (err) {
+          return reject(err);
+        });
+      });
+    }
+  }, {
     key: "insert",
     value: function insert(param) {
       return new Promise(function (resolve, reject) {

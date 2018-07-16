@@ -1443,11 +1443,22 @@
     "description": "Get all saldo",
     "token": true,
     "parameter" : [{
-			"name" : "limit",
-			"type" : "integer",
-			"required" : false,
-			"description" : "Limit of data, default 4"
-		}]
+		"name" : "limit",
+		"type" : "integer",
+		"required" : false,
+		"description" : "Limit of data, default 4"
+	}]
+  },
+  "/saldo/detail" :{
+    "method" : "get",
+    "description": "Get detail saldo where type",
+    "token": true,
+    "parameter" : [{
+		"name" : "type",
+		"type" : "integer",
+		"required" : true,
+		"description" : "Card type id"
+	}]
   },
   "/saldo/create" :{
     "method" : "post",

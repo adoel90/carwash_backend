@@ -34,6 +34,14 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
       return this.db.execute();
     }
   }, {
+    key: 'getOne',
+    value: function getOne(type) {
+      this.db.select('saldo', 'id, saldo, created_at');
+      this.db.where('ct_id', type);
+
+      return this.db.execute();
+    }
+  }, {
     key: 'insert',
     value: function insert(saldo) {
       this.db.init();
