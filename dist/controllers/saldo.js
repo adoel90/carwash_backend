@@ -52,11 +52,21 @@ var SaldoController = exports.SaldoController = function (_Controller) {
   }, {
     key: "getOne",
     value: function getOne(type) {
+      var _this3 = this;
+
       return new Promise(function (resolve, reject) {
         var model = new _saldo.SaldoModel();
 
         model.getOne(type).then(function (data) {
-          return resolve(data);
+          var result = [];
+
+          for (var i = 0; i < data.length; i++) {
+            var param = _this3.build.balance(data[i]);
+
+            result.push(param);
+          }
+
+          return resolve(result);
         }).catch(function (err) {
           return reject(err);
         });
@@ -84,7 +94,7 @@ var SaldoController = exports.SaldoController = function (_Controller) {
   }, {
     key: "updateBalance",
     value: function updateBalance(param) {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve, reject) {
         var saldoModel = new _saldo.SaldoModel();
@@ -93,7 +103,7 @@ var SaldoController = exports.SaldoController = function (_Controller) {
           ct_id: param.card,
           bonus: param.bonus,
           saldo: param.saldo,
-          updated_at: _this3.moment(new Date()).format()
+          updated_at: _this4.moment(new Date()).format()
         };
 
         saldoModel.update(param.id, dataBalance).then(function () {
@@ -119,14 +129,14 @@ var SaldoController = exports.SaldoController = function (_Controller) {
   }, {
     key: "changeStatusBalance",
     value: function changeStatusBalance(param) {
-      var _this4 = this;
+      var _this5 = this;
 
       return new Promise(function (resolve, reject) {
         var saldoModel = new _saldo.SaldoModel();
 
         saldoModel.getBalanceId(param.id).then(function (balance) {
           var balanceParam = {
-            deleted_at: balance.deleted_at ? null : _this4.moment(new Date()).format()
+            deleted_at: balance.deleted_at ? null : _this5.moment(new Date()).format()
           };
 
           saldoModel.update(param.id, balanceParam).then(function () {
