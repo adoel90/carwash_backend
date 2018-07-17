@@ -36,7 +36,7 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
   }, {
     key: 'getOne',
     value: function getOne(type) {
-      this.db.select('saldo', 'id, saldo, created_at');
+      this.db.select('saldo', 'id, saldo, bonus, created_at');
       this.db.where('ct_id', type);
 
       return this.db.execute();

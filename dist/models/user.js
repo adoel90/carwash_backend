@@ -112,7 +112,6 @@ var UserModel = exports.UserModel = function (_Model) {
 			this.db.init();
 			this.db.select("users", "users.*, user_level.ul_id, user_level.ul_name");
 			this.db.join("user_level", "user_level.ul_id = users.ul_id");
-			this.db.where('user_level.ul_id', 1, null, '!=');
 			if (name) {
 				this.db.whereLike("lower(u_name)", "%" + name.toLowerCase() + "%");
 			}
@@ -122,9 +121,9 @@ var UserModel = exports.UserModel = function (_Model) {
 			if (active) {
 				this.db.whereIsNull("users.deleted_at");
 			}
-			// this.db.order("u_id");
-			this.db.order("users.deleted_at IS NULL", true);
-			this.db.limit(limit, offset);
+			this.db.where('users.ul_id', 1, null, '!=');
+			this.db.order("users.deleted_at is null", true);
+			// this.db.limit(limit, offset);
 
 			return this.db.execute();
 		}
@@ -160,7 +159,7 @@ var UserModel = exports.UserModel = function (_Model) {
 		key: "insertUser",
 		value: function insertUser(param) {
 			this.db.init();
-			this.db.insert("users", param, "u_id");
+			this.db.insert("users", param, "u_id as id");
 
 			return this.db.execute(true);
 		}

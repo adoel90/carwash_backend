@@ -110,9 +110,9 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					name: req.query.name ? req.query.name : null,
 					access: req.query.access ? req.query.access : null,
-					active: req.query.active ? req.query.active : null,
-					limit: req.query.limit ? req.query.limit : 10,
-					offset: req.query.offset ? req.query.offset : 0
+					active: req.query.active ? req.query.active : null
+					// limit : req.query.limit ? req.query.limit : 10,
+					// offset : req.query.offset ? req.query.offset : 0
 				};
 
 				if (!_this2.checkParameters(param)) {
