@@ -399,7 +399,12 @@ var MemberController = exports.MemberController = function (_Controller) {
 						if (param.balance < card.ct_min) {
 							return reject(32);
 						}
-						var bonus = parseInt(param.balance / parseFloat(card.ct_min));
+
+						var bonus = 0;
+						if (card.ct_min > 0) {
+							bonus = param.balance / parseFloat(card.ct_min);
+						}
+
 						param.balance += parseFloat(card.ct_bonus * bonus);
 						var tpParam = {
 							m_id: param.id,
@@ -408,6 +413,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							tp_payment: param.payment,
 							created_by: param.staff
 						};
+
 						memberModel.insertTopup(tpParam).then(function (topup) {
 							var logParam = {
 								m_id: param.id,

@@ -40,9 +40,14 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
   }, {
     key: "getOne",
     value: function getOne(type) {
+<<<<<<< HEAD
       this.db.select("saldo");
       this.db.join("card_type", "card_type.ct_id = saldo.ct_id", "LEFT");
       this.db.where("ct_id", type);
+=======
+      this.db.select('saldo', 'id, saldo, bonus, created_at');
+      this.db.where('ct_id', type);
+>>>>>>> 0a35491d3d3fdd75b2a97868154f90c8d6522c7b
 
       return this.db.execute();
     }
