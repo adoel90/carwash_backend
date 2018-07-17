@@ -1236,7 +1236,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					min: req.body.minimum,
 					bonus: req.body.bonus,
 					refund: req.body.refund ? req.body.refund : false,
-					charge: req.body.charge ? req.body.charge : false
+					charge: req.body.charge ? req.body.charge : false,
+					item: req.body.item
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1257,7 +1258,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					min: req.body.minimum,
 					bonus: req.body.bonus ? req.body.bonus : 0,
 					refund: req.body.refund ? req.body.refund : false,
-					charge: req.body.charge ? req.body.charge : false
+					charge: req.body.charge ? req.body.charge : false,
+					item: req.body.item
 				};
 
 				if (!_this2.checkParameters(param)) {
@@ -1433,7 +1435,8 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 					limit: req.query.limit ? req.query.limit : 10,
 					offset: req.query.offset ? req.query.offset : 0,
 					card: req.query.card ? req.query.card : null,
-					filter: req.query.filter ? req.query.filter : null
+					filter: req.query.filter ? req.query.filter : null,
+					type: req.query.type ? req.query.type : 1
 				};
 
 				saldoController.getAll(param).then(function (data) {

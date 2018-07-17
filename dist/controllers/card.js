@@ -106,8 +106,17 @@ var CardController = exports.CardController = function (_Controller) {
 					ct_charge: param.charge
 				};
 
+				for (var i = 0; i < param.item.length; i++) {
+					param.item[i].topup = parseInt(param.item[i].topup);
+					param.item[i].bonus = parseInt(param.item[i].bonus);
+				}
+
 				cardModel.insertCardType(cardParam).then(function (data) {
-					return resolve(true);
+					cardModel.createItemTopUp(data[0][0].ct_id, param.item).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});
@@ -137,8 +146,17 @@ var CardController = exports.CardController = function (_Controller) {
 					updated_at: _this4.moment(new Date()).format()
 				};
 
+				for (var i = 0; i < param.item.length; i++) {
+					param.item[i].topup = parseInt(param.item[i].topup);
+					param.item[i].bonus = parseInt(param.item[i].bonus);
+				}
+
 				cardModel.updateCardType(param.id, cardParam).then(function (data) {
-					return resolve(true);
+					cardModel.updateItemTopUp(param.id, param.item).then(function () {
+						return resolve(true);
+					}).catch(function (err) {
+						return reject(err);
+					});
 				}).catch(function (err) {
 					return reject(err);
 				});

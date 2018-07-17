@@ -993,6 +993,11 @@
 			"type" : "boolean",
 			"required" : false,
 			"description" : "Charge for customer with type card Taxi Online"
+		},{
+			"name" : "item",
+			"type" : "array",
+			"required" : true,
+			"description" : ""
 		}]
 	},
 	"/card/type/update" :{
@@ -1030,6 +1035,11 @@
 			"type" : "boolean",
 			"required" : false,
 			"description" : "Charge for customer with type card Taxi Online"
+		},{
+			"name" : "item",
+			"type" : "array",
+			"required" : true,
+			"description" : ""
 		}]
 	},
 	"/card/type/delete" :{
@@ -1448,10 +1458,10 @@
     "description": "Get all saldo",
     "token": true,
     "parameter" : [{
-		"name" : "limit",
+		"name" : "type",
 		"type" : "integer",
 		"required" : false,
-		"description" : "Limit of data, default 4"
+		"description" : "Type member"
 	}]
   },
   "/saldo/detail" :{
