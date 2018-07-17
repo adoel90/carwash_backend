@@ -27,7 +27,7 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
   _createClass(SaldoModel, [{
     key: "getAll",
     value: function getAll(limit, offset, card) {
-      this.db.select("saldo");
+      this.db.select("saldo", "saldo.saldo, saldo.bonus, card_type.ct_id, card_type.ct_name, card_type.ct_refund, card_type.ct_charge");
       this.db.join("card_type", "card_type.ct_id = saldo.ct_id", "LEFT");
       if (card) {
         this.db.where("saldo.ct_id", card);
@@ -40,9 +40,9 @@ var SaldoModel = exports.SaldoModel = function (_Model) {
   }, {
     key: "getOne",
     value: function getOne(type) {
-      this.db.select("saldo");
+      this.db.select("saldo", "saldo.saldo, saldo.bonus, card_type.ct_id, card_type.ct_name, card_type.ct_refund, card_type.ct_charge");
       this.db.join("card_type", "card_type.ct_id = saldo.ct_id", "LEFT");
-      this.db.where("ct_id", type);
+      this.db.where("card_type.ct_id", type);
 
       return this.db.execute();
     }

@@ -409,7 +409,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 						var tpParam = {
 							m_id: param.id,
 							tp_value: param.balance,
-							tp_before: member.m_balance,
+							tp_before: member.m_balance ? member.m_balance : 0,
 							tp_payment: param.payment,
 							created_by: param.staff
 						};
@@ -418,7 +418,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 							var logParam = {
 								m_id: param.id,
 								log_value: param.balance,
-								log_before: member.m_balance,
+								log_before: member.m_balance ? member.m_balance : 0,
 								log_payment: param.payment,
 								created_by: param.staff,
 								log_description: "Topup"
