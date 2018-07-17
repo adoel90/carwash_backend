@@ -256,7 +256,7 @@ var MemberController = exports.MemberController = function (_Controller) {
 					m_phone: param.phone,
 					m_email: param.email,
 					m_address: param.address,
-					m_balance: param.saldo,
+					m_balance: param.balance,
 					updated_at: _this6.moment(new Date()).format()
 				};
 

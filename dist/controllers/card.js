@@ -228,7 +228,7 @@ var CardController = exports.CardController = function (_Controller) {
 						if (ct_id === 1) balance = '100000';else if (ct_id === 2) balance = '10000';else if (ct_id === 3) balance = '20000';
 
 						var memberParam = {
-							m_balance: balance,
+							m_balance: balance ? balance : 0,
 							c_id: data.c_id,
 							ct_id: ct_id
 						};
