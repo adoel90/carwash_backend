@@ -1255,7 +1255,7 @@ var ApiRoutes = exports.ApiRoutes = function (_Routes) {
 				var param = {
 					id: req.body.id,
 					name: req.body.name,
-					min: req.body.minimum,
+					min: req.body.minimum ? req.body.minimum : 0,
 					bonus: req.body.bonus ? req.body.bonus : 0,
 					refund: req.body.refund ? req.body.refund : false,
 					charge: req.body.charge ? req.body.charge : false,

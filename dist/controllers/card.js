@@ -152,8 +152,12 @@ var CardController = exports.CardController = function (_Controller) {
 				}
 
 				cardModel.updateCardType(param.id, cardParam).then(function (data) {
-					cardModel.updateItemTopUp(param.id, param.item).then(function () {
-						return resolve(true);
+					cardModel.deleteItemTopUp(param.id).then(function () {
+						cardModel.createItemTopUp(param.id, param.item).then(function () {
+							return resolve(true);
+						}).catch(function (err) {
+							return reject(err);
+						});
 					}).catch(function (err) {
 						return reject(err);
 					});

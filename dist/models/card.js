@@ -154,23 +154,13 @@ var CardModel = exports.CardModel = function (_Model) {
 			return this.db.executeMany();
 		}
 	}, {
-		key: "updateItemTopUp",
-		value: function updateItemTopUp(id, item) {
-			for (var i = 0; i < item.length; i++) {
-				this.db.init();
+		key: "deleteItemTopUp",
+		value: function deleteItemTopUp(id) {
+			this.db.init();
+			this.db.delete('saldo');
+			this.db.where('ct_id', id);
 
-				var param = {
-					saldo: item[i].saldo,
-					bonus: item[i].bonus,
-					updated_at: this.moment(new Date()).format()
-				};
-
-				this.db.update('saldo', param);
-				this.db.where('ct_id', id);
-				this.db.push(true);
-			}
-
-			return this.db.executeMany();
+			return this.db.execute();
 		}
 	}]);
 
