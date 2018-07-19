@@ -117,11 +117,12 @@ var UserModel = exports.UserModel = function (_Model) {
 			}
 			if (access) {
 				this.db.where("users.ul_id", access);
+			} else {
+				this.db.where('users.ul_id', 1, null, '!=');
 			}
 			if (active) {
 				this.db.whereIsNull("users.deleted_at");
 			}
-			this.db.where('users.ul_id', 1, null, '!=');
 			this.db.order("users.deleted_at is null", true);
 
 			return this.db.execute();
