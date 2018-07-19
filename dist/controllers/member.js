@@ -401,11 +401,11 @@ var MemberController = exports.MemberController = function (_Controller) {
 						}
 
 						var bonus = 0;
-						if (card.ct_min > 0) {
-							bonus = param.balance / parseFloat(card.ct_min);
+						if (card.saldo > 0) {
+							bonus = param.balance / parseFloat(card.saldo);
 						}
 
-						param.balance += parseFloat(card.ct_bonus * bonus);
+						param.balance += parseFloat(card.bonus * bonus);
 						var tpParam = {
 							m_id: param.id,
 							tp_value: param.balance,
