@@ -76,6 +76,18 @@ var CardModel = exports.CardModel = function (_Model) {
 		key: "getCardTypeById",
 		value: function getCardTypeById(ct_id) {
 			this.db.init();
+			this.db.select("card_type");
+			this.db.where("ct_id", ct_id);
+
+			return this.db.execute(true);
+		}
+
+		/*** Get saldo by ct_id ***/
+
+	}, {
+		key: "getSaldoByCtId",
+		value: function getSaldoByCtId(ct_id) {
+			this.db.init();
 			this.db.select("saldo");
 			this.db.where("ct_id", ct_id);
 

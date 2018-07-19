@@ -400,12 +400,13 @@ var MemberController = exports.MemberController = function (_Controller) {
 							return reject(32);
 						}
 
-						var bonus = 0;
-						if (card.saldo > 0) {
-							bonus = param.balance / parseFloat(card.saldo);
-						}
+						// let bonus = 0;
+						// if (card.saldo > 0) {
+						// 	bonus = (param.balance / parseFloat(card.saldo));
+						// }
+						var bonus = param.balance;
 
-						param.balance += parseFloat(card.bonus * bonus);
+						// param.balance += parseFloat(card.bonus * bonus);
 						var tpParam = {
 							m_id: param.id,
 							tp_value: param.balance,
