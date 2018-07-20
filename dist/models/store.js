@@ -64,7 +64,7 @@ var StoreModel = exports.StoreModel = function (_Model) {
 			this.db.join("users", "users.u_id = owner.u_id", "LEFT");
 			this.db.where("store.store_id", id);
 
-			return this.db.execute(true);
+			return this.db.execute();
 		}
 
 		/*** Get Detail Store for Delete ***/
