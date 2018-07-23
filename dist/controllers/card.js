@@ -75,11 +75,23 @@ var CardController = exports.CardController = function (_Controller) {
 						card: []
 					};
 
-					for (var i = 0; i < card[1].length; i++) {
-						result.card.push(_this3.build.card(card[1][i]));
-					}
+					var _loop = function _loop(i) {
+						var paramCard = _this3.build.card(card[1][i]);
 
-					return resolve(result);
+						cardModel.saldoListByCardTypeId(card[1][i].ct_id).then(function (balance) {
+							paramCard.balance = balance;
+
+							result.card.push(paramCard);
+
+							if (result.card.length >= card[1].length) {
+								return resolve(result);
+							}
+						});
+					};
+
+					for (var i = 0; i < card[1].length; i++) {
+						_loop(i);
+					}
 				}).catch(function (err) {
 					return reject(err);
 				});

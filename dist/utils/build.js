@@ -126,18 +126,17 @@ var Build = exports.Build = function () {
 				id: data.ct_id,
 				name: data.ct_name,
 				min: data.ct_min,
-				// .replace(/{/g, '').replace(/}/g, '').split(","),
-				// .reduce((result, item, index) => {
-				// 	result[index] = item;
-				// 	return result;
-				// }, {}),
-				bonus: data.ct_bonus,
-				refund: data.ct_refund,
+				// bonus : data.ct_bonus,
+				// refund : data.ct_refund,
 				charge: data.ct_charge,
 				status: true
-			};
 
-			if (data.deleted_at) {
+				// if(data.saldo) {
+				//   console.log(data)
+				//   // card.saldo = this.balance(data);
+				// }
+
+			};if (data.deleted_at) {
 				card.status = false;
 			}
 

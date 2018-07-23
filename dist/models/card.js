@@ -101,10 +101,10 @@ var CardModel = exports.CardModel = function (_Model) {
 		value: function getCardTypeList(limit, offset) {
 			this.db.init();
 			this.db.select("card_type", "count(*)");
-			// this.db.whereIsNull("deleted_at");
 			this.db.push();
 
 			this.db.select("card_type");
+			// this.db.join("saldo", "card_type.ct_id = saldo.ct_id");
 			this.db.limit(limit, offset);
 			this.db.push();
 
@@ -171,6 +171,18 @@ var CardModel = exports.CardModel = function (_Model) {
 			this.db.init();
 			this.db.delete('saldo');
 			this.db.where('ct_id', id);
+
+			return this.db.execute();
+		}
+
+		/*** Saldo List by Card Type ID ***/
+
+	}, {
+		key: "saldoListByCardTypeId",
+		value: function saldoListByCardTypeId(id) {
+			this.db.init();
+			this.db.select("saldo", "id, saldo, bonus");
+			this.db.where("ct_id", id);
 
 			return this.db.execute();
 		}
