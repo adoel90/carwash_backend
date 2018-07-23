@@ -414,6 +414,8 @@ var Build = exports.Build = function () {
 
 			if (data.ct_id) {
 				reportMember.card.type = this.card(data);
+			} else {
+				reportMember.card.status = 'Refund';
 			}
 
 			if (data.deleted) {
