@@ -195,7 +195,7 @@ var StoreController = exports.StoreController = function (_Controller) {
 
 				storeModel.getDetailStoreById(param.id).then(function (store) {
 					var paramStore = {
-						deleted_at: store.deleted_at ? null : _this5.moment(new Date()).format()
+						deleted_at: store[0].deleted_at ? null : _this5.moment(new Date()).format()
 					};
 
 					storeModel.updateStore(paramStore, param.id).then(function () {

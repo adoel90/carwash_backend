@@ -130,13 +130,9 @@ var Build = exports.Build = function () {
 				// refund : data.ct_refund,
 				charge: data.ct_charge,
 				status: true
+			};
 
-				// if(data.saldo) {
-				//   console.log(data)
-				//   // card.saldo = this.balance(data);
-				// }
-
-			};if (data.deleted_at) {
+			if (data.deleted_at) {
 				card.status = false;
 			}
 
